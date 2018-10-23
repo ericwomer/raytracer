@@ -5,9 +5,6 @@
 		}
 	],
 	"settings": {
-		"editor.formatOnSave": true,
-		"files.associations": {
-			"cmath": "cpp"
-		}
+		"editor.formatOnSave": true
 	}
 }

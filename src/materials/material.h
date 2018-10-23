@@ -1,9 +1,9 @@
 #if !defined(__MATERIAL_H__)
 #define __MATERIAL_H__
 
-#include "hitable.h"
-#include "ray.h"
-#include "vec3.h"
+#include "ray_engine/hitable.h"
+#include "ray_engine/ray.h"
+#include "types/vec3.h"
 
 double schlick(double cosine, double ref_idx) {
 	double r0 = (1 - ref_idx) / (1 + ref_idx);

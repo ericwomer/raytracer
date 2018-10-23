@@ -1,7 +1,7 @@
 #if !defined(__SPHERE_H__)
 #define __SPHERE_H__
 
-#include "hitable.h"
+#include "ray_engine/hitable.h"
 
 class material;
 
