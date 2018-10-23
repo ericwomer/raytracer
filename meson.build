@@ -1,5 +1,5 @@
 project(
-    'raytrace',
+    'raytracer',
     'cpp',
     version : '0.0.1',
     default_options: 
@@ -16,6 +16,7 @@ pkgconfig = import('pkgconfig')
 cpp = meson.get_compiler('cpp')
 
 raytrace_src = [
+    'src/raytracer.cpp',
     'src/main.cpp'
     ]
 
@@ -24,11 +25,14 @@ raytrace_include_directories = [
     ]
 
 raytrace_cflags = ['-stdlib=libc++']
-raytrace_ldflags = ['-lm']
+raytrace_ldflags = [
+    '-lm',
+    '-lc++',
+    '-lc++abi']
 raytrace_deps = []
 
 raytrace = executable(
-    'raytrace', 
+    'raytracer', 
     raytrace_src,
     dependencies: raytrace_deps,
     include_directories: raytrace_include_directories,
