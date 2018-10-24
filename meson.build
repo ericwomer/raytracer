@@ -21,7 +21,8 @@ raytrace_src = [
     ]
 
 raytrace_include_directories = [
-    include_directories('src')
+    include_directories('src/'),
+    include_directories('thirdparty/json/include/')
     ]
 
 raytrace_cflags = ['-stdlib=libc++']
