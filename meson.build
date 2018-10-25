@@ -16,8 +16,14 @@ pkgconfig = import('pkgconfig')
 cpp = meson.get_compiler('cpp')
 
 raytrace_src = [
-    'src/raytracer.cpp',
-    'src/main.cpp'
+    'src/raytracerapp.cpp',
+    'src/main.cpp',
+    'src/system/system.cpp',
+    'src/system/file.cpp',
+    'src/rendering/raytracer.cpp',
+    'src/objects/sphere.cpp',
+    'src/rendering/hitable.cpp',
+    'src/rendering/raytracer.cpp'
     ]
 
 raytrace_include_directories = [

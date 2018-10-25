@@ -3,30 +3,7 @@
 #include <sstream>
 #include <string>
 
-#include "camera/camera.h"
-#include "materials/material.h"
-#include "objects/sphere.h"
-#include "ray_engine/hitable_list.h"
-
-#include "raytracer.h"
-
-// Move this eventually to types
-vec3 color(const ray &r, hitable *world, int depth) {
-	hit_record rec;
-	if (world->hit(r, 0.001, std::numeric_limits<double>::max(), rec)) {
-		ray scattered;
-		vec3 attenuation;
-		if (depth < 50 && rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
-			return attenuation * color(scattered, world, depth + 1);
-		} else {
-			return vec3(0, 0, 0);
-		}
-	} else {
-		vec3 unit_direction = unit_vector(r.direction());
-		double t = 0.5 * (unit_direction.y() + 1.0);
-		return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
-	}
-}
+#include "raytracerapp.hpp"
 
 hitable *random_scene() {
 	int n = 500;
@@ -66,50 +43,24 @@ hitable *random_scene() {
 	return new hitable_list(list, i);
 }
 
-int writeFile(std::string const &filename, std::string const &contents) {
-	std::ofstream ofile;
-
-	{
-
-		// Close it incase it was left open.
-		if (ofile.is_open()) {
-			ofile.close();
-		}
-		ofile.open(filename);
-
-		if (!ofile) {
-			std::cerr << "Could not open " << filename << "\n";
-			return -1;
-		}
-
-		ofile << contents;
-		ofile.close();
-	}
-
-	return 0;
-}
-
-raytracer::raytracer() {
-	app_description.push_back(std::string("Raytracer \n"));
+raytracerapp::raytracerapp() {
+	app_description.push_back(std::string("raytracerapp \n"));
 	app_description.push_back(std::string("** nothing else follows ** \n"));
 }
 
 // All of the application starts here
 // if any parameters are used they are handled
 // with member vars.
-int raytracer::main(void) {
+int raytracerapp::main(void) {
 	// Start Main Application Here.
 	// writePlaylist();
 
 	// Do threading, brake up the view port and split off threads based on that
-	int nx = 800;
-	int ny = 400;
+	int nx = 640;
+	int ny = 480;
 	int ns = 50; // Bounces?
 
-	std::stringstream ppm_file;
-
-	std::cout << "Rendering\n" << std::endl;
-	ppm_file << "P3\n" << nx << " " << ny << "\n255\n";
+	std::stringstream ppm_file, ppm_file_01, ppm_file_02;
 
 	// Convert this list to a class scene::objects or something
 	// render based on isrenderable_in_scene bool
@@ -120,7 +71,6 @@ int raytracer::main(void) {
 	list[2] =
 	    new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1)));
 	list[3] = new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.1, 0.1, 0.1), 0.0));
-	hitable *world = new hitable_list(list, 4);
 
 	vec3 lookfrom(13, 2, -10);
 	vec3 lookat(0, 0, 0);
@@ -130,30 +80,15 @@ int raytracer::main(void) {
 	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, double(nx) / double(ny),
 	           aperture, dist_to_focus);
 
-	for (int j = ny - 1; j >= 0; j--) {
-		for (int i = 0; i < nx; i++) {
-			vec3 col(0, 0, 0);
-			for (int s = 0; s < ns; s++) {
-				double u = double(i + drand48()) / double(nx);
-				double v = double(j + drand48()) / double(ny);
-				ray r = cam.get_ray(u, v);
-				// vec3 p = r.point_at_parameter(2.0);
-				col += color(r, world, 0);
-			}
-			col /= double(ns);
-			col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
-			int ir = int(255.99 * col[0]);
-			int ig = int(255.99 * col[1]);
-			int ib = int(255.99 * col[2]);
+	ppm_file = tracer.render(&cam, vec2<int>(640, 480), 50, list, 4);
 
-			ppm_file << ir << " " << ig << " " << ib << "\n";
-		}
-	}
-	return writeFile("scene.ppm", ppm_file.str());
+	writeFile("scene.ppm", ppm_file.str());
+
+	return 0;
 }
 
 // This is the main that handles parameters
-int raytracer::main(std::vector<std::string> &params) {
+int raytracerapp::main(std::vector<std::string> &params) {
 
 	// std::vector<std::string> actions;
 	std::vector<std::string> dump;
@@ -187,7 +122,7 @@ int raytracer::main(std::vector<std::string> &params) {
 			return 0;
 		} else if (c == "version") {
 			std::cout << app_name << " " << 00 << "." << 00 << "." << 01
-			          << std::endl; // create a version raytracer class??
+			          << std::endl; // create a version raytracerapp class??
 			return 0;
 		} else {
 			dump.push_back(c);
@@ -199,7 +134,7 @@ int raytracer::main(std::vector<std::string> &params) {
 
 // This main converts c style parameters to c++ strings
 // then passes it to main that handles the actual parametrs.
-int raytracer::main(int argv, char *argc[]) {
+int raytracerapp::main(int argv, char *argc[]) {
 	// Start here if there are params
 	std::vector<std::string> params;
 
@@ -212,7 +147,7 @@ int raytracer::main(int argv, char *argc[]) {
 	return main(params);
 }
 
-void raytracer::help(void) {
+void raytracerapp::help(void) {
 	std::cout << "Usage: " << app_name << " [options] files...\n\n";
 	std::cout << "Options: \n";
 	std::cout
