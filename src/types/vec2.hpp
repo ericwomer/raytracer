@@ -106,6 +106,7 @@ inline vec2<T> operator-(const vec2<T> &v1, const vec2<T> v2) {
 	return vec2<T>(v1.e[0] - v2.e[0], v1.e[1] - v2.e[1]);
 }
 
+template <class T>
 inline vec2<T> operator*(const vec2<T> &v1, const vec2<T> &v2) {
 	return vec2<T>(v1.e[0] * v2.e[0], v1.e[1] * v2.e[1]);
 }

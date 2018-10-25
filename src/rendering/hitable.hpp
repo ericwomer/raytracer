@@ -1,7 +1,7 @@
 #if !defined(__HITABLE_H__)
 #define __HITABLE_H__
 
-#include "ray.h"
+#include "ray.hpp"
 
 class material;
 

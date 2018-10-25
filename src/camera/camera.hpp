@@ -1,9 +1,9 @@
 #if !defined(__CAMERA_H__)
 #define __CAMERA_H__
 
-#include "ray_engine/ray.h"
+#include "rendering/ray.hpp"
 
-vec3 random_in_unit_disk() {
+inline vec3 random_in_unit_disk() {
 	vec3 p;
 	do {
 		p = 2.0 * vec3(drand48(), drand48(), 0) - vec3(1, 1, 0);
@@ -31,7 +31,7 @@ public:
 		// origin = vec3(0.0, 0.0, 0.0);
 	}
 
-	ray get_ray(double s, double t) {
+	inline ray get_ray(double s, double t) {
 		vec3 rd = lens_radius * random_in_unit_disk();
 		vec3 offset = u * rd.x() + v * rd.y();
 		return ray(origin + offset, lower_left_corner + s * horizontal +
