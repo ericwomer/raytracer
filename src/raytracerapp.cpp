@@ -61,7 +61,7 @@ int raytracerapp::main(void) {
 	int ns = 50; // Bounces?
 
 	std::stringstream ppm_file, ppm_file_01, ppm_file_02;
-
+	std::vector<char> ppm_data;
 	// Convert this list to a class scene::objects or something
 	// render based on isrenderable_in_scene bool
 	hitable *list[4];
@@ -80,10 +80,11 @@ int raytracerapp::main(void) {
 	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, double(nx) / double(ny),
 	           aperture, dist_to_focus);
 
-	ppm_file = tracer.render(&cam, vec2<int>(640, 480), 50, list, 4);
+	pixelrgb *data = tracer.render(&cam, vec2<int>(nx, ny), ns, list, 4);
+	ppm_file = tracer.renderPPM(&cam, vec2<int>(nx, ny), ns, list, 4);
 
-	writeFile("scene.ppm", ppm_file.str());
-
+	writeFile("scene.tga", vec2<int>(nx, ny), data);
+	writeFilePPM("scene.ppm", ppm_file.str());
 	return 0;
 }
 
