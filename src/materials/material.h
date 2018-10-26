@@ -1,9 +1,9 @@
-#if !defined(__MATERIAL_H__)
-#define __MATERIAL_H__
+#if !defined(MATERIAL_H)
+#define MATERIAL_H
 
-#include "rendering/hitable.hpp"
-#include "rendering/ray.hpp"
-#include "types/vec3.hpp"
+#include "rendering/hitable.h"
+#include "rendering/ray.h"
+#include "types/vec3.h"
 
 inline double schlick(double cosine, double ref_idx) {
 	double r0 = (1 - ref_idx) / (1 + ref_idx);
@@ -116,4 +116,4 @@ public:
 	double ref_idx;
 };
 
-#endif // __MATERIAL_H__
+#endif // MATERIAL_H

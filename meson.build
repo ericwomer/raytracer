@@ -6,7 +6,7 @@ project(
     [
         'cpp_std=c++11',
         'b_lundef=false',
-        'b_sanitize=address,undefined',
+        'b_sanitize=none',
         'warning_level=3'
     ],
     meson_version: '>=0.48.0'

@@ -1,5 +1,5 @@
-#if !defined(__RAYTRACERAPP_H__)
-#define __RAYTRACERAPP_H__
+#if !defined(RAYTRACERAPP_H)
+#define RAYTRACERAPP_H
 
 #include <string>
 #include <vector>
@@ -9,14 +9,14 @@
 
 #include <cstdint>
 
-#include "base/base.hpp"
-#include "camera/camera.hpp"
-#include "materials/material.hpp"
-#include "objects/sphere.hpp"
-#include "rendering/hitable_list.hpp"
-#include "rendering/raytracer.hpp"
-#include "system/file.hpp"
-#include "system/system.hpp"
+#include "base/base.h"
+#include "camera/camera.h"
+#include "materials/material.h"
+#include "objects/sphere.h"
+#include "rendering/hitable_list.h"
+#include "rendering/raytracer.h"
+#include "system/file.h"
+#include "system/system.h"
 
 class raytracerapp : public base {
 public: // data types

@@ -31,4 +31,4 @@ private:
 	versionNumberData versionNumber;
 };
 
-#endif // PRIMER_H
+#endif // BASE_H

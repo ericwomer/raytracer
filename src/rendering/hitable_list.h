@@ -1,7 +1,7 @@
-#if !defined(__HITABLE_LIST_H__)
-#define __HITABLE_LIST_H__
+#if !defined(HITABLE_LIST_H)
+#define HITABLE_LIST_H
 
-#include "hitable.hpp"
+#include "hitable.h"
 
 class hitable_list : public hitable {
 public:
@@ -16,4 +16,4 @@ public:
 	int list_size;
 };
 
-#endif // __HITABL_ELIST_H__
+#endif // HITABL_ELIST_H

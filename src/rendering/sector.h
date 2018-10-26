@@ -1,10 +1,10 @@
-#if !defined(__SECTOR_H__)
-#define __SECTOR_H__
+#if !defined(SECTOR_H)
+#define SECTOR_H
 
 #include <sstream>
 #include <vector>
 
-#include "types/vec2.hpp"
+#include "types/vec2.h"
 
 // Used for
 class sector {
@@ -18,4 +18,4 @@ public:
 	std::vector<std::vector<int>> section;
 };
 
-#endif // __SECTOR_H__
+#endif // SECTOR_H

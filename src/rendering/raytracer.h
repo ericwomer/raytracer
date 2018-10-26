@@ -1,17 +1,17 @@
-#if !defined(__RAYTRACER_HPP__)
-#define __RAYTRACER_HPP__
+#if !defined(RAYTRACER_H)
+#define RAYTRACER_H
 
 #include <iostream>
 #include <sstream>
 #include <vector>
 
-#include "camera/camera.hpp"
-#include "materials/material.hpp"
-#include "objects/sphere.hpp"
-#include "rendering/hitable_list.hpp"
-#include "types/types.hpp"
-#include "types/vec2.hpp"
-#include "types/vec3.hpp"
+#include "camera/camera.h"
+#include "materials/material.h"
+#include "objects/sphere.h"
+#include "rendering/hitable_list.h"
+#include "types/types.h"
+#include "types/vec2.h"
+#include "types/vec3.h"
 
 // Move this eventually to types
 inline vec3 color(const ray &r, hitable *world, int depth) {
@@ -31,13 +31,16 @@ inline vec3 color(const ray &r, hitable *world, int depth) {
 	}
 }
 
+// determine the size of the pixel
+
 class raytracer {
 public:
 	raytracer(){};
 	std::stringstream renderPPM(camera *cam, vec2<int> res, int samples,
 	                            hitable *elements[], int element_count);
-	pixelrgb *render(camera *cam, vec2<int> res, int samples, hitable *elements[],
-	                 int element_count);
+
+	pixelrgb_t *render(camera *cam, vec2<int> res, int samples,
+	                   hitable *elements[], int element_count);
 };
 
 #endif // __RAYTRACER_HPP__
