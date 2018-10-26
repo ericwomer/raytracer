@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #include "camera/camera.hpp"
 #include "materials/material.hpp"
 #include "objects/sphere.hpp"
 #include "rendering/hitable_list.hpp"
+#include "types/types.hpp"
 #include "types/vec2.hpp"
 #include "types/vec3.hpp"
 
@@ -32,8 +34,10 @@ inline vec3 color(const ray &r, hitable *world, int depth) {
 class raytracer {
 public:
 	raytracer(){};
-	std::stringstream render(camera *cam, vec2<int> res, int samples,
-	                         hitable *elements[], int element_count);
+	std::stringstream renderPPM(camera *cam, vec2<int> res, int samples,
+	                            hitable *elements[], int element_count);
+	pixelrgb *render(camera *cam, vec2<int> res, int samples, hitable *elements[],
+	                 int element_count);
 };
 
 #endif // __RAYTRACER_HPP__

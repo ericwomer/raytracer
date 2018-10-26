@@ -4,8 +4,9 @@ project(
     version : '0.0.1',
     default_options: 
     [
-        'cpp_std=c++17',
+        'cpp_std=c++11',
         'b_lundef=false',
+        'b_sanitize=address,undefined',
         'warning_level=3'
     ],
     meson_version: '>=0.48.0'
@@ -16,19 +17,19 @@ pkgconfig = import('pkgconfig')
 cpp = meson.get_compiler('cpp')
 
 raytrace_src = [
-    'src/raytracerapp.cpp',
-    'src/main.cpp',
-    'src/system/system.cpp',
     'src/system/file.cpp',
+    'src/system/system.cpp',
     'src/rendering/raytracer.cpp',
     'src/objects/sphere.cpp',
     'src/rendering/hitable.cpp',
-    'src/rendering/raytracer.cpp'
+    'src/rendering/raytracer.cpp',
+     'src/raytracerapp.cpp',
+     'src/main.cpp',
     ]
 
 raytrace_include_directories = [
     include_directories('src/'),
-    include_directories('thirdparty/json/include/')
+    include_directories('thirdparty/include/')
     ]
 
 raytrace_cflags = ['-stdlib=libc++']
@@ -36,7 +37,10 @@ raytrace_ldflags = [
     '-lm',
     '-lc++',
     '-lc++abi']
-raytrace_deps = []
+
+assimp = dependency('assimp')
+
+raytrace_deps = [assimp]
 
 raytrace = executable(
     'raytracer', 

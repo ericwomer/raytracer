@@ -3,7 +3,11 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
 
-int writeFile(std::string const &filename, std::string const &contents);
+#include "types/vec2.hpp"
+
+int writeFilePPM(std::string const &filename, std::string const &contents);
+int writeFile(std::string const &filename, vec2<int> res, void *data);
 
 #endif // __FILE_HPP__
