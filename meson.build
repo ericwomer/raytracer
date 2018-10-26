@@ -29,7 +29,8 @@ raytrace_src = [
 
 raytrace_include_directories = [
     include_directories('src/'),
-    include_directories('thirdparty/include/')
+    include_directories('thirdparty/include/'),
+    include_directories('/usr/lib/llvm-8/include/c++/v1/')
     ]
 
 raytrace_cflags = ['-stdlib=libc++']
