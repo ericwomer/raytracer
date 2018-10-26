@@ -1,5 +1,5 @@
-#if !defined(__VEC2_H__)
-#define __VEC2_H__
+#if !defined(VEC2_H)
+#define VEC2_H
 
 #include <iostream>
 #include <math.h>
@@ -141,4 +141,4 @@ inline vec2<T> unit_vector(vec2<T> v) {
 	return v / v.length();
 }
 
-#endif // __VEC2_H__
+#endif // VEC2_H

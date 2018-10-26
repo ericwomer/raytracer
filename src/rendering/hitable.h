@@ -1,7 +1,7 @@
-#if !defined(__HITABLE_H__)
-#define __HITABLE_H__
+#if !defined(HITABLE_H)
+#define HITABLE_H
 
-#include "ray.hpp"
+#include "ray.h"
 
 class material;
 
@@ -20,4 +20,4 @@ public:
 	                 hit_record &rec) const = 0;
 };
 
-#endif // __HITABLE_H__
+#endif // HITABLE_H

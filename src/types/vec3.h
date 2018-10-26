@@ -1,6 +1,6 @@
 
-#if !defined(__VEC3_H__)
-#define __VEC3_H__
+#if !defined(VEC3_H)
+#define VEC3_H
 
 #include <iostream>
 #include <math.h>
@@ -143,4 +143,4 @@ inline vec3 &vec3::operator/=(const double t) {
 
 inline vec3 unit_vector(vec3 v) { return v / v.length(); }
 
-#endif // __VEC3_H__
+#endif // VEC3_H

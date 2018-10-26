@@ -1,7 +1,7 @@
-#if !defined(__RAY_H__)
-#define __RAY_H__
+#if !defined(RAY_H)
+#define RAY_H
 
-#include "types/vec3.hpp"
+#include "types/vec3.h"
 
 class ray {
 public:
@@ -19,4 +19,4 @@ public:
 	vec3 B;
 };
 
-#endif // __RAY_H__
+#endif // RAY_H

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-#include "raytracerapp.hpp"
+#include "raytracerapp.h"
 
 hitable *random_scene() {
 	int n = 500;
@@ -80,7 +80,7 @@ int raytracerapp::main(void) {
 	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, double(nx) / double(ny),
 	           aperture, dist_to_focus);
 
-	pixelrgb *data = tracer.render(&cam, vec2<int>(nx, ny), ns, list, 4);
+	pixelrgb_t *data = tracer.render(&cam, vec2<int>(nx, ny), ns, list, 4);
 	ppm_file = tracer.renderPPM(&cam, vec2<int>(nx, ny), ns, list, 4);
 
 	writeFile("scene.tga", vec2<int>(nx, ny), data);

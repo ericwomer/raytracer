@@ -1,7 +1,7 @@
-#if !defined(__SPHERE_H__)
-#define __SPHERE_H__
+#if !defined(SPHERE_H)
+#define SPHERE_H
 
-#include "rendering/hitable.hpp"
+#include "rendering/hitable.h"
 
 class material;
 
@@ -19,4 +19,4 @@ public:
 	material *mat_ptr;
 };
 
-#endif // __SPHERE_H__
+#endif // SPHERE_H

@@ -1,7 +1,7 @@
-#if !defined(__CAMERA_H__)
-#define __CAMERA_H__
+#if !defined(CAMERA_H)
+#define CAMERA_H
 
-#include "rendering/ray.hpp"
+#include "rendering/ray.h"
 
 inline vec3 random_in_unit_disk() {
 	vec3 p;
@@ -45,4 +45,4 @@ public:
 	vec3 u, w, v;
 	double lens_radius;
 };
-#endif // __CAMERA_H__
+#endif // CAMERA_H

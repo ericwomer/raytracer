@@ -1,5 +1,5 @@
 
-#include "raytracer.hpp"
+#include "raytracer.h"
 
 std::stringstream raytracer::renderPPM(camera *cam, vec2<int> res, int samples,
                                        hitable *elements[], int element_count) {
@@ -30,12 +30,12 @@ std::stringstream raytracer::renderPPM(camera *cam, vec2<int> res, int samples,
 	return buf;
 }
 
-pixelrgb *raytracer::render(camera *cam, vec2<int> res, int samples,
-                            hitable *elements[], int element_count) {
+pixelrgb_t *raytracer::render(camera *cam, vec2<int> res, int samples,
+                              hitable *elements[], int element_count) {
 
 	hitable *world = new hitable_list(elements, element_count);
 
-	pixelrgb data[res.y()][res.x()];
+	pixelrgb_t data[res.y()][res.x()];
 
 	for (int j = res.y() - 1; j >= 0; j--) {
 		for (int i = 0; i < res.x(); i++) {

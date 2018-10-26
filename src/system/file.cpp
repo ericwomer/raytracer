@@ -4,7 +4,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb/stb_image_write.h>
 
-#include "file.hpp"
+#include "file.h"
 
 int writeFilePPM(std::string const &filename, std::string const &contents) {
 	std::ofstream ofile;
