@@ -38,4 +38,12 @@ typedef struct hdr_pixelrgba_s {
 // Move to file i/o class
 enum writefile_ext : int8_t { WRITE_PPM, WRITE_PNG, WRITE_JPEG, WRITE_TGA };
 
+// True Color Pixel
+typedef union pixel {
+	std::uint32_t Color;
+	struct {
+		std::uint8_t r, g, b, a;
+	} pixelData;
+} * pixelData_p;
+
 #endif // TYPES_H

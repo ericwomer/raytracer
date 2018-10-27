@@ -4,44 +4,50 @@
 #include <string>
 
 #include "raytracerapp.h"
-
+#include "types/types.h"
+/* Ignore this for now
 hitable *random_scene() {
-	int n = 500;
-	hitable **list = new hitable *[n + 1];
-	list[0] =
-	    new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5, 0.5, 0.5)));
+  int n = 500;
+  hitable **list = new hitable *[n + 1];
+  list[0] =
+      new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5, 0.5, 0.5)));
 
-	int i = 1;
-	for (int a = -11; a < 11; a++) {
-		for (int b = -11; b < 11; b++) {
-			double choosen_mat = drand48();
-			vec3 center(a + 0.9 * drand48(), 0.2, b + 0.9 * drand48());
-			if ((center - vec3(4, 0.2, 0)).length() > 0.9) {
-				if (choosen_mat < 0.8) {
-					list[i++] = new sphere(
-					    center, 0.2,
-					    new lambertian(vec3(drand48() * drand48(), drand48() * drand48(),
-					                        drand48() * drand48())));
-				} else if (choosen_mat < 0.95) {
-					list[i++] = new sphere(
-					    center, 0.2,
-					    new metal(vec3(0.5 * (1 + drand48()), 0.5 * (1 + drand48()),
-					                   0.5 * (1 + drand48())),
-					              0.5 * drand48()));
-				} else {
-					list[i++] = new sphere(center, 0.2, new dielectric(1.5));
-				}
-			}
-		}
-	}
-	list[i++] = new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5));
-	list[i++] =
-	    new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1)));
-	list[i++] =
-	    new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.0), 0.0));
+  int i = 1;
+  for (int a = -11; a < 11; a++) {
+    for (int b = -11; b < 11; b++) {
+      double choosen_mat = drand48();
+      vec3 center(a + 0.9 * drand48(), 0.2, b + 0.9 * drand48());
+      if ((center - vec3(4, 0.2, 0)).length() > 0.9) {
+        if (choosen_mat < 0.8) {
+          list[i++] = new sphere(
+              center, 0.2,
+              new lambertian(vec3(drand48() * drand48(), drand48() * drand48(),
+                                  drand48() * drand48())));
+        } else if (choosen_mat < 0.95) {
+          list[i++] = new sphere(
+              center, 0.2,
+              new metal(vec3(0.5 * (1 + drand48()), 0.5 * (1 + drand48()),
+                             0.5 * (1 + drand48())),
+                        0.5 * drand48()));
+        } else {
+          list[i++] = new sphere(center, 0.2, new dielectric(1.5));
+        }
+      }
+    }
+  }
+  list[i++] = new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5));
+  list[i++] =
+      new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1)));
+  list[i++] =
+      new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.0), 0.0));
 
-	return new hitable_list(list, i);
+  return new hitable_list(list, i);
 }
+*/
+
+constexpr int nx = 640;
+constexpr int ny = 480;
+constexpr int ns = 50;
 
 raytracerapp::raytracerapp() {
 	app_description.push_back(std::string("raytracerapp \n"));
@@ -51,26 +57,27 @@ raytracerapp::raytracerapp() {
 // All of the application starts here
 // if any parameters are used they are handled
 // with member vars.
-int raytracerapp::main(void) {
+int raytracerapp::main() {
+
+	const std::string fileName = "scene.tga";
+
 	// Start Main Application Here.
 	// writePlaylist();
 
 	// Do threading, brake up the view port and split off threads based on that
-	int nx = 640;
-	int ny = 480;
-	int ns = 50; // Bounces?
 
-	std::stringstream ppm_file, ppm_file_01, ppm_file_02;
-	std::vector<char> ppm_data;
+	std::vector<pixel> Pixels;
+
 	// Convert this list to a class scene::objects or something
 	// render based on isrenderable_in_scene bool
-	hitable *list[4];
-	list[0] =
-	    new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5, 0.5, 0.5)));
-	list[1] = new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5));
-	list[2] =
-	    new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1)));
-	list[3] = new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.1, 0.1, 0.1), 0.0));
+	std::vector<hitable *> list; // [4];
+	list.push_back(
+	    new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5, 0.5, 0.5))));
+	list.push_back(new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5)));
+	list.push_back(
+	    new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1))));
+	list.push_back(
+	    new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.1, 0.1, 0.1), 0.0)));
 
 	vec3 lookfrom(13, 2, -10);
 	vec3 lookat(0, 0, 0);
@@ -80,11 +87,10 @@ int raytracerapp::main(void) {
 	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, double(nx) / double(ny),
 	           aperture, dist_to_focus);
 
-	pixelrgb_t *data = tracer.render(&cam, vec2<int>(nx, ny), ns, list, 4);
-	ppm_file = tracer.renderPPM(&cam, vec2<int>(nx, ny), ns, list, 4);
+	Pixels = tracer.render(&cam, vec2<int>(nx, ny), ns, list);
 
-	writeFile("scene.tga", vec2<int>(nx, ny), data);
-	writeFilePPM("scene.ppm", ppm_file.str());
+	writeFile(fileName, vec2<int>(nx, ny), Pixels);
+
 	return 0;
 }
 

@@ -12,7 +12,7 @@ public: // data types
 		uint8_t patch;
 	} versionNumberData, *pversionNumberData;
 
-public:
+	// Public Interface
 	base(){};
 	virtual ~base(){};
 	virtual int main(void) = 0;
@@ -25,6 +25,7 @@ public:
 	virtual versionNumberData version(void) { return versionNumber; };
 
 private:
+	// Private data members
 	std::string app_name;
 	std::vector<std::string> app_description;
 
