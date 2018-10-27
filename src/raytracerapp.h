@@ -28,7 +28,7 @@ public: // data types
 
 public:
 	raytracerapp();
-	virtual int main(void);
+	virtual int main();
 	virtual int main(int argv, char *argc[]);
 	virtual int main(std::vector<std::string> &params);
 	virtual int size(void) { return sizeof(this); };

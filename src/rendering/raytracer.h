@@ -37,10 +37,10 @@ class raytracer {
 public:
 	raytracer(){};
 	std::stringstream renderPPM(camera *cam, vec2<int> res, int samples,
-	                            hitable *elements[], int element_count);
+	                            std::vector<hitable *> elements);
 
-	pixelrgb_t *render(camera *cam, vec2<int> res, int samples,
-	                   hitable *elements[], int element_count);
+	std::vector<pixel> render(camera *cam, vec2<int> res, int samples,
+	                          std::vector<hitable *> elements);
 };
 
-#endif // __RAYTRACER_HPP__
+#endif // RAYTRACER_H
