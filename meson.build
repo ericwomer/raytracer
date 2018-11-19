@@ -4,7 +4,7 @@ project(
     version : '0.0.1',
     default_options: 
     [
-        'cpp_std=c++11',
+        'cpp_std=c++17',
         'b_lundef=false',
         'b_sanitize=none',
         'warning_level=3'
@@ -17,14 +17,14 @@ pkgconfig = import('pkgconfig')
 cpp = meson.get_compiler('cpp')
 
 raytrace_src = [
-    'src/system/file.cpp',
+    'src/scene/scene.cpp',
+    'src/rendering/raytracer.cpp',
     'src/system/system.cpp',
-    'src/rendering/raytracer.cpp',
+    'src/system/file.cpp',
     'src/objects/sphere.cpp',
-    'src/rendering/hitable.cpp',
-    'src/rendering/raytracer.cpp',
-     'src/raytracerapp.cpp',
-     'src/main.cpp',
+    'src/objects/hitable.cpp',
+    'src/main.cpp',
+    'src/raytracerapp.cpp'
     ]
 
 raytrace_include_directories = [
@@ -39,9 +39,22 @@ raytrace_ldflags = [
     '-lc++',
     '-lc++abi']
 
-assimp = dependency('assimp')
+threads = dependency('threads')
 
-raytrace_deps = [assimp]
+tbb_prefix = get_option('with_tbb')
+    
+libtbb = cpp.find_library(
+        'tbb',
+        dirs:join_paths(tbb_prefix, 'lib')
+)
+
+tbb = declare_dependency(
+    include_directories: include_directories(tbb_prefix + '/include'),
+    dependencies: [libtbb],
+    link_args: ['-latomic']
+)
+
+raytrace_deps = [tbb, threads]
 
 raytrace = executable(
     'raytracer', 

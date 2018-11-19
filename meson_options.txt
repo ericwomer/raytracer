@@ -1,0 +1,1 @@
+option('with_tbb', type : 'string', value : '/usr/', description : 'Path to TBB install prefix, default is /usr')
