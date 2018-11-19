@@ -2,165 +2,106 @@
 #include <limits>
 #include <sstream>
 #include <string>
+#include <tbb/tbb.h>
 
 #include "raytracerapp.h"
 #include "types/types.h"
-/* Ignore this for now
-hitable *random_scene() {
-  int n = 500;
-  hitable **list = new hitable *[n + 1];
-  list[0] =
-      new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5, 0.5, 0.5)));
 
-  int i = 1;
-  for (int a = -11; a < 11; a++) {
-    for (int b = -11; b < 11; b++) {
-      double choosen_mat = drand48();
-      vec3 center(a + 0.9 * drand48(), 0.2, b + 0.9 * drand48());
-      if ((center - vec3(4, 0.2, 0)).length() > 0.9) {
-        if (choosen_mat < 0.8) {
-          list[i++] = new sphere(
-              center, 0.2,
-              new lambertian(vec3(drand48() * drand48(), drand48() * drand48(),
-                                  drand48() * drand48())));
-        } else if (choosen_mat < 0.95) {
-          list[i++] = new sphere(
-              center, 0.2,
-              new metal(vec3(0.5 * (1 + drand48()), 0.5 * (1 + drand48()),
-                             0.5 * (1 + drand48())),
-                        0.5 * drand48()));
-        } else {
-          list[i++] = new sphere(center, 0.2, new dielectric(1.5));
-        }
-      }
-    }
-  }
-  list[i++] = new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5));
-  list[i++] =
-      new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1)));
-  list[i++] =
-      new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.0), 0.0));
+RaytracingApp::RaytracingApp()
+{
+    app_description.push_back(std::string("Ray Tracing App \n"));
+    app_description.push_back(std::string("** nothing else follows ** \n"));
 
-  return new hitable_list(list, i);
-}
-*/
-
-constexpr int nx = 640;
-constexpr int ny = 480;
-constexpr int ns = 50;
-
-raytracerapp::raytracerapp() {
-	app_description.push_back(std::string("raytracerapp \n"));
-	app_description.push_back(std::string("** nothing else follows ** \n"));
+    out_format.resolution.e[0] = 640;
+    out_format.resolution.e[1] = 480;
+    out_format.samples = 50;
+    out_format.name = "out.tga";  // fix it so the extension is selected by the output format.
 }
 
 // All of the application starts here
 // if any parameters are used they are handled
 // with member vars.
-int raytracerapp::main() {
+int RaytracingApp::main()
+{
+    // Start Main Application Here.
 
-	const std::string fileName = "scene.tga";
+    // Do threading, brake up the view port and split off threads based on that
 
-	// Start Main Application Here.
-	// writePlaylist();
+    std::vector<Pixel_t> pixels;  // lower case this
 
-	// Do threading, brake up the view port and split off threads based on that
+    // Convert this list to a class scene::objects or something
+    // render based on is_renderable_in_scene bool
+    std::vector<hitable*> list;  // [4];
+    list.push_back(new sphere(Vec3(0, -1000, 0), 1000, new Lambertian(Vec3(0.5, 0.5, 0.5))));
+    list.push_back(new sphere(Vec3(0, 1, 0), 1.0, new Dielectric(1.5)));
+    list.push_back(new sphere(Vec3(-4, 1, 0), 1.0, new Lambertian(Vec3(0.4, 0.2, 0.1))));
+    list.push_back(new sphere(Vec3(4, 1, 0), 1.0, new Metal(Vec3(0.1, 0.1, 0.1), 0.0)));
 
-	std::vector<pixel> Pixels;
+    Vec3   lookfrom(13, 2, -10);
+    Vec3   lookat(0, 0, 0);
+    double dist_to_focus = 10;  // (lookfrom - lookat).length();
+    double aperture = 0.0;
 
-	// Convert this list to a class scene::objects or something
-	// render based on isrenderable_in_scene bool
-	std::vector<hitable *> list; // [4];
-	list.push_back(
-	    new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5, 0.5, 0.5))));
-	list.push_back(new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5)));
-	list.push_back(
-	    new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1))));
-	list.push_back(
-	    new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.1, 0.1, 0.1), 0.0)));
+    camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(out_format.resolution.x()) / double(out_format.resolution.y()), aperture, dist_to_focus);
+    pixels = tracer.render(&cam, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), out_format.samples, list);
 
-	vec3 lookfrom(13, 2, -10);
-	vec3 lookat(0, 0, 0);
-	double dist_to_focus = 10; // (lookfrom - lookat).length();
-	double aperture = 0.0;
+    writeFile(out_format.name, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), pixels);
 
-	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, double(nx) / double(ny),
-	           aperture, dist_to_focus);
-
-	Pixels = tracer.render(&cam, vec2<int>(nx, ny), ns, list);
-
-	writeFile(fileName, vec2<int>(nx, ny), Pixels);
-
-	return 0;
+    return EXIT_SUCCESS;
 }
 
 // This is the main that handles parameters
-int raytracerapp::main(std::vector<std::string> &params) {
+int RaytracingApp::main(std::vector<std::string>& params)
+{
+    tbb::task_scheduler_init init;
 
-	// std::vector<std::string> actions;
-	std::vector<std::string> dump;
+    std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
+    std::cout << "threads: " << init.default_num_threads() << "\n";
 
-	// iterate through params to remove the -- from the text
-	for (std::vector<std::string>::const_iterator i = params.begin();
-	     i != params.end(); ++i) {
+    // std::vector<std::string> actions;
+    std::vector<std::string> dump;
 
-		if (*i == "--help" || *i == "-h") {
-			actions.push_back("help");
-		} else if (*i == "--verbose" || *i == "-v") {
-			actions.push_back("verbose");
-		} else if (*i == "--version" || *i == "-V") {
-			actions.push_back("version");
-		} else { // catch all to make sure there are no invalid parameters
-			dump.push_back(*i);
-		}
-	}
+    // iterate through params to remove the -- from the text
+    for (std::vector<std::string>::const_iterator i = params.begin(); i != params.end(); ++i) {
+        if (*i == "--help" || *i == "-h") {
+            actions.push_back("help");
+        } else if (*i == "--verbose" || *i == "-v") {
+            actions.push_back("verbose");
+        } else if (*i == "--version" || *i == "-V") {
+            actions.push_back("version");
+        } else {  // catch all to make sure there are no invalid parameters
+            dump.push_back(*i);
+        }
+    }
 
-	for (auto &c : actions) { // handle all the prameters
-		if (c == "help") {
-			help();
-			return 0; // exit the app
+    for (auto& c : actions) {  // handle all the prameters
+        if (c == "help") {
+            help();
+            return 0;  // exit the app
+        } else if (c == "verbose") {
+            for (auto& d : actions) {
+                std::cout << "--" << d << " ";
+            }
+            std::cout << std::endl;
+            return 0;
+        } else if (c == "version") {
+            std::cout << app_name << " " << 00 << "." << 00 << "." << 01 << std::endl;  // create a version raytracerapp class??
+            return 0;
+        } else {
+            dump.push_back(c);
+        }
+    }
 
-		} else if (c == "verbose") {
-
-			for (auto &d : actions) {
-				std::cout << "--" << d << " ";
-			}
-			std::cout << std::endl;
-			return 0;
-		} else if (c == "version") {
-			std::cout << app_name << " " << 00 << "." << 00 << "." << 01
-			          << std::endl; // create a version raytracerapp class??
-			return 0;
-		} else {
-			dump.push_back(c);
-		}
-	}
-
-	return main();
+    return main();
 }
 
-// This main converts c style parameters to c++ strings
-// then passes it to main that handles the actual parametrs.
-int raytracerapp::main(int argv, char *argc[]) {
-	// Start here if there are params
-	std::vector<std::string> params;
-
-	setAppName(argc[0]);
-
-	for (int i = 1; i != argv; ++i) {
-		params.push_back(argc[i]);
-	}
-
-	return main(params);
-}
-
-void raytracerapp::help(void) {
-	std::cout << "Usage: " << app_name << " [options] files...\n\n";
-	std::cout << "Options: \n";
-	std::cout
-	    << " -h, --help \t\t Print this help message and exit the program.\n";
-	std::cout << " -v, --verbose \t\t Print out all the valid command line "
-	             "parameters\n";
-	std::cout << " \t\t\t passed to the program.\n";
-	std::cout << " -V, --version \t\t Print the version and exit.\n";
+void RaytracingApp::help(void)
+{
+    std::cout << "Usage: " << app_name << " [options] files...\n\n";
+    std::cout << "Options: \n";
+    std::cout << " -h, --help \t\t Print this help message and exit the program.\n";
+    std::cout << " -v, --verbose \t\t Print out all the valid command line "
+                 "parameters\n";
+    std::cout << " \t\t\t passed to the program.\n";
+    std::cout << " -V, --version \t\t Print the version and exit.\n";
 }

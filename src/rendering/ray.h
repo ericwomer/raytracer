@@ -5,18 +5,19 @@
 
 class ray {
 public:
-	ray() {}
-	ray(const vec3 &a, const vec3 &b) {
-		A = a;
-		B = b;
-	}
+    ray() {}
+    ray(const Vec3& a, const Vec3& b)
+    {
+        A = a;
+        B = b;
+    }
 
-	vec3 origin() const { return A; }
-	vec3 direction() const { return B; }
-	vec3 point_at_parameter(double t) const { return A + t * B; }
+    Vec3 origin() const { return A; }
+    Vec3 direction() const { return B; }
+    Vec3 point_at_parameter(double t) const { return A + t * B; }
 
-	vec3 A;
-	vec3 B;
+    Vec3 A;
+    Vec3 B;
 };
 
-#endif // RAY_H
+#endif  // RAY_H
