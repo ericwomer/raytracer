@@ -1,17 +1,24 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <exception>
 
 #include "raytracerapp.h"
 
-raytracerapp rayTracer;
+RaytracingApp rayTracer;
 
-int main(int argv, char *argc[]) {
+int main(int argc, char* argv[])
+{
+    std::vector<std::string> params;
+    for (int i = 0; i != argc; i++) {
+        params.push_back(argv[i]);
+    }
 
-	if (argv == 1) {
-		rayTracer.setAppName(argc[0]);
-		rayTracer.main();
-	} else {
-		rayTracer.main(argv, argc);
-	}
-
-	return 0;
+    try {
+        rayTracer.main(params);
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }

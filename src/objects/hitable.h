@@ -1,15 +1,15 @@
 #if !defined(HITABLE_H)
 #define HITABLE_H
 
-#include "ray.h"
+#include "rendering/ray.h"
 
-class material;
+class Material;
 
 struct hit_record {
     double    t;
-    vec3      p;
-    vec3      normal;
-    material* mat_ptr;
+    Vec3      p;
+    Vec3      normal;
+    Material* mat_ptr;
     char*     name;
 };
 

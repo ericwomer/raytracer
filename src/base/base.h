@@ -4,32 +4,31 @@
 #include <string>
 #include <vector>
 
-class base {
-public: // data types
-	typedef struct versionNumberData_t {
-		uint8_t major;
-		uint8_t minor;
-		uint8_t patch;
-	} versionNumberData, *pversionNumberData;
+class Base {
+public:  // data types
+    typedef struct Version_s {
+        uint8_t major;
+        uint8_t minor;
+        uint8_t patch;
+    } Version_t, *Version_p;
 
-	// Public Interface
-	base(){};
-	virtual ~base(){};
-	virtual int main(void) = 0;
-	virtual int main(int argv, char *argc[]) = 0;
-	virtual int main(std::vector<std::string> &params) = 0;
-	virtual int size(void) { return sizeof(this); };
-	virtual std::string name(void) = 0;
-	virtual void help(void) = 0;
-	virtual void setAppName(std::string name) = 0;
-	virtual versionNumberData version(void) { return versionNumber; };
+    // Public Interface
+    Base(){};
+    virtual ~Base(){};
+    virtual int               main() = 0;
+    virtual int               main(std::vector<std::string>& params) = 0;
+    virtual int               size() = 0;
+    virtual const std::string name() = 0;
+    virtual void              help() = 0;
+    virtual void              name(std::string name) = 0;
+    virtual Version_t         version() = 0;
 
-private:
-	// Private data members
-	std::string app_name;
-	std::vector<std::string> app_description;
+protected:
+    // Protected data members
+    std::string              app_name;
+    std::vector<std::string> app_description;
 
-	versionNumberData versionNumber;
+    Version_t versionNumber;
 };
 
-#endif // BASE_H
+#endif  // BASE_H

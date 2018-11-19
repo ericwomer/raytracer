@@ -6,4 +6,4 @@
 
 #include <string>
 
-#endif // SYSTEM_H
+#endif  // SYSTEM_H
