@@ -2,6 +2,7 @@
 #include <limits>
 #include <sstream>
 #include <string>
+#include <sstream>
 #include <tbb/tbb.h>
 
 #include "raytracerapp.h"
@@ -9,13 +10,15 @@
 
 RaytracingApp::RaytracingApp()
 {
-    app_description.push_back(std::string("Ray Tracing App \n"));
-    app_description.push_back(std::string("** nothing else follows ** \n"));
+  app_name = project.name;
+  version_number = project.version_number;
+  project.version_number;
 
     out_format.resolution.e[0] = 640;
     out_format.resolution.e[1] = 480;
-    out_format.samples = 50;
-    out_format.name = "out.tga";  // fix it so the extension is selected by the output format.
+    out_format.samples = 10;
+    out_format.name = "default";  // fix it so the extension is selected by the output format.
+    out_format.ext = ".tga";
 }
 
 // All of the application starts here
@@ -23,8 +26,6 @@ RaytracingApp::RaytracingApp()
 // with member vars.
 int RaytracingApp::main()
 {
-    // Start Main Application Here.
-
     // Do threading, brake up the view port and split off threads based on that
 
     std::vector<Pixel_t> pixels;  // lower case this
@@ -45,6 +46,10 @@ int RaytracingApp::main()
     camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(out_format.resolution.x()) / double(out_format.resolution.y()), aperture, dist_to_focus);
     pixels = tracer.render(&cam, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), out_format.samples, list);
 
+    std::stringstream stream_name;
+    stream_name << out_format.name << "-" << out_format.resolution.x() << "x" << out_format.resolution.y() << "-" << out_format.samples << out_format.ext;
+    out_format.name = stream_name.str();
+    std::cout << "name: " << out_format.name << " \nstream_name: " << stream_name.str() << "\n";
     writeFile(out_format.name, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), pixels);
 
     return EXIT_SUCCESS;
@@ -55,40 +60,40 @@ int RaytracingApp::main(std::vector<std::string>& params)
 {
     tbb::task_scheduler_init init;
 
-    std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
+    /* std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
     std::cout << "threads: " << init.default_num_threads() << "\n";
-
+*/
     // std::vector<std::string> actions;
     std::vector<std::string> dump;
 
-    // iterate through params to remove the -- from the text
+    app_name = params[0].data();
+    app_name.erase(0, 2);
+
+    // Eric: !!! REWRITE Fix this slow mess, have it processed in one section.
+    // Switch throught the parameters.
     for (std::vector<std::string>::const_iterator i = params.begin(); i != params.end(); ++i) {
         if (*i == "--help" || *i == "-h") {
-            actions.push_back("help");
-        } else if (*i == "--verbose" || *i == "-v") {
-            actions.push_back("verbose");
+            help();
+            return EXIT_SUCCESS;
         } else if (*i == "--version" || *i == "-V") {
-            actions.push_back("version");
+            version();
+            return EXIT_SUCCESS;
+        } else if (*i == "--output" || *i == "-o" || *i == "--filename") {
+            ++i;
+            out_format.name = *i;  // Hopefully its a file and not another parameter
+                                   // Eric: Fix later with a class/enum combo for checking
+                                   // to see if its another parameter or not.
+        } else if (*i == "--samples" || *i == "-s") {
+            ++i;
+            out_format.samples = std::stoi(*i);
+        } else if (*i == "--width" || *i == "-x") {
+            ++i;
+            out_format.resolution.e[0] = std::stoi(*i);
+        } else if (*i == "--height" || *i == "-y") {
+            ++i;
+            out_format.resolution.e[1] = std::stoi(*i);
         } else {  // catch all to make sure there are no invalid parameters
             dump.push_back(*i);
-        }
-    }
-
-    for (auto& c : actions) {  // handle all the prameters
-        if (c == "help") {
-            help();
-            return 0;  // exit the app
-        } else if (c == "verbose") {
-            for (auto& d : actions) {
-                std::cout << "--" << d << " ";
-            }
-            std::cout << std::endl;
-            return 0;
-        } else if (c == "version") {
-            std::cout << app_name << " " << 00 << "." << 00 << "." << 01 << std::endl;  // create a version raytracerapp class??
-            return 0;
-        } else {
-            dump.push_back(c);
         }
     }
 
@@ -97,11 +102,16 @@ int RaytracingApp::main(std::vector<std::string>& params)
 
 void RaytracingApp::help(void)
 {
-    std::cout << "Usage: " << app_name << " [options] files...\n\n";
-    std::cout << "Options: \n";
-    std::cout << " -h, --help \t\t Print this help message and exit the program.\n";
-    std::cout << " -v, --verbose \t\t Print out all the valid command line "
-                 "parameters\n";
-    std::cout << " \t\t\t passed to the program.\n";
+    version();
+    
+    std::cout << "Usage: " << app_name << " [options] [output file options] [rendering options]...\n";
+    std::cout << "\nInformation: \n";
+    std::cout << " -h, --help \t\t Print this help message and exit.\n";
     std::cout << " -V, --version \t\t Print the version and exit.\n";
+    std::cout << "\nOptions: \n";
+    std::cout << " -o, --output \t\t Output file name.\n";
+    std::cout << " -s, --samples \t\t Number of samples taken of each pixel. (?)\n";
+    std::cout << " -x, --width \t\t Image width. \n";
+    std::cout << " -y, --height \t\t Image height. \n";
+    std::cout << " -f, --format \t\t Output format [future use] \n";
 }

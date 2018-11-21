@@ -1,1 +1,1 @@
-option('with_tbb', type : 'string', value : '/usr/', description : 'Path to TBB install prefix, default is /usr')
+option('with_system_tbb', type : 'boolean', value : false, description : 'Build with system TBB install.')
