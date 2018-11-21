@@ -6,11 +6,6 @@
 
 class Base {
 public:  // data types
-    typedef struct Version_s {
-        uint8_t major;
-        uint8_t minor;
-        uint8_t patch;
-    } Version_t, *Version_p;
 
     // Public Interface
     Base(){};
@@ -21,14 +16,14 @@ public:  // data types
     virtual const std::string name() = 0;
     virtual void              help() = 0;
     virtual void              name(std::string name) = 0;
-    virtual Version_t         version() = 0;
+    virtual void              version() = 0;
 
 protected:
     // Protected data members
     std::string              app_name;
     std::vector<std::string> app_description;
 
-    Version_t versionNumber;
+    std::string version_number;
 };
 
 #endif  // BASE_H
