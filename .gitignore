@@ -1,7 +1,7 @@
 renders*
 render-scene
 .directory
-build/
+build/**
 *~
 nbproject*
 
