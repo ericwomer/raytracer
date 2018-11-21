@@ -1,0 +1,26 @@
+#if !defined(CONFIG_H)
+#define CONFIG_H
+
+#include <string>
+
+typedef struct Project_s 
+{
+    std::string name;
+    std::string version_number;
+    std::string compiler_name;
+    std::string compiler_version;
+    std::string operating_system;
+    std::string cpu_family;
+    
+    Project_s() 
+    {
+        name = "@name@";
+        version_number = "@version_number@";
+        compiler_name = "@compiler_name@";
+        compiler_version = "@compiler_version@";
+        operating_system = "@host_machine@";
+        cpu_family = "@cpu_family@";
+    }
+}Project_t;
+
+#endif // CONFIG_H
