@@ -1,9 +1,0 @@
-[submodule "thirdparty/include/stb"]
-	path = thirdparty/include/stb
-	url = https://github.com/salamanderrake/stb.git 
-[submodule "thirdparty/tbb"]
-	path = thirdparty/tbb
-	url = https://github.com/salamanderrake/tbb.git
-[submodule "thirdparty/fmt"]
-	path = thirdparty/fmt
-	url = https://github.com/salamanderrake/fmt.git
