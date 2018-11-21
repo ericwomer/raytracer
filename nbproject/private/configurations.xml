@@ -1,0 +1,1690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name=".vscode">
+      </df>
+      <df name="build">
+      </df>
+      <df name="doc">
+      </df>
+      <df name="dump">
+        <in>dump.h</in>
+      </df>
+      <df name="src">
+        <df name="base">
+          <in>base.h</in>
+        </df>
+        <df name="camera">
+          <in>camera.h</in>
+        </df>
+        <df name="materials">
+          <in>material.h</in>
+        </df>
+        <df name="objects">
+          <in>hitable.cpp</in>
+          <in>hitable.h</in>
+          <in>hitable_list.h</in>
+          <in>sphere.cpp</in>
+          <in>sphere.h</in>
+        </df>
+        <df name="rendering">
+          <in>ray.h</in>
+          <in>raytracer.cpp</in>
+          <in>raytracer.h</in>
+          <in>sector.h</in>
+        </df>
+        <df name="scene">
+          <in>scene.cpp</in>
+          <in>scene.h</in>
+        </df>
+        <df name="system">
+          <in>file.cpp</in>
+          <in>file.h</in>
+          <in>system.cpp</in>
+          <in>system.h</in>
+        </df>
+        <df name="thirdparty">
+          <df name="json">
+            <df name=".github">
+              <df name="ISSUE_TEMPLATE">
+              </df>
+            </df>
+            <df name="benchmarks">
+              <df name="data">
+                <df name="jeopardy">
+                </df>
+                <df name="nativejson-benchmark">
+                </df>
+              </df>
+              <df name="src">
+                <in>benchmarks.cpp</in>
+              </df>
+              <df name="thirdparty">
+                <df name="benchmark">
+                  <df name="cmake">
+                    <df name="Modules">
+                    </df>
+                    <in>gnu_posix_regex.cpp</in>
+                    <in>posix_regex.cpp</in>
+                    <in>std_regex.cpp</in>
+                    <in>steady_clock.cpp</in>
+                    <in>thread_safety_attributes.cpp</in>
+                  </df>
+                  <df name="include">
+                    <df name="benchmark">
+                      <in>benchmark.h</in>
+                    </df>
+                  </df>
+                  <df name="src">
+                    <in>arraysize.h</in>
+                    <in>benchmark.cc</in>
+                    <in>benchmark_api_internal.h</in>
+                    <in>benchmark_register.cc</in>
+                    <in>check.h</in>
+                    <in>colorprint.cc</in>
+                    <in>colorprint.h</in>
+                    <in>commandlineflags.cc</in>
+                    <in>commandlineflags.h</in>
+                    <in>complexity.cc</in>
+                    <in>complexity.h</in>
+                    <in>console_reporter.cc</in>
+                    <in>counter.cc</in>
+                    <in>counter.h</in>
+                    <in>csv_reporter.cc</in>
+                    <in>cycleclock.h</in>
+                    <in>internal_macros.h</in>
+                    <in>json_reporter.cc</in>
+                    <in>log.h</in>
+                    <in>mutex.h</in>
+                    <in>re.h</in>
+                    <in>reporter.cc</in>
+                    <in>sleep.cc</in>
+                    <in>sleep.h</in>
+                    <in>statistics.cc</in>
+                    <in>statistics.h</in>
+                    <in>string_util.cc</in>
+                    <in>string_util.h</in>
+                    <in>sysinfo.cc</in>
+                    <in>timers.cc</in>
+                    <in>timers.h</in>
+                  </df>
+                </df>
+              </df>
+            </df>
+            <df name="cmake">
+            </df>
+            <df name="doc">
+              <df name="css">
+              </df>
+              <df name="examples">
+                <in>README.cpp</in>
+                <in>array.cpp</in>
+                <in>at__object_t_key_type.cpp</in>
+                <in>at__object_t_key_type_const.cpp</in>
+                <in>at__size_type.cpp</in>
+                <in>at__size_type_const.cpp</in>
+                <in>at_json_pointer.cpp</in>
+                <in>at_json_pointer_const.cpp</in>
+                <in>back.cpp</in>
+                <in>basic_json__CompatibleType.cpp</in>
+                <in>basic_json__InputIt_InputIt.cpp</in>
+                <in>basic_json__basic_json.cpp</in>
+                <in>basic_json__copyassignment.cpp</in>
+                <in>basic_json__list_init_t.cpp</in>
+                <in>basic_json__moveconstructor.cpp</in>
+                <in>basic_json__nullptr_t.cpp</in>
+                <in>basic_json__size_type_basic_json.cpp</in>
+                <in>basic_json__value.cpp</in>
+                <in>basic_json__value_ptr.cpp</in>
+                <in>basic_json__value_t.cpp</in>
+                <in>begin.cpp</in>
+                <in>cbegin.cpp</in>
+                <in>cend.cpp</in>
+                <in>clear.cpp</in>
+                <in>count.cpp</in>
+                <in>crbegin.cpp</in>
+                <in>crend.cpp</in>
+                <in>diff.cpp</in>
+                <in>dump.cpp</in>
+                <in>emplace.cpp</in>
+                <in>emplace_back.cpp</in>
+                <in>empty.cpp</in>
+                <in>end.cpp</in>
+                <in>erase__IteratorType.cpp</in>
+                <in>erase__IteratorType_IteratorType.cpp</in>
+                <in>erase__key_type.cpp</in>
+                <in>erase__size_type.cpp</in>
+                <in>exception.cpp</in>
+                <in>find__key_type.cpp</in>
+                <in>flatten.cpp</in>
+                <in>from_bson.cpp</in>
+                <in>from_cbor.cpp</in>
+                <in>from_msgpack.cpp</in>
+                <in>from_ubjson.cpp</in>
+                <in>front.cpp</in>
+                <in>get__PointerType.cpp</in>
+                <in>get__ValueType_const.cpp</in>
+                <in>get_ptr.cpp</in>
+                <in>get_ref.cpp</in>
+                <in>get_to.cpp</in>
+                <in>insert.cpp</in>
+                <in>insert__count.cpp</in>
+                <in>insert__ilist.cpp</in>
+                <in>insert__range.cpp</in>
+                <in>insert__range_object.cpp</in>
+                <in>invalid_iterator.cpp</in>
+                <in>is_array.cpp</in>
+                <in>is_boolean.cpp</in>
+                <in>is_discarded.cpp</in>
+                <in>is_null.cpp</in>
+                <in>is_number.cpp</in>
+                <in>is_number_float.cpp</in>
+                <in>is_number_integer.cpp</in>
+                <in>is_number_unsigned.cpp</in>
+                <in>is_object.cpp</in>
+                <in>is_primitive.cpp</in>
+                <in>is_string.cpp</in>
+                <in>is_structured.cpp</in>
+                <in>items.cpp</in>
+                <in>iterator_wrapper.cpp</in>
+                <in>json_pointer.cpp</in>
+                <in>json_pointer__to_string.cpp</in>
+                <in>max_size.cpp</in>
+                <in>merge_patch.cpp</in>
+                <in>meta.cpp</in>
+                <in>object.cpp</in>
+                <in>operator__ValueType.cpp</in>
+                <in>operator__equal.cpp</in>
+                <in>operator__equal__nullptr_t.cpp</in>
+                <in>operator__greater.cpp</in>
+                <in>operator__greaterequal.cpp</in>
+                <in>operator__less.cpp</in>
+                <in>operator__lessequal.cpp</in>
+                <in>operator__notequal.cpp</in>
+                <in>operator__notequal__nullptr_t.cpp</in>
+                <in>operator__value_t.cpp</in>
+                <in>operator_deserialize.cpp</in>
+                <in>operator_serialize.cpp</in>
+                <in>operatorarray__key_type.cpp</in>
+                <in>operatorarray__key_type_const.cpp</in>
+                <in>operatorarray__size_type.cpp</in>
+                <in>operatorarray__size_type_const.cpp</in>
+                <in>operatorjson_pointer.cpp</in>
+                <in>operatorjson_pointer_const.cpp</in>
+                <in>other_error.cpp</in>
+                <in>out_of_range.cpp</in>
+                <in>parse__array__parser_callback_t.cpp</in>
+                <in>parse__contiguouscontainer__parser_callback_t.cpp</in>
+                <in>parse__istream__parser_callback_t.cpp</in>
+                <in>parse__iteratortype__parser_callback_t.cpp</in>
+                <in>parse__string__parser_callback_t.cpp</in>
+                <in>parse_error.cpp</in>
+                <in>patch.cpp</in>
+                <in>push_back.cpp</in>
+                <in>push_back__initializer_list.cpp</in>
+                <in>push_back__object_t__value.cpp</in>
+                <in>rbegin.cpp</in>
+                <in>rend.cpp</in>
+                <in>sax_parse.cpp</in>
+                <in>size.cpp</in>
+                <in>swap__array_t.cpp</in>
+                <in>swap__object_t.cpp</in>
+                <in>swap__reference.cpp</in>
+                <in>swap__string_t.cpp</in>
+                <in>to_bson.cpp</in>
+                <in>to_cbor.cpp</in>
+                <in>to_msgpack.cpp</in>
+                <in>to_ubjson.cpp</in>
+                <in>type.cpp</in>
+                <in>type_error.cpp</in>
+                <in>type_name.cpp</in>
+                <in>unflatten.cpp</in>
+                <in>update.cpp</in>
+                <in>update__range.cpp</in>
+              </df>
+              <df name="images">
+              </df>
+              <df name="scripts">
+              </df>
+              <df name="usages">
+              </df>
+            </df>
+            <df name="include">
+              <df name="nlohmann">
+                <df name="detail">
+                  <df name="conversions">
+                    <in>from_json.hpp</in>
+                    <in>to_chars.hpp</in>
+                    <in>to_json.hpp</in>
+                  </df>
+                  <df name="input">
+                    <in>binary_reader.hpp</in>
+                    <in>input_adapters.hpp</in>
+                    <in>json_sax.hpp</in>
+                    <in>lexer.hpp</in>
+                    <in>parser.hpp</in>
+                    <in>position_t.hpp</in>
+                  </df>
+                  <df name="iterators">
+                    <in>internal_iterator.hpp</in>
+                    <in>iter_impl.hpp</in>
+                    <in>iteration_proxy.hpp</in>
+                    <in>json_reverse_iterator.hpp</in>
+                    <in>primitive_iterator.hpp</in>
+                  </df>
+                  <df name="meta">
+                    <in>cpp_future.hpp</in>
+                    <in>detected.hpp</in>
+                    <in>is_sax.hpp</in>
+                    <in>type_traits.hpp</in>
+                    <in>void_t.hpp</in>
+                  </df>
+                  <df name="output">
+                    <in>binary_writer.hpp</in>
+                    <in>output_adapters.hpp</in>
+                    <in>serializer.hpp</in>
+                  </df>
+                  <in>exceptions.hpp</in>
+                  <in>json_pointer.hpp</in>
+                  <in>json_ref.hpp</in>
+                  <in>macro_scope.hpp</in>
+                  <in>macro_unscope.hpp</in>
+                  <in>value_t.hpp</in>
+                </df>
+                <in>adl_serializer.hpp</in>
+                <in>json.hpp</in>
+                <in>json_fwd.hpp</in>
+              </df>
+            </df>
+            <df name="single_include">
+              <df name="nlohmann">
+                <in>json.hpp</in>
+              </df>
+            </df>
+            <df name="test">
+              <df name="cmake_add_subdirectory">
+                <df name="project">
+                  <in>main.cpp</in>
+                </df>
+              </df>
+              <df name="cmake_import">
+                <df name="project">
+                  <in>main.cpp</in>
+                </df>
+              </df>
+              <df name="cmake_import_minver">
+                <df name="project">
+                  <in>main.cpp</in>
+                </df>
+              </df>
+              <df name="data">
+                <df name="big-list-of-naughty-strings">
+                </df>
+                <df name="cbor_regression">
+                </df>
+                <df name="json-patch-tests">
+                </df>
+                <df name="json.org">
+                </df>
+                <df name="json_nlohmann_tests">
+                </df>
+                <df name="json_roundtrip">
+                </df>
+                <df name="json_tests">
+                </df>
+                <df name="json_testsuite">
+                </df>
+                <df name="markus_kuhn">
+                </df>
+                <df name="nst_json_testsuite">
+                  <df name="test_parsing">
+                  </df>
+                </df>
+                <df name="nst_json_testsuite2">
+                  <df name="test_parsing">
+                  </df>
+                </df>
+                <df name="regression">
+                </df>
+              </df>
+              <df name="reports">
+                <df name="2016-08-29-fuzz">
+                </df>
+                <df name="2016-09-09-nativejson_benchmark">
+                </df>
+                <df name="2016-10-02-fuzz">
+                </df>
+              </df>
+              <df name="src">
+                <in>fuzzer-driver_afl.cpp</in>
+                <in>fuzzer-parse_bson.cpp</in>
+                <in>fuzzer-parse_cbor.cpp</in>
+                <in>fuzzer-parse_json.cpp</in>
+                <in>fuzzer-parse_msgpack.cpp</in>
+                <in>fuzzer-parse_ubjson.cpp</in>
+                <in>unit-algorithms.cpp</in>
+                <in>unit-allocator.cpp</in>
+                <in>unit-alt-string.cpp</in>
+                <in>unit-bson.cpp</in>
+                <in>unit-capacity.cpp</in>
+                <in>unit-cbor.cpp</in>
+                <in>unit-class_const_iterator.cpp</in>
+                <in>unit-class_iterator.cpp</in>
+                <in>unit-class_lexer.cpp</in>
+                <in>unit-class_parser.cpp</in>
+                <in>unit-comparison.cpp</in>
+                <in>unit-concepts.cpp</in>
+                <in>unit-constructor1.cpp</in>
+                <in>unit-constructor2.cpp</in>
+                <in>unit-convenience.cpp</in>
+                <in>unit-conversions.cpp</in>
+                <in>unit-deserialization.cpp</in>
+                <in>unit-element_access1.cpp</in>
+                <in>unit-element_access2.cpp</in>
+                <in>unit-inspection.cpp</in>
+                <in>unit-items.cpp</in>
+                <in>unit-iterators1.cpp</in>
+                <in>unit-iterators2.cpp</in>
+                <in>unit-json_patch.cpp</in>
+                <in>unit-json_pointer.cpp</in>
+                <in>unit-merge_patch.cpp</in>
+                <in>unit-meta.cpp</in>
+                <in>unit-modifiers.cpp</in>
+                <in>unit-msgpack.cpp</in>
+                <in>unit-noexcept.cpp</in>
+                <in>unit-pointer_access.cpp</in>
+                <in>unit-readme.cpp</in>
+                <in>unit-reference_access.cpp</in>
+                <in>unit-regression.cpp</in>
+                <in>unit-serialization.cpp</in>
+                <in>unit-testsuites.cpp</in>
+                <in>unit-to_chars.cpp</in>
+                <in>unit-ubjson.cpp</in>
+                <in>unit-udt.cpp</in>
+                <in>unit-unicode.cpp</in>
+                <in>unit-wstring.cpp</in>
+                <in>unit.cpp</in>
+              </df>
+              <df name="thirdparty">
+                <df name="catch">
+                  <in>catch.hpp</in>
+                </df>
+                <df name="fifo_map">
+                  <in>fifo_map.hpp</in>
+                </df>
+                <df name="Fuzzer">
+                  <df name="afl">
+                    <in>afl_driver.cpp</in>
+                  </df>
+                  <df name="standalone">
+                    <in>StandaloneFuzzTargetMain.c</in>
+                  </df>
+                  <df name="test">
+                    <df name="no-coverage">
+                    </df>
+                    <df name="ubsan">
+                    </df>
+                    <df name="uninstrumented">
+                    </df>
+                    <df name="unit">
+                    </df>
+                    <in>AFLDriverTest.cpp</in>
+                    <in>AbsNegAndConstant64Test.cpp</in>
+                    <in>AbsNegAndConstantTest.cpp</in>
+                    <in>AccumulateAllocationsTest.cpp</in>
+                    <in>BufferOverflowOnInput.cpp</in>
+                    <in>CallerCalleeTest.cpp</in>
+                    <in>CounterTest.cpp</in>
+                    <in>CustomCrossOverTest.cpp</in>
+                    <in>CustomMutatorTest.cpp</in>
+                    <in>DSO1.cpp</in>
+                    <in>DSO2.cpp</in>
+                    <in>DSOTestExtra.cpp</in>
+                    <in>DSOTestMain.cpp</in>
+                    <in>DivTest.cpp</in>
+                    <in>EmptyTest.cpp</in>
+                    <in>FourIndependentBranchesTest.cpp</in>
+                    <in>FullCoverageSetTest.cpp</in>
+                    <in>FuzzerUnittest.cpp</in>
+                    <in>InitializeTest.cpp</in>
+                    <in>LeakTest.cpp</in>
+                    <in>LeakTimeoutTest.cpp</in>
+                    <in>LoadTest.cpp</in>
+                    <in>MemcmpTest.cpp</in>
+                    <in>NthRunCrashTest.cpp</in>
+                    <in>NullDerefOnEmptyTest.cpp</in>
+                    <in>NullDerefTest.cpp</in>
+                    <in>OneHugeAllocTest.cpp</in>
+                    <in>OutOfMemorySingleLargeMallocTest.cpp</in>
+                    <in>OutOfMemoryTest.cpp</in>
+                    <in>RepeatedBytesTest.cpp</in>
+                    <in>RepeatedMemcmp.cpp</in>
+                    <in>ShrinkControlFlowTest.cpp</in>
+                    <in>ShrinkValueProfileTest.cpp</in>
+                    <in>SignedIntOverflowTest.cpp</in>
+                    <in>SimpleCmpTest.cpp</in>
+                    <in>SimpleDictionaryTest.cpp</in>
+                    <in>SimpleHashTest.cpp</in>
+                    <in>SimpleTest.cpp</in>
+                    <in>SimpleThreadedTest.cpp</in>
+                    <in>SingleMemcmpTest.cpp</in>
+                    <in>SingleStrcmpTest.cpp</in>
+                    <in>SingleStrncmpTest.cpp</in>
+                    <in>SpamyTest.cpp</in>
+                    <in>StrcmpTest.cpp</in>
+                    <in>StrncmpOOBTest.cpp</in>
+                    <in>StrncmpTest.cpp</in>
+                    <in>StrstrTest.cpp</in>
+                    <in>SwapCmpTest.cpp</in>
+                    <in>Switch2Test.cpp</in>
+                    <in>SwitchTest.cpp</in>
+                    <in>ThreadedLeakTest.cpp</in>
+                    <in>ThreadedTest.cpp</in>
+                    <in>TimeoutEmptyTest.cpp</in>
+                    <in>TimeoutTest.cpp</in>
+                    <in>TraceMallocTest.cpp</in>
+                    <in>UninstrumentedTest.cpp</in>
+                  </df>
+                  <in>FuzzerCorpus.h</in>
+                  <in>FuzzerCrossOver.cpp</in>
+                  <in>FuzzerDefs.h</in>
+                  <in>FuzzerDictionary.h</in>
+                  <in>FuzzerDriver.cpp</in>
+                  <in>FuzzerExtFunctions.def</in>
+                  <in>FuzzerExtFunctions.h</in>
+                  <in>FuzzerExtFunctionsDlsym.cpp</in>
+                  <in>FuzzerExtFunctionsWeak.cpp</in>
+                  <in>FuzzerExtFunctionsWeakAlias.cpp</in>
+                  <in>FuzzerFlags.def</in>
+                  <in>FuzzerIO.cpp</in>
+                  <in>FuzzerIO.h</in>
+                  <in>FuzzerIOPosix.cpp</in>
+                  <in>FuzzerIOWindows.cpp</in>
+                  <in>FuzzerInterface.h</in>
+                  <in>FuzzerInternal.h</in>
+                  <in>FuzzerLoop.cpp</in>
+                  <in>FuzzerMain.cpp</in>
+                  <in>FuzzerMerge.cpp</in>
+                  <in>FuzzerMerge.h</in>
+                  <in>FuzzerMutate.cpp</in>
+                  <in>FuzzerMutate.h</in>
+                  <in>FuzzerOptions.h</in>
+                  <in>FuzzerRandom.h</in>
+                  <in>FuzzerSHA1.cpp</in>
+                  <in>FuzzerSHA1.h</in>
+                  <in>FuzzerTracePC.cpp</in>
+                  <in>FuzzerTracePC.h</in>
+                  <in>FuzzerTraceState.cpp</in>
+                  <in>FuzzerUtil.cpp</in>
+                  <in>FuzzerUtil.h</in>
+                  <in>FuzzerUtilDarwin.cpp</in>
+                  <in>FuzzerUtilLinux.cpp</in>
+                  <in>FuzzerUtilPosix.cpp</in>
+                  <in>FuzzerUtilWindows.cpp</in>
+                  <in>FuzzerValueBitMap.h</in>
+                </df>
+                <df name="imapdl">
+                </df>
+              </df>
+            </df>
+            <df name="third_party">
+              <df name="amalgamate">
+              </df>
+            </df>
+          </df>
+          <df name="stb">
+            <df name=".github">
+            </df>
+            <df name="data">
+              <df name="herringbone">
+              </df>
+            </df>
+            <df name="deprecated">
+              <in>rrsprintf.h</in>
+              <in>stb_image.c</in>
+            </df>
+            <df name="docs">
+            </df>
+            <df name="tests">
+              <df name="caveview">
+                <df name="win32">
+                  <in>SDL_windows_main.c</in>
+                </df>
+                <in>cave_main.c</in>
+                <in>cave_mesher.c</in>
+                <in>cave_parse.c</in>
+                <in>cave_parse.h</in>
+                <in>cave_render.c</in>
+                <in>caveview.h</in>
+                <in>glext.h</in>
+                <in>glext_list.h</in>
+                <in>main.c</in>
+                <in>stb_gl.h</in>
+                <in>stb_glprog.h</in>
+              </df>
+              <df name="oversample">
+                <in>main.c</in>
+                <in>stb_wingraph.h</in>
+              </df>
+              <df name="pg_test">
+                <in>pg_test.c</in>
+              </df>
+              <df name="pngsuite">
+                <df name="16bit">
+                </df>
+                <df name="corrupt">
+                </df>
+                <df name="primary">
+                </df>
+                <df name="primary_check">
+                </df>
+                <df name="unused">
+                </df>
+              </df>
+              <df name="prerelease">
+                <in>stb_lib.h</in>
+              </df>
+              <df name="sdf">
+                <in>sdf_test.c</in>
+              </df>
+              <df name="vorbseek">
+                <in>vorbseek.c</in>
+              </df>
+              <in>c_lexer_test.c</in>
+              <in>grid_reachability.c</in>
+              <in>herringbone_generator.c</in>
+              <in>herringbone_map.c</in>
+              <in>image_test.c</in>
+              <in>resample_test.cpp</in>
+              <in>resample_test_c.c</in>
+              <in>stb.c</in>
+              <in>stb_cpp.cpp</in>
+              <in>stblib_test.c</in>
+              <in>stblib_test_companion.c</in>
+              <in>stretch_test.c</in>
+              <in>stretchy_buffer_test.c</in>
+              <in>test_c_compilation.c</in>
+              <in>test_c_lexer.c</in>
+              <in>test_cpp_compilation.cpp</in>
+              <in>test_dxt.c</in>
+              <in>test_easyfont.c</in>
+              <in>test_image.c</in>
+              <in>test_image_write.c</in>
+              <in>test_perlin.c</in>
+              <in>test_sprintf.c</in>
+              <in>test_truetype.c</in>
+              <in>test_vorbis.c</in>
+              <in>test_voxel.c</in>
+              <in>textedit_sample.c</in>
+              <in>tilemap_editor_integration_example.c</in>
+            </df>
+            <df name="tools">
+              <df name="unicode">
+              </df>
+              <in>easy_font_maker.c</in>
+              <in>make_readme.c</in>
+              <in>unicode.c</in>
+            </df>
+            <in>stb.h</in>
+            <in>stb_c_lexer.h</in>
+            <in>stb_connected_components.h</in>
+            <in>stb_divide.h</in>
+            <in>stb_dxt.h</in>
+            <in>stb_easy_font.h</in>
+            <in>stb_herringbone_wang_tile.h</in>
+            <in>stb_image.h</in>
+            <in>stb_image_resize.h</in>
+            <in>stb_image_write.h</in>
+            <in>stb_leakcheck.h</in>
+            <in>stb_perlin.h</in>
+            <in>stb_rect_pack.h</in>
+            <in>stb_sprintf.h</in>
+            <in>stb_textedit.h</in>
+            <in>stb_tilemap_editor.h</in>
+            <in>stb_truetype.h</in>
+            <in>stb_vorbis.c</in>
+            <in>stb_voxel_render.h</in>
+            <in>stretchy_buffer.h</in>
+          </df>
+          <df name="tbb">
+            <df name="build">
+              <df name="vs2013">
+              </df>
+            </df>
+            <df name="cmake">
+              <df name="templates">
+              </df>
+            </df>
+            <df name="doc">
+            </df>
+            <df name="examples">
+              <df name="common">
+                <df name="gui">
+                  <df name="xcode">
+                    <df name="tbbExample">
+                      <df name="en.lproj">
+                      </df>
+                      <in>OpenGLView.h</in>
+                      <in>OpenGLView.m</in>
+                      <in>main.m</in>
+                      <in>tbbAppDelegate.h</in>
+                      <in>tbbAppDelegate.m</in>
+                    </df>
+                  </df>
+                  <in>convideo.cpp</in>
+                  <in>d2dvideo.cpp</in>
+                  <in>gdivideo.cpp</in>
+                  <in>macvideo.cpp</in>
+                  <in>video.h</in>
+                  <in>winvideo.h</in>
+                  <in>xvideo.cpp</in>
+                </df>
+                <df name="utility">
+                  <in>fast_random.h</in>
+                  <in>utility.h</in>
+                </df>
+              </df>
+              <df name="concurrent_hash_map">
+                <df name="count_strings">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="count_strings.xcodeproj">
+                    </df>
+                  </df>
+                  <in>count_strings.cpp</in>
+                </df>
+              </df>
+              <df name="concurrent_priority_queue">
+                <df name="shortpath">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="shortpath.xcodeproj">
+                    </df>
+                  </df>
+                  <in>shortpath.cpp</in>
+                </df>
+              </df>
+              <df name="GettingStarted">
+                <df name="sub_string_finder">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="sub_string_finder.xcodeproj">
+                    </df>
+                  </df>
+                  <in>sub_string_finder.cpp</in>
+                  <in>sub_string_finder_extended.cpp</in>
+                  <in>sub_string_finder_pretty.cpp</in>
+                </df>
+              </df>
+              <df name="graph">
+                <df name="binpack">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="binpack.xcodeproj">
+                    </df>
+                  </df>
+                  <in>binpack.cpp</in>
+                </df>
+                <df name="cholesky">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="cholesky.xcodeproj">
+                    </df>
+                  </df>
+                  <in>cholesky.cpp</in>
+                  <in>init.cpp</in>
+                </df>
+                <df name="dining_philosophers">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="dining_philosophers.xcodeproj">
+                    </df>
+                  </df>
+                  <in>dining_philosophers.cpp</in>
+                </df>
+                <df name="fgbzip2">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="fgbzip2.xcodeproj">
+                    </df>
+                  </df>
+                  <in>blocksort.cpp</in>
+                  <in>bzlib.cpp</in>
+                  <in>bzlib.h</in>
+                  <in>bzlib_private.h</in>
+                  <in>compress.cpp</in>
+                  <in>crctable.cpp</in>
+                  <in>decompress.cpp</in>
+                  <in>fgbzip2.cpp</in>
+                  <in>huffman.cpp</in>
+                  <in>randtable.cpp</in>
+                </df>
+                <df name="logic_sim">
+                  <df name="msvs">
+                  </df>
+                  <in>D_latch.h</in>
+                  <in>basics.h</in>
+                  <in>four_bit_adder.h</in>
+                  <in>one_bit_adder.h</in>
+                  <in>test_all.cpp</in>
+                  <in>two_bit_adder.h</in>
+                </df>
+                <df name="matmult">
+                  <df name="msvs">
+                  </df>
+                  <in>matmult.cpp</in>
+                </df>
+                <df name="som">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="som.xcodeproj">
+                    </df>
+                  </df>
+                  <in>som.cpp</in>
+                  <in>som.h</in>
+                  <in>som_graph.cpp</in>
+                </df>
+                <df name="stereo">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="stereo.xcodeproj">
+                    </df>
+                  </df>
+                  <in>lodepng.cpp</in>
+                  <in>lodepng.h</in>
+                  <in>stereo.cpp</in>
+                  <in>utils.h</in>
+                </df>
+              </df>
+              <df name="parallel_do">
+                <df name="parallel_preorder">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="parallel_preorder.xcodeproj">
+                    </df>
+                  </df>
+                  <in>Graph.cpp</in>
+                  <in>Graph.h</in>
+                  <in>Matrix.h</in>
+                  <in>main.cpp</in>
+                  <in>parallel_preorder.cpp</in>
+                </df>
+              </df>
+              <df name="parallel_for">
+                <df name="game_of_life">
+                  <df name="msvs">
+                    <in>resource.h</in>
+                  </df>
+                  <df name="src">
+                    <in>AssemblyInfo.cpp</in>
+                    <in>Board.h</in>
+                    <in>Evolution.cpp</in>
+                    <in>Evolution.h</in>
+                    <in>Form1.h</in>
+                    <in>Game_of_life.cpp</in>
+                    <in>Update_state.cpp</in>
+                  </df>
+                  <df name="xcode">
+                    <df name="game_of_life.xcodeproj">
+                    </df>
+                  </df>
+                </df>
+                <df name="polygon_overlay">
+                  <df name="msvs">
+                    <in>resource.h</in>
+                  </df>
+                  <df name="xcode">
+                    <df name="polygon_overlay.xcodeproj">
+                      <df name="xcshareddata">
+                        <df name="xcschemes">
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                  <in>polymain.cpp</in>
+                  <in>polymain.h</in>
+                  <in>polyover.cpp</in>
+                  <in>polyover.h</in>
+                  <in>pover_global.h</in>
+                  <in>pover_video.cpp</in>
+                  <in>pover_video.h</in>
+                  <in>rpolygon.h</in>
+                </df>
+                <df name="seismic">
+                  <df name="msvs">
+                    <in>resource.h</in>
+                  </df>
+                  <df name="xcode">
+                    <df name="seismic.xcodeproj">
+                      <df name="xcshareddata">
+                        <df name="xcschemes">
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                  <in>main.cpp</in>
+                  <in>seismic_video.cpp</in>
+                  <in>seismic_video.h</in>
+                  <in>universe.cpp</in>
+                  <in>universe.h</in>
+                </df>
+                <df name="tachyon">
+                  <df name="dat">
+                  </df>
+                  <df name="msvs">
+                    <df name="win8ui">
+                      <df name="Assets">
+                      </df>
+                      <df name="Common">
+                      </df>
+                      <in>App.xaml.cpp</in>
+                      <in>App.xaml.h</in>
+                      <in>DirectXBase.cpp</in>
+                      <in>DirectXBase.h</in>
+                      <in>DirectXPage.xaml.cpp</in>
+                      <in>DirectXPage.xaml.h</in>
+                      <in>pch.h</in>
+                      <in>tbbTachyonRenderer.cpp</in>
+                      <in>tbbTachyonRenderer.h</in>
+                    </df>
+                    <in>resource.h</in>
+                  </df>
+                  <df name="src">
+                    <in>api.cpp</in>
+                    <in>api.h</in>
+                    <in>apigeom.cpp</in>
+                    <in>apitrigeom.cpp</in>
+                    <in>apitrigeom.h</in>
+                    <in>bndbox.cpp</in>
+                    <in>bndbox.h</in>
+                    <in>box.cpp</in>
+                    <in>box.h</in>
+                    <in>camera.cpp</in>
+                    <in>camera.h</in>
+                    <in>coordsys.cpp</in>
+                    <in>coordsys.h</in>
+                    <in>cylinder.cpp</in>
+                    <in>cylinder.h</in>
+                    <in>extvol.cpp</in>
+                    <in>extvol.h</in>
+                    <in>global.cpp</in>
+                    <in>global.h</in>
+                    <in>grid.cpp</in>
+                    <in>grid.h</in>
+                    <in>imageio.cpp</in>
+                    <in>imageio.h</in>
+                    <in>imap.cpp</in>
+                    <in>imap.h</in>
+                    <in>intersect.cpp</in>
+                    <in>intersect.h</in>
+                    <in>jpeg.cpp</in>
+                    <in>jpeg.h</in>
+                    <in>light.cpp</in>
+                    <in>light.h</in>
+                    <in>machine.h</in>
+                    <in>macros.h</in>
+                    <in>main.cpp</in>
+                    <in>objbound.cpp</in>
+                    <in>objbound.h</in>
+                    <in>parse.cpp</in>
+                    <in>parse.h</in>
+                    <in>plane.cpp</in>
+                    <in>plane.h</in>
+                    <in>ppm.cpp</in>
+                    <in>ppm.h</in>
+                    <in>pthread.cpp</in>
+                    <in>pthread_w.h</in>
+                    <in>quadric.cpp</in>
+                    <in>quadric.h</in>
+                    <in>render.cpp</in>
+                    <in>render.h</in>
+                    <in>ring.cpp</in>
+                    <in>ring.h</in>
+                    <in>shade.cpp</in>
+                    <in>shade.h</in>
+                    <in>sphere.cpp</in>
+                    <in>sphere.h</in>
+                    <in>tachyon_video.cpp</in>
+                    <in>tachyon_video.h</in>
+                    <in>texture.cpp</in>
+                    <in>texture.h</in>
+                    <in>tgafile.cpp</in>
+                    <in>tgafile.h</in>
+                    <in>trace.h</in>
+                    <in>trace.serial.cpp</in>
+                    <in>trace.simple.cpp</in>
+                    <in>trace.tbb.cpp</in>
+                    <in>trace.tbb1d.cpp</in>
+                    <in>trace_rest.cpp</in>
+                    <in>triangle.cpp</in>
+                    <in>triangle.h</in>
+                    <in>types.h</in>
+                    <in>ui.cpp</in>
+                    <in>ui.h</in>
+                    <in>util.cpp</in>
+                    <in>util.h</in>
+                    <in>vector.cpp</in>
+                    <in>vector.h</in>
+                    <in>vol.cpp</in>
+                    <in>vol.h</in>
+                  </df>
+                  <df name="xcode">
+                    <df name="tachyon.xcodeproj">
+                      <df name="xcshareddata">
+                        <df name="xcschemes">
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                </df>
+              </df>
+              <df name="parallel_reduce">
+                <df name="convex_hull">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="convex_hull.xcodeproj">
+                    </df>
+                  </df>
+                  <in>convex_hull.h</in>
+                  <in>convex_hull_bench.cpp</in>
+                  <in>convex_hull_sample.cpp</in>
+                </df>
+                <df name="primes">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="primes.xcodeproj">
+                    </df>
+                  </df>
+                  <in>main.cpp</in>
+                  <in>primes.cpp</in>
+                  <in>primes.h</in>
+                </df>
+              </df>
+              <df name="pipeline">
+                <df name="square">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="square.xcodeproj">
+                    </df>
+                  </df>
+                  <in>gen_input.cpp</in>
+                  <in>square.cpp</in>
+                </df>
+              </df>
+              <df name="task">
+                <df name="tree_sum">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="tree_sum.xcodeproj">
+                    </df>
+                  </df>
+                  <in>OptimizedParallelSumTree.cpp</in>
+                  <in>SerialSumTree.cpp</in>
+                  <in>SimpleParallelSumTree.cpp</in>
+                  <in>TreeMaker.h</in>
+                  <in>common.h</in>
+                  <in>main.cpp</in>
+                </df>
+              </df>
+              <df name="task_arena">
+                <df name="fractal">
+                  <df name="msvs">
+                    <in>resource.h</in>
+                  </df>
+                  <df name="xcode">
+                    <df name="fractal.xcodeproj">
+                      <df name="xcshareddata">
+                        <df name="xcschemes">
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                  <in>fractal.cpp</in>
+                  <in>fractal.h</in>
+                  <in>fractal_video.h</in>
+                  <in>main.cpp</in>
+                </df>
+              </df>
+              <df name="task_group">
+                <df name="sudoku">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="sudoku.xcodeproj">
+                    </df>
+                  </df>
+                  <in>sudoku.cpp</in>
+                </df>
+              </df>
+              <df name="test_all">
+                <df name="fibonacci">
+                  <df name="msvs">
+                  </df>
+                  <df name="xcode">
+                    <df name="fibonacci.xcodeproj">
+                    </df>
+                  </df>
+                  <in>Fibonacci.cpp</in>
+                </df>
+              </df>
+            </df>
+            <df name="include">
+              <df name="serial">
+                <df name="tbb">
+                  <in>parallel_for.h</in>
+                  <in>tbb_annotate.h</in>
+                </df>
+              </df>
+              <df name="tbb">
+                <df name="compat">
+                  <in>condition_variable</in>
+                  <in>ppl.h</in>
+                  <in>thread</in>
+                  <in>tuple</in>
+                </df>
+                <df name="internal">
+                  <in>_aggregator_impl.h</in>
+                  <in>_concurrent_queue_impl.h</in>
+                  <in>_concurrent_unordered_impl.h</in>
+                  <in>_flow_graph_async_msg_impl.h</in>
+                  <in>_flow_graph_body_impl.h</in>
+                  <in>_flow_graph_cache_impl.h</in>
+                  <in>_flow_graph_impl.h</in>
+                  <in>_flow_graph_indexer_impl.h</in>
+                  <in>_flow_graph_item_buffer_impl.h</in>
+                  <in>_flow_graph_join_impl.h</in>
+                  <in>_flow_graph_node_impl.h</in>
+                  <in>_flow_graph_streaming_node.h</in>
+                  <in>_flow_graph_tagged_buffer_impl.h</in>
+                  <in>_flow_graph_trace_impl.h</in>
+                  <in>_flow_graph_types_impl.h</in>
+                  <in>_mutex_padding.h</in>
+                  <in>_range_iterator.h</in>
+                  <in>_tbb_hash_compare_impl.h</in>
+                  <in>_tbb_strings.h</in>
+                  <in>_tbb_trace_impl.h</in>
+                  <in>_tbb_windef.h</in>
+                  <in>_template_helpers.h</in>
+                  <in>_x86_eliding_mutex_impl.h</in>
+                  <in>_x86_rtm_rw_mutex_impl.h</in>
+                </df>
+                <df name="machine">
+                  <in>gcc_arm.h</in>
+                  <in>gcc_generic.h</in>
+                  <in>gcc_ia32_common.h</in>
+                  <in>gcc_itsx.h</in>
+                  <in>ibm_aix51.h</in>
+                  <in>icc_generic.h</in>
+                  <in>linux_common.h</in>
+                  <in>linux_ia32.h</in>
+                  <in>linux_ia64.h</in>
+                  <in>linux_intel64.h</in>
+                  <in>mac_ppc.h</in>
+                  <in>macos_common.h</in>
+                  <in>mic_common.h</in>
+                  <in>msvc_armv7.h</in>
+                  <in>msvc_ia32_common.h</in>
+                  <in>sunos_sparc.h</in>
+                  <in>windows_api.h</in>
+                  <in>windows_ia32.h</in>
+                  <in>windows_intel64.h</in>
+                </df>
+                <in>aggregator.h</in>
+                <in>aligned_space.h</in>
+                <in>atomic.h</in>
+                <in>blocked_range.h</in>
+                <in>blocked_range2d.h</in>
+                <in>blocked_range3d.h</in>
+                <in>blocked_rangeNd.h</in>
+                <in>cache_aligned_allocator.h</in>
+                <in>combinable.h</in>
+                <in>concurrent_hash_map.h</in>
+                <in>concurrent_lru_cache.h</in>
+                <in>concurrent_priority_queue.h</in>
+                <in>concurrent_queue.h</in>
+                <in>concurrent_unordered_map.h</in>
+                <in>concurrent_unordered_set.h</in>
+                <in>concurrent_vector.h</in>
+                <in>critical_section.h</in>
+                <in>enumerable_thread_specific.h</in>
+                <in>flow_graph.h</in>
+                <in>flow_graph_abstractions.h</in>
+                <in>flow_graph_opencl_node.h</in>
+                <in>gfx_factory.h</in>
+                <in>global_control.h</in>
+                <in>iterators.h</in>
+                <in>memory_pool.h</in>
+                <in>mutex.h</in>
+                <in>null_mutex.h</in>
+                <in>null_rw_mutex.h</in>
+                <in>parallel_do.h</in>
+                <in>parallel_for.h</in>
+                <in>parallel_for_each.h</in>
+                <in>parallel_invoke.h</in>
+                <in>parallel_reduce.h</in>
+                <in>parallel_scan.h</in>
+                <in>parallel_sort.h</in>
+                <in>parallel_while.h</in>
+                <in>partitioner.h</in>
+                <in>pipeline.h</in>
+                <in>queuing_mutex.h</in>
+                <in>queuing_rw_mutex.h</in>
+                <in>reader_writer_lock.h</in>
+                <in>recursive_mutex.h</in>
+                <in>runtime_loader.h</in>
+                <in>scalable_allocator.h</in>
+                <in>spin_mutex.h</in>
+                <in>spin_rw_mutex.h</in>
+                <in>task.h</in>
+                <in>task_arena.h</in>
+                <in>task_group.h</in>
+                <in>task_scheduler_init.h</in>
+                <in>task_scheduler_observer.h</in>
+                <in>tbb.h</in>
+                <in>tbb_allocator.h</in>
+                <in>tbb_config.h</in>
+                <in>tbb_disable_exceptions.h</in>
+                <in>tbb_exception.h</in>
+                <in>tbb_machine.h</in>
+                <in>tbb_profiling.h</in>
+                <in>tbb_stddef.h</in>
+                <in>tbb_thread.h</in>
+                <in>tbbmalloc_proxy.h</in>
+                <in>tick_count.h</in>
+              </df>
+            </df>
+            <df name="jni">
+            </df>
+            <df name="python">
+              <df name="rml">
+                <in>ipc_server.cpp</in>
+                <in>ipc_utils.cpp</in>
+                <in>ipc_utils.h</in>
+              </df>
+              <df name="tbb">
+                <in>api.i</in>
+              </df>
+            </df>
+            <df name="src">
+              <df name="old">
+                <in>concurrent_queue_v2.cpp</in>
+                <in>concurrent_queue_v2.h</in>
+                <in>concurrent_vector_v2.cpp</in>
+                <in>concurrent_vector_v2.h</in>
+                <in>spin_rw_mutex_v2.cpp</in>
+                <in>spin_rw_mutex_v2.h</in>
+                <in>task_v2.cpp</in>
+                <in>test_concurrent_queue_v2.cpp</in>
+                <in>test_concurrent_vector_v2.cpp</in>
+                <in>test_mutex_v2.cpp</in>
+                <in>test_task_scheduler_observer_v3.cpp</in>
+              </df>
+              <df name="perf">
+                <in>coarse_grained_raii_lru_cache.h</in>
+                <in>cpq_pdes.cpp</in>
+                <in>fibonacci_impl_tbb.cpp</in>
+                <in>perf.cpp</in>
+                <in>perf.h</in>
+                <in>perf_sched.cpp</in>
+                <in>statistics.cpp</in>
+                <in>statistics.h</in>
+                <in>statistics_xml.h</in>
+                <in>time_cpq_throughput_test.cpp</in>
+                <in>time_fibonacci_cutoff.cpp</in>
+                <in>time_framework.h</in>
+                <in>time_hash_map.cpp</in>
+                <in>time_hash_map_fill.cpp</in>
+                <in>time_locked_work.cpp</in>
+                <in>time_lru_cache_throughput.cpp</in>
+                <in>time_parallel_for_each.cpp</in>
+                <in>time_sandbox.h</in>
+                <in>time_split_node.cpp</in>
+                <in>time_vector.cpp</in>
+              </df>
+              <df name="rml">
+                <df name="client">
+                  <in>library_assert.h</in>
+                  <in>omp_dynamic_link.cpp</in>
+                  <in>omp_dynamic_link.h</in>
+                  <in>rml_factory.h</in>
+                  <in>rml_omp.cpp</in>
+                  <in>rml_tbb.cpp</in>
+                </df>
+                <df name="include">
+                  <in>rml_base.h</in>
+                  <in>rml_omp.h</in>
+                  <in>rml_tbb.h</in>
+                </df>
+                <df name="perfor">
+                  <in>omp_nested.cpp</in>
+                  <in>omp_simple.cpp</in>
+                  <in>tbb_multi_omp.cpp</in>
+                  <in>tbb_simple.cpp</in>
+                  <in>thread_level.h</in>
+                </df>
+                <df name="server">
+                  <in>job_automaton.h</in>
+                  <in>lin-rml-export.def</in>
+                  <in>rml_server.cpp</in>
+                  <in>thread_monitor.h</in>
+                  <in>wait_counter.h</in>
+                  <in>win32-rml-export.def</in>
+                  <in>win64-rml-export.def</in>
+                </df>
+                <df name="test">
+                  <in>rml_omp_stub.cpp</in>
+                  <in>test_job_automaton.cpp</in>
+                  <in>test_rml_mixed.cpp</in>
+                  <in>test_rml_omp.cpp</in>
+                  <in>test_rml_omp_c_linkage.c</in>
+                  <in>test_rml_tbb.cpp</in>
+                  <in>test_server.h</in>
+                  <in>test_thread_monitor.cpp</in>
+                </df>
+              </df>
+              <df name="tbb">
+                <df name="ia32-masm">
+                  <in>atomic_support.asm</in>
+                  <in>itsx.asm</in>
+                  <in>lock_byte.asm</in>
+                </df>
+                <df name="ia64-gas">
+                  <in>atomic_support.s</in>
+                  <in>ia64_misc.s</in>
+                  <in>lock_byte.s</in>
+                  <in>log2.s</in>
+                  <in>pause.s</in>
+                </df>
+                <df name="ibm_aix51">
+                  <in>atomic_support.c</in>
+                </df>
+                <df name="intel64-masm">
+                  <in>atomic_support.asm</in>
+                  <in>intel64_misc.asm</in>
+                  <in>itsx.asm</in>
+                </df>
+                <df name="tools_api">
+                  <df name="legacy">
+                    <in>ittnotify.h</in>
+                  </df>
+                  <in>disable_warnings.h</in>
+                  <in>ittnotify.h</in>
+                  <in>ittnotify_config.h</in>
+                  <in>ittnotify_static.c</in>
+                  <in>ittnotify_static.h</in>
+                  <in>ittnotify_types.h</in>
+                </df>
+                <in>arena.cpp</in>
+                <in>arena.h</in>
+                <in>cache_aligned_allocator.cpp</in>
+                <in>cilk-tbb-interop.h</in>
+                <in>concurrent_hash_map.cpp</in>
+                <in>concurrent_monitor.cpp</in>
+                <in>concurrent_monitor.h</in>
+                <in>concurrent_queue.cpp</in>
+                <in>concurrent_vector.cpp</in>
+                <in>condition_variable.cpp</in>
+                <in>critical_section.cpp</in>
+                <in>custom_scheduler.h</in>
+                <in>dynamic_link.cpp</in>
+                <in>dynamic_link.h</in>
+                <in>governor.cpp</in>
+                <in>governor.h</in>
+                <in>intrusive_list.h</in>
+                <in>itt_notify.cpp</in>
+                <in>itt_notify.h</in>
+                <in>lin32-tbb-export.def</in>
+                <in>lin64-tbb-export.def</in>
+                <in>lin64ipf-tbb-export.def</in>
+                <in>mac32-tbb-export.def</in>
+                <in>mac64-tbb-export.def</in>
+                <in>mailbox.h</in>
+                <in>market.cpp</in>
+                <in>market.h</in>
+                <in>mutex.cpp</in>
+                <in>observer_proxy.cpp</in>
+                <in>observer_proxy.h</in>
+                <in>pipeline.cpp</in>
+                <in>private_server.cpp</in>
+                <in>queuing_mutex.cpp</in>
+                <in>queuing_rw_mutex.cpp</in>
+                <in>reader_writer_lock.cpp</in>
+                <in>recursive_mutex.cpp</in>
+                <in>scheduler.cpp</in>
+                <in>scheduler.h</in>
+                <in>scheduler_common.h</in>
+                <in>scheduler_utility.h</in>
+                <in>semaphore.cpp</in>
+                <in>semaphore.h</in>
+                <in>spin_mutex.cpp</in>
+                <in>spin_rw_mutex.cpp</in>
+                <in>task.cpp</in>
+                <in>task_group_context.cpp</in>
+                <in>task_stream.h</in>
+                <in>tbb_assert_impl.h</in>
+                <in>tbb_main.cpp</in>
+                <in>tbb_main.h</in>
+                <in>tbb_misc.cpp</in>
+                <in>tbb_misc.h</in>
+                <in>tbb_misc_ex.cpp</in>
+                <in>tbb_statistics.cpp</in>
+                <in>tbb_statistics.h</in>
+                <in>tbb_thread.cpp</in>
+                <in>tbb_version.h</in>
+                <in>tls.h</in>
+                <in>win32-tbb-export.def</in>
+                <in>win64-gcc-tbb-export.def</in>
+                <in>win64-tbb-export.def</in>
+                <in>x86_rtm_rw_mutex.cpp</in>
+              </df>
+              <df name="tbbmalloc">
+                <in>Customize.h</in>
+                <in>MapMemory.h</in>
+                <in>Statistics.h</in>
+                <in>Synchronize.h</in>
+                <in>TypeDefinitions.h</in>
+                <in>backend.cpp</in>
+                <in>backref.cpp</in>
+                <in>frontend.cpp</in>
+                <in>large_objects.cpp</in>
+                <in>lin32-proxy-export.def</in>
+                <in>lin32-tbbmalloc-export.def</in>
+                <in>lin64-proxy-export.def</in>
+                <in>lin64-tbbmalloc-export.def</in>
+                <in>lin64ipf-proxy-export.def</in>
+                <in>lin64ipf-tbbmalloc-export.def</in>
+                <in>mac32-tbbmalloc-export.def</in>
+                <in>mac64-tbbmalloc-export.def</in>
+                <in>proxy.cpp</in>
+                <in>proxy.h</in>
+                <in>proxy_overload_osx.h</in>
+                <in>shared_utils.h</in>
+                <in>tbb_function_replacement.cpp</in>
+                <in>tbb_function_replacement.h</in>
+                <in>tbbmalloc.cpp</in>
+                <in>tbbmalloc_internal.h</in>
+                <in>tbbmalloc_internal_api.h</in>
+                <in>win32-gcc-tbbmalloc-export.def</in>
+                <in>win32-tbbmalloc-export.def</in>
+                <in>win64-gcc-tbbmalloc-export.def</in>
+                <in>win64-tbbmalloc-export.def</in>
+              </df>
+              <df name="tbbproxy">
+                <in>tbbproxy-windows.asm</in>
+                <in>tbbproxy.cpp</in>
+              </df>
+              <df name="test">
+                <in>harness.h</in>
+                <in>harness_allocator.h</in>
+                <in>harness_allocator_overload.h</in>
+                <in>harness_assert.h</in>
+                <in>harness_bad_expr.h</in>
+                <in>harness_barrier.h</in>
+                <in>harness_checktype.h</in>
+                <in>harness_concurrency.h</in>
+                <in>harness_concurrency_tracker.h</in>
+                <in>harness_cpu.h</in>
+                <in>harness_defs.h</in>
+                <in>harness_dynamic_libs.h</in>
+                <in>harness_eh.h</in>
+                <in>harness_fp.h</in>
+                <in>harness_graph.h</in>
+                <in>harness_inject_scheduler.h</in>
+                <in>harness_iterator.h</in>
+                <in>harness_m128.h</in>
+                <in>harness_memory.h</in>
+                <in>harness_mic.h</in>
+                <in>harness_preload.h</in>
+                <in>harness_report.h</in>
+                <in>harness_runtime_loader.h</in>
+                <in>harness_state_trackable.h</in>
+                <in>harness_task.h</in>
+                <in>harness_tbb_independence.h</in>
+                <in>harness_test_cases_framework.h</in>
+                <in>harness_tls.h</in>
+                <in>harness_tsx.h</in>
+                <in>test_ScalableAllocator.cpp</in>
+                <in>test_ScalableAllocator_STL.cpp</in>
+                <in>test_aggregator.cpp</in>
+                <in>test_aligned_space.cpp</in>
+                <in>test_allocator.h</in>
+                <in>test_allocator_STL.h</in>
+                <in>test_assembly.cpp</in>
+                <in>test_async_msg.cpp</in>
+                <in>test_async_node.cpp</in>
+                <in>test_atomic.cpp</in>
+                <in>test_blocked_range.cpp</in>
+                <in>test_blocked_range2d.cpp</in>
+                <in>test_blocked_range3d.cpp</in>
+                <in>test_blocked_rangeNd.cpp</in>
+                <in>test_broadcast_node.cpp</in>
+                <in>test_buffer_node.cpp</in>
+                <in>test_cache_aligned_allocator.cpp</in>
+                <in>test_cache_aligned_allocator_STL.cpp</in>
+                <in>test_cilk_common.h</in>
+                <in>test_cilk_dynamic_load.cpp</in>
+                <in>test_cilk_interop.cpp</in>
+                <in>test_combinable.cpp</in>
+                <in>test_composite_node.cpp</in>
+                <in>test_concurrent_hash_map.cpp</in>
+                <in>test_concurrent_lru_cache.cpp</in>
+                <in>test_concurrent_monitor.cpp</in>
+                <in>test_concurrent_priority_queue.cpp</in>
+                <in>test_concurrent_queue.cpp</in>
+                <in>test_concurrent_queue_whitebox.cpp</in>
+                <in>test_concurrent_unordered_common.h</in>
+                <in>test_concurrent_unordered_map.cpp</in>
+                <in>test_concurrent_unordered_set.cpp</in>
+                <in>test_concurrent_vector.cpp</in>
+                <in>test_condition_variable.h</in>
+                <in>test_container_move_support.h</in>
+                <in>test_continue_node.cpp</in>
+                <in>test_critical_section.cpp</in>
+                <in>test_dynamic_link.cpp</in>
+                <in>test_eh_algorithms.cpp</in>
+                <in>test_eh_flow_graph.cpp</in>
+                <in>test_eh_tasks.cpp</in>
+                <in>test_enumerable_thread_specific.cpp</in>
+                <in>test_examples_common_utility.cpp</in>
+                <in>test_fast_random.cpp</in>
+                <in>test_flow_graph.cpp</in>
+                <in>test_flow_graph_whitebox.cpp</in>
+                <in>test_fp.cpp</in>
+                <in>test_function_node.cpp</in>
+                <in>test_gfx_factory.cpp</in>
+                <in>test_global_control.cpp</in>
+                <in>test_global_control_whitebox.cpp</in>
+                <in>test_halt.cpp</in>
+                <in>test_handle_perror.cpp</in>
+                <in>test_hw_concurrency.cpp</in>
+                <in>test_indexer_node.cpp</in>
+                <in>test_initializer_list.h</in>
+                <in>test_inits_loop.cpp</in>
+                <in>test_intrusive_list.cpp</in>
+                <in>test_ittnotify.cpp</in>
+                <in>test_join_node.cpp</in>
+                <in>test_join_node.h</in>
+                <in>test_join_node_key_matching.cpp</in>
+                <in>test_join_node_msg_key_matching.cpp</in>
+                <in>test_lambda.cpp</in>
+                <in>test_limiter_node.cpp</in>
+                <in>test_malloc_atexit.cpp</in>
+                <in>test_malloc_compliance.cpp</in>
+                <in>test_malloc_init_shutdown.cpp</in>
+                <in>test_malloc_lib_unload.cpp</in>
+                <in>test_malloc_new_handler.cpp</in>
+                <in>test_malloc_overload.cpp</in>
+                <in>test_malloc_pools.cpp</in>
+                <in>test_malloc_pure_c.c</in>
+                <in>test_malloc_regression.cpp</in>
+                <in>test_malloc_shutdown_hang.cpp</in>
+                <in>test_malloc_used_by_lib.cpp</in>
+                <in>test_malloc_whitebox.cpp</in>
+                <in>test_model_plugin.cpp</in>
+                <in>test_multifunction_node.cpp</in>
+                <in>test_mutex.cpp</in>
+                <in>test_mutex_native_threads.cpp</in>
+                <in>test_opencl_node.cpp</in>
+                <in>test_openmp.cpp</in>
+                <in>test_overwrite_node.cpp</in>
+                <in>test_parallel_do.cpp</in>
+                <in>test_parallel_for.cpp</in>
+                <in>test_parallel_for_each.cpp</in>
+                <in>test_parallel_for_vectorization.cpp</in>
+                <in>test_parallel_invoke.cpp</in>
+                <in>test_parallel_pipeline.cpp</in>
+                <in>test_parallel_reduce.cpp</in>
+                <in>test_parallel_scan.cpp</in>
+                <in>test_parallel_sort.cpp</in>
+                <in>test_parallel_while.cpp</in>
+                <in>test_partitioner.h</in>
+                <in>test_partitioner_whitebox.cpp</in>
+                <in>test_partitioner_whitebox.h</in>
+                <in>test_pipeline.cpp</in>
+                <in>test_pipeline_with_tbf.cpp</in>
+                <in>test_priority_queue_node.cpp</in>
+                <in>test_queue_node.cpp</in>
+                <in>test_range_based_for.h</in>
+                <in>test_reader_writer_lock.cpp</in>
+                <in>test_runtime_loader.cpp</in>
+                <in>test_rwm_upgrade_downgrade.cpp</in>
+                <in>test_semaphore.cpp</in>
+                <in>test_sequencer_node.cpp</in>
+                <in>test_source_node.cpp</in>
+                <in>test_split_node.cpp</in>
+                <in>test_static_assert.cpp</in>
+                <in>test_std_thread.cpp</in>
+                <in>test_streaming_node.cpp</in>
+                <in>test_tagged_msg.cpp</in>
+                <in>test_task.cpp</in>
+                <in>test_task_arena.cpp</in>
+                <in>test_task_assertions.cpp</in>
+                <in>test_task_auto_init.cpp</in>
+                <in>test_task_enqueue.cpp</in>
+                <in>test_task_group.cpp</in>
+                <in>test_task_leaks.cpp</in>
+                <in>test_task_priority.cpp</in>
+                <in>test_task_scheduler_init.cpp</in>
+                <in>test_task_scheduler_observer.cpp</in>
+                <in>test_task_steal_limit.cpp</in>
+                <in>test_tbb_condition_variable.cpp</in>
+                <in>test_tbb_fork.cpp</in>
+                <in>test_tbb_header.cpp</in>
+                <in>test_tbb_thread.cpp</in>
+                <in>test_tbb_version.cpp</in>
+                <in>test_thread.h</in>
+                <in>test_tick_count.cpp</in>
+                <in>test_tuple.cpp</in>
+                <in>test_write_once_node.cpp</in>
+                <in>test_yield.cpp</in>
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="types">
+          <in>node.h</in>
+          <in>pixel.h</in>
+          <in>types.h</in>
+          <in>vec2.h</in>
+          <in>vec3.h</in>
+        </df>
+        <in>main.cpp</in>
+        <in>raytracerapp.cpp</in>
+        <in>raytracerapp.h</in>
+      </df>
+      <df name="thirdparty">
+      </df>
+      <df name="tools">
+      </df>
+      <in>style.cpp</in>
+      <in>style.h</in>
+      <in>styple.h</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <dbxdebugger version="1">
+        <pathmaps>
+        </pathmaps>
+        <interceptlist>
+          <interceptoptions all="false" unhandled="true" unexpected="true"/>
+        </interceptlist>
+        <signals>
+        </signals>
+        <options>
+          <DebugOptions>
+          </DebugOptions>
+        </options>
+        <buildfirst buildfirst_overriden="false" buildfirst_old="false"/>
+      </dbxdebugger>
+      <dbxrtc version="1">
+        <options>
+          <RtcOptions>
+            <option name="rtc_error_log_file_name" value="/dev/null"/>
+          </RtcOptions>
+        </options>
+        <loadobjs>
+        </loadobjs>
+      </dbxrtc>
+      <nativedebugger version="1">
+        <engine>dbx</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
