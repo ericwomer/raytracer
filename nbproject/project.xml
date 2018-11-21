@@ -6,7 +6,7 @@
             <name>raytracer</name>
             <c-extensions>c,i,m</c-extensions>
             <cpp-extensions>cc,cpp</cpp-extensions>
-            <header-extensions>def,h,hpp</header-extensions>
+            <header-extensions>def,h,hpp,ver</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
@@ -19,7 +19,8 @@
                 </confElem>
             </confList>
             <formatting>
-                <project-formatting-style>false</project-formatting-style>
+                <project-formatting-style>clang-format</project-formatting-style>
+                <clang-format-style>src/.clang-format|file</clang-format-style>
             </formatting>
         </data>
     </configuration>
