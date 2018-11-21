@@ -5,6 +5,14 @@
       <df name=".vscode">
       </df>
       <df name="build">
+        <df name="meson-logs">
+        </df>
+        <df name="meson-private">
+          <in>sanitycheckcpp.cc</in>
+        </df>
+        <df name="raytracer@exe">
+        </df>
+        <in>config.h</in>
       </df>
       <df name="doc">
       </df>
@@ -649,7 +657,18 @@
           </df>
           <df name="tbb">
             <df name="build">
+              <df name="lib_debug">
+                <in>tbb.def</in>
+                <in>version_string.ver</in>
+              </df>
+              <df name="lib_release">
+                <in>tbb.def</in>
+                <in>tbbmalloc.def</in>
+                <in>tbbmallocproxy.def</in>
+                <in>version_string.ver</in>
+              </df>
               <df name="vs2013">
+                <in>version_string.ver</in>
               </df>
             </df>
             <df name="cmake">
@@ -1607,7 +1626,250 @@
         <in>raytracerapp.cpp</in>
         <in>raytracerapp.h</in>
       </df>
+      <df name="subprojects">
+      </df>
       <df name="thirdparty">
+        <df name="include">
+          <df name="serial">
+            <df name="tbb">
+              <in>parallel_for.h</in>
+              <in>tbb_annotate.h</in>
+            </df>
+          </df>
+          <df name="stb">
+            <df name=".github">
+            </df>
+            <df name="data">
+              <df name="herringbone">
+              </df>
+            </df>
+            <df name="deprecated">
+              <in>rrsprintf.h</in>
+              <in>stb_image.c</in>
+            </df>
+            <df name="docs">
+            </df>
+            <df name="tests">
+              <df name="caveview">
+                <df name="win32">
+                  <in>SDL_windows_main.c</in>
+                </df>
+                <in>cave_main.c</in>
+                <in>cave_mesher.c</in>
+                <in>cave_parse.c</in>
+                <in>cave_parse.h</in>
+                <in>cave_render.c</in>
+                <in>caveview.h</in>
+                <in>glext.h</in>
+                <in>glext_list.h</in>
+                <in>main.c</in>
+                <in>stb_gl.h</in>
+                <in>stb_glprog.h</in>
+              </df>
+              <df name="oversample">
+                <in>main.c</in>
+                <in>stb_wingraph.h</in>
+              </df>
+              <df name="pg_test">
+                <in>pg_test.c</in>
+              </df>
+              <df name="pngsuite">
+                <df name="16bit">
+                </df>
+                <df name="corrupt">
+                </df>
+                <df name="primary">
+                </df>
+                <df name="primary_check">
+                </df>
+                <df name="unused">
+                </df>
+              </df>
+              <df name="prerelease">
+                <in>stb_lib.h</in>
+              </df>
+              <df name="sdf">
+                <in>sdf_test.c</in>
+              </df>
+              <df name="vorbseek">
+                <in>vorbseek.c</in>
+              </df>
+              <in>c_lexer_test.c</in>
+              <in>grid_reachability.c</in>
+              <in>herringbone_generator.c</in>
+              <in>herringbone_map.c</in>
+              <in>image_test.c</in>
+              <in>resample_test.cpp</in>
+              <in>resample_test_c.c</in>
+              <in>stb.c</in>
+              <in>stb_cpp.cpp</in>
+              <in>stblib_test.c</in>
+              <in>stblib_test_companion.c</in>
+              <in>stretch_test.c</in>
+              <in>stretchy_buffer_test.c</in>
+              <in>test_c_compilation.c</in>
+              <in>test_c_lexer.c</in>
+              <in>test_cpp_compilation.cpp</in>
+              <in>test_dxt.c</in>
+              <in>test_easyfont.c</in>
+              <in>test_image.c</in>
+              <in>test_image_write.c</in>
+              <in>test_perlin.c</in>
+              <in>test_sprintf.c</in>
+              <in>test_truetype.c</in>
+              <in>test_vorbis.c</in>
+              <in>test_voxel.c</in>
+              <in>textedit_sample.c</in>
+              <in>tilemap_editor_integration_example.c</in>
+            </df>
+            <df name="tools">
+              <df name="unicode">
+              </df>
+              <in>easy_font_maker.c</in>
+              <in>make_readme.c</in>
+              <in>unicode.c</in>
+            </df>
+            <in>stb.h</in>
+            <in>stb_c_lexer.h</in>
+            <in>stb_connected_components.h</in>
+            <in>stb_divide.h</in>
+            <in>stb_dxt.h</in>
+            <in>stb_easy_font.h</in>
+            <in>stb_herringbone_wang_tile.h</in>
+            <in>stb_image.h</in>
+            <in>stb_image_resize.h</in>
+            <in>stb_image_write.h</in>
+            <in>stb_leakcheck.h</in>
+            <in>stb_perlin.h</in>
+            <in>stb_rect_pack.h</in>
+            <in>stb_sprintf.h</in>
+            <in>stb_textedit.h</in>
+            <in>stb_tilemap_editor.h</in>
+            <in>stb_truetype.h</in>
+            <in>stb_vorbis.c</in>
+            <in>stb_voxel_render.h</in>
+            <in>stretchy_buffer.h</in>
+          </df>
+          <df name="tbb">
+            <df name="compat">
+              <in>condition_variable</in>
+              <in>ppl.h</in>
+              <in>thread</in>
+              <in>tuple</in>
+            </df>
+            <df name="internal">
+              <in>_aggregator_impl.h</in>
+              <in>_concurrent_queue_impl.h</in>
+              <in>_concurrent_unordered_impl.h</in>
+              <in>_flow_graph_async_msg_impl.h</in>
+              <in>_flow_graph_body_impl.h</in>
+              <in>_flow_graph_cache_impl.h</in>
+              <in>_flow_graph_impl.h</in>
+              <in>_flow_graph_indexer_impl.h</in>
+              <in>_flow_graph_item_buffer_impl.h</in>
+              <in>_flow_graph_join_impl.h</in>
+              <in>_flow_graph_node_impl.h</in>
+              <in>_flow_graph_streaming_node.h</in>
+              <in>_flow_graph_tagged_buffer_impl.h</in>
+              <in>_flow_graph_trace_impl.h</in>
+              <in>_flow_graph_types_impl.h</in>
+              <in>_mutex_padding.h</in>
+              <in>_range_iterator.h</in>
+              <in>_tbb_hash_compare_impl.h</in>
+              <in>_tbb_strings.h</in>
+              <in>_tbb_trace_impl.h</in>
+              <in>_tbb_windef.h</in>
+              <in>_template_helpers.h</in>
+              <in>_x86_eliding_mutex_impl.h</in>
+              <in>_x86_rtm_rw_mutex_impl.h</in>
+            </df>
+            <df name="machine">
+              <in>gcc_arm.h</in>
+              <in>gcc_generic.h</in>
+              <in>gcc_ia32_common.h</in>
+              <in>gcc_itsx.h</in>
+              <in>ibm_aix51.h</in>
+              <in>icc_generic.h</in>
+              <in>linux_common.h</in>
+              <in>linux_ia32.h</in>
+              <in>linux_ia64.h</in>
+              <in>linux_intel64.h</in>
+              <in>mac_ppc.h</in>
+              <in>macos_common.h</in>
+              <in>mic_common.h</in>
+              <in>msvc_armv7.h</in>
+              <in>msvc_ia32_common.h</in>
+              <in>sunos_sparc.h</in>
+              <in>windows_api.h</in>
+              <in>windows_ia32.h</in>
+              <in>windows_intel64.h</in>
+            </df>
+            <in>aggregator.h</in>
+            <in>aligned_space.h</in>
+            <in>atomic.h</in>
+            <in>blocked_range.h</in>
+            <in>blocked_range2d.h</in>
+            <in>blocked_range3d.h</in>
+            <in>blocked_rangeNd.h</in>
+            <in>cache_aligned_allocator.h</in>
+            <in>combinable.h</in>
+            <in>concurrent_hash_map.h</in>
+            <in>concurrent_lru_cache.h</in>
+            <in>concurrent_priority_queue.h</in>
+            <in>concurrent_queue.h</in>
+            <in>concurrent_unordered_map.h</in>
+            <in>concurrent_unordered_set.h</in>
+            <in>concurrent_vector.h</in>
+            <in>critical_section.h</in>
+            <in>enumerable_thread_specific.h</in>
+            <in>flow_graph.h</in>
+            <in>flow_graph_abstractions.h</in>
+            <in>flow_graph_opencl_node.h</in>
+            <in>gfx_factory.h</in>
+            <in>global_control.h</in>
+            <in>iterators.h</in>
+            <in>memory_pool.h</in>
+            <in>mutex.h</in>
+            <in>null_mutex.h</in>
+            <in>null_rw_mutex.h</in>
+            <in>parallel_do.h</in>
+            <in>parallel_for.h</in>
+            <in>parallel_for_each.h</in>
+            <in>parallel_invoke.h</in>
+            <in>parallel_reduce.h</in>
+            <in>parallel_scan.h</in>
+            <in>parallel_sort.h</in>
+            <in>parallel_while.h</in>
+            <in>partitioner.h</in>
+            <in>pipeline.h</in>
+            <in>queuing_mutex.h</in>
+            <in>queuing_rw_mutex.h</in>
+            <in>reader_writer_lock.h</in>
+            <in>recursive_mutex.h</in>
+            <in>runtime_loader.h</in>
+            <in>scalable_allocator.h</in>
+            <in>spin_mutex.h</in>
+            <in>spin_rw_mutex.h</in>
+            <in>task.h</in>
+            <in>task_arena.h</in>
+            <in>task_group.h</in>
+            <in>task_scheduler_init.h</in>
+            <in>task_scheduler_observer.h</in>
+            <in>tbb.h</in>
+            <in>tbb_allocator.h</in>
+            <in>tbb_config.h</in>
+            <in>tbb_disable_exceptions.h</in>
+            <in>tbb_exception.h</in>
+            <in>tbb_machine.h</in>
+            <in>tbb_profiling.h</in>
+            <in>tbb_stddef.h</in>
+            <in>tbb_thread.h</in>
+            <in>tbbmalloc_proxy.h</in>
+            <in>tick_count.h</in>
+          </df>
+        </df>
+        <df name="lib">
+        </df>
       </df>
       <df name="tools">
       </df>
@@ -1618,7 +1880,7 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Default" type="0">
+    <conf name="Default" type="0" platformSpecific="true">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <platform>2</platform>

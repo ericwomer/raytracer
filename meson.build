@@ -49,7 +49,6 @@ raytrace_src = [
 
 raytrace_include_directories = [
     include_directories('src/'),
-    include_directories('thirdparty/include/'),
     include_directories('/usr/lib/llvm-8/include/c++/v1/')
     ]
 
@@ -64,7 +63,7 @@ threads = dependency('threads')
 raytrace_deps = [threads]
 
 if not get_option('with_system_tbb')
-    tbb_prefix = 'thirdparty/tbb/'
+    tbb_prefix = 'thirdparty/'
 
 # tbb build command, replace clang with cpp's name and the stdver and 
 # make compiler=clang stdlib=libc++ stdver=c++17 tbb_build_prefix=lib
@@ -72,9 +71,9 @@ if not get_option('with_system_tbb')
     if get_option('buildtype') == 'debug'
         libtbb = cpp.find_library(
                 'tbb_debug',
-                dirs : join_paths(meson.source_root(), tbb_prefix, 'build/lib_debug')
+                dirs : join_paths(meson.source_root(), tbb_prefix, 'lib')
             )
-            tbb_link_path = '-L' + meson.source_root() + '/' + tbb_prefix + 'build/lib_debug'
+            tbb_link_path = '-L' + meson.source_root() + '/' + tbb_prefix + 'lib'
     else
          libtbb = cpp.find_library(
                 'tbb',
