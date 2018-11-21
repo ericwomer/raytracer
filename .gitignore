@@ -3,6 +3,5 @@ render-scene
 .directory
 build/**
 *~
-nbproject*
 
 !.keep
