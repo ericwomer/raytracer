@@ -2,6 +2,7 @@ renders*
 render-scene
 .directory
 build/**
+thirdparty/*
 *~
 
 !.keep
