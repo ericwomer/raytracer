@@ -2,7 +2,8 @@ renders*
 render-scene
 .directory
 build/**
-thirdparty/*
+thirdparty/**
+nbproject/**
 *~
 
 !.keep
