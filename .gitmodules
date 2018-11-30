@@ -7,3 +7,6 @@
 [submodule "src/thirdparty/json"]
 	path = src/thirdparty/json
 	url = https://github.com/salamanderrake/json.git
+[submodule "src/thirdparty/fmt"]
+	path = src/thirdparty/fmt
+	url = https://github.com/fmtlib/fmt.git
