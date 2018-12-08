@@ -5,5 +5,5 @@ build/**
 thirdparty/**
 nbproject/**
 *~
-
+.codelite/**
 !.keep
