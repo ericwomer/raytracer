@@ -51,7 +51,7 @@ raytrace_src = [
 
 raytrace_include_directories = [
     include_directories('src/'),
-    include_directories('/usr/lib/llvm-8/include/c++/v1/')
+    include_directories('/usr/include/c++/v1/')
     ]
 
 raytrace_cflags = [

@@ -5,6 +5,8 @@
 #include <vulkan/vulkan.h>
 #include <memory>
 
+#include "vk_core.h"
+
 class Window {
   public:
   Window();
