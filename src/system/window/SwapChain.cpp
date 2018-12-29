@@ -168,9 +168,25 @@ VkExtent2D SwapChain::choose_swap_extent(const VkSurfaceCapabilitiesKHR& capabil
   }
 }
 
-void SwapChain::image_view_cleanup(const VkDevice& logicalDevice)
+/**
+ * @brief
+ *
+ */
+bool SwapChain::create_image_views(const VkDevice& logicalDevice)
+{
+  bool canRender = false;
+  resize_image_views(images().size());
+
+  for (size_t i = 0; i < images().size(); i++) {
+    swapchainImageViews[i].create(logicalDevice, images()[i], image_format(), VK_IMAGE_ASPECT_COLOR_BIT, 1);
+    canRender = true;
+  }
+  return canRender;
+}
+
+void SwapChain::destroy_image_views(const VkDevice& logicalDevice)
 {
   for (auto imageView : swapchainImageViews) {
-    vkDestroyImageView(logicalDevice, imageView, nullptr);
+    imageView.cleanup(logicalDevice);
   }
 }

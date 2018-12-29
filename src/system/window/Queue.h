@@ -30,12 +30,12 @@ class Queue {
 public:
   QueueFamilyIndices find_queue_families(const VkPhysicalDevice& device, const VkSurfaceKHR& surface) const;
 
-  void init(VkDevice& device);
+  void init(const VkDevice& device);
 
   const VkQueue&            graphics() { return graphicsQueue; }
   const VkQueue&            present() { return presentQueue; }
   const QueueFamilyIndices& family_indicies() { return familyIndicies; }
-  void                      init_faily_indicies(QueueFamilyIndices& _indicies) { familyIndicies = _indicies; }
+  void                      init_family_indicies(QueueFamilyIndices& _indicies) { familyIndicies = _indicies; }
 
 private:
   // Logical Queues

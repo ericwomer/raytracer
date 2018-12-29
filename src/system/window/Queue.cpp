@@ -42,7 +42,7 @@ QueueFamilyIndices Queue::find_queue_families(const VkPhysicalDevice& device, co
  * @brief
  *
  */
-void Queue::init(VkDevice& device)
+void Queue::init(const VkDevice& device)
 {
   vkGetDeviceQueue(device, familyIndicies.presentFamily.value(), 0, &presentQueue);
   vkGetDeviceQueue(device, familyIndicies.graphicsFamily.value(), 0, &graphicsQueue);
