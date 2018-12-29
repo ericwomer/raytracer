@@ -1480,6 +1480,12 @@
     </VirtualDirectory>
     <VirtualDirectory Name="system">
       <VirtualDirectory Name="window">
+        <File Name="src/system/window/ImageView.cpp"/>
+        <File Name="src/system/window/ImageView.h"/>
+        <File Name="src/system/window/Image.cpp"/>
+        <File Name="src/system/window/Image.h"/>
+        <File Name="src/system/window/LogicalDevice.cpp"/>
+        <File Name="src/system/window/LogicalDevice.h"/>
         <File Name="src/system/window/SwapChain.cpp"/>
         <File Name="src/system/window/SwapChain.h"/>
         <File Name="src/system/window/Queue.cpp"/>

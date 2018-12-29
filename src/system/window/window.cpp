@@ -51,21 +51,16 @@ bool Window::rendering_loop()
       switch (event.type) {  //xevent->response_type & 0x7f) {
           // resize
         case SDL_WINDOWEVENT: {
-          std::cout << "SDL_WINDOWEVENT:\n\t";
           switch (event.window.event) {
             case SDL_WINDOWEVENT_RESIZED: {
-              std::cout << "SDL_WINDOWEVENT_RESIZED:\n\t width: " << width << " height: " << height << "\n";
               width  = event.window.data1;
               height = event.window.data2;
-              std::cout << "width: " << width << " height: " << height << "\n";
               if (((event.window.data1 > 0) && (width != event.window.data1)) ||
                   ((event.window.data2 > 0) && height != event.window.data2)) {
                 resize = true;
                 width  = event.window.data1;
                 height = event.window.data2;
-                std::cout << "width: " << width << " height: " << height << "\n";
               }
-              std::cout << "width: " << width << " height: " << height << "\n";
             } break;
           }
         } break;
@@ -79,6 +74,8 @@ bool Window::rendering_loop()
 */
         case SDL_KEYUP:
           loop = false;
+          break;
+        case SDL_MOUSEMOTION:
           break;
         case SDL_QUIT:
           loop = false;
