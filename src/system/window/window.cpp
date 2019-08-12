@@ -8,19 +8,25 @@ Window::Window()
     , height(480)
 {
   SDL_Init(SDL_INIT_VIDEO);
-  window =
-      SDL_CreateWindow("RayTracer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_VULKAN);
+
+  window = std::unique_ptr<SDL_Window, std::function<void(SDL_Window*)>>(SDL_CreateWindow("RayTracer",
+                                                                                          SDL_WINDOWPOS_UNDEFINED,
+                                                                                          SDL_WINDOWPOS_UNDEFINED,
+                                                                                          width,
+                                                                                          height,
+                                                                                          SDL_WINDOW_VULKAN),
+                                                                         SDL_DestroyWindow);
 
   if (window == nullptr) {
     std::runtime_error("Failed to create SDL window");
     exit;
   }
-  Core core(window);
-  // core.init(window);
+
+  Core core;
+  core.init();
 }
 
 Window::~Window()
 {
-  SDL_DestroyWindow(window);
   SDL_Quit();
 }

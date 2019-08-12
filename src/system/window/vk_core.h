@@ -21,18 +21,14 @@
 #include <dlfcn.h>
 #endif
 
-#include <SDL.h>
-
 #if defined(NDEBUG)
 const bool enableValidationLayers = false;
 #else
 const bool enableValidationLayers = true;
 #endif
 
-const std::vector<const char*> validationLayers = {"VK_LAYER_LUNARG_standard_validation"};
-
-// Add aditional extensions here if needed, defaults handled by SDL.
-const std::vector<const char*> instanceExtensions = {/*"VK_KHR_xcb_surface", "VK_KHR_surface"*/};
+const std::vector<const char*> validationLayers   = {"VK_LAYER_LUNARG_standard_validation"};
+const std::vector<const char*> instanceExtensions = {"VK_KHR_xcb_surface", "VK_KHR_surface"};
 const std::vector<const char*> deviceExtensions   = {"VK_KHR_swapchain"};
 
 VkResult create_debug_util_messenger_ext(VkInstance                                instance,
@@ -46,7 +42,7 @@ void destroy_debug_utils_messenger_ext(VkInstance                   instance,
 
 class Core {
   public:
-  Core(SDL_Window* window);
+  Core();
   ~Core();
   // Vulkan Public Interface Methods.
   static VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT      messageSeverity,
@@ -58,7 +54,7 @@ class Core {
     return VK_FALSE;
   }
 
-  void init(SDL_Window* window);
+  void init();
   bool draw();  // Vulkan-tutorial.com DrawFrame
   void cleanup();
   bool ready_to_draw() { return canRender; }
@@ -80,9 +76,6 @@ class Core {
   private:
   const int MAX_FRAMES_IN_FLIGHT = 2;
   size_t    currentFrame         = 0;
-
-  // SDL2
-  SDL_Window* window;
 
   // Core
   VkInstance               instance;
@@ -153,8 +146,6 @@ class Core {
   // Initializers
   void create_instance();
   void setup_debug_callback();
-  void create_surface(SDL_Window* window);
-  void pick_physical_device();
 
   // Cleanup
   void cleanup_swapchain();
@@ -162,11 +153,11 @@ class Core {
   // Eric: Clean this area up
   // Misc
   std::vector<const char*>      get_required_extensions(const std::vector<const char*>& instanceExtensions);
-  Core::SwapChainSupportDetails query_swap_chain_support(VkPhysicalDevice& device);
-  Core::QueueFamilyIndices      find_queue_families(VkPhysicalDevice& device);
+  Core::SwapChainSupportDetails query_swap_chain_support(VkPhysicalDevice& device, VkSurfaceKHR& surface);
+  Core::QueueFamilyIndices      find_queue_families(VkPhysicalDevice& device, VkSurfaceKHR& surface);
   bool                          check_validation_layer_support(const std::vector<const char*>& validationLayers);
   bool                          check_device_extension_support(VkPhysicalDevice device);
-  bool                          is_device_suitable(VkPhysicalDevice device);
+  bool                          is_device_suitable(VkPhysicalDevice device, VkSurfaceKHR surface);
   void                          get_device_queues(VkDevice&                 device,
                                                   Core::QueueFamilyIndices& familyIndicies,
                                                   VkQueue&                  presentQueue,

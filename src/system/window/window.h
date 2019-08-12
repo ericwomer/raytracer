@@ -16,7 +16,8 @@ class Window {
   int width;
   int height;
 
-  SDL_Window* window;
+  std::unique_ptr<SDL_Window, std::function<void(SDL_Window*)>> window;
+  SDL_Surface                                                   surface;
 };
 
 #endif  // WINDOW_H
