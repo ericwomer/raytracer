@@ -2,6 +2,7 @@
 #define SWAPCHAIN_H
 
 #include "Queue.h"
+#include "ImageView.h"
 
 #include <string>
 #include <vector>
@@ -31,24 +32,27 @@ public:
   const std::vector<VkImage>& images() const { return swapchainImages; }
   const VkFormat&             image_format() const { return swapchainImageFormat; }
 
-  const std::vector<VkImageView>& image_views() const { return swapchainImageViews; }
-  void                            resize_image_views(size_t size) { swapchainImageViews.resize(size); }
-  void add_image_view(VkImageView imageView, size_t pos) { swapchainImageViews[pos] = imageView; }
-  void image_view_cleanup(const VkDevice& logicalDevice);
+  // const std::vector<ImageView>& image_views() const { return swapchainImageViews; }
+  void resize_image_views(size_t size) { swapchainImageViews.resize(size); }
+  // void add_image_view(VkImageView imageView, size_t pos) { swapchainImageViews[pos] = imageView; }
 
   const VkExtent2D&                 extent() const { return swapchainExtent; }
   const std::vector<VkFramebuffer>& framebuffers() const { return swapchainFramebuffers; }
+  bool                              create_image_views(const VkDevice& logicalDevice);
+  void                              destroy_image_views(const VkDevice& logicalDevice);
 
 private:
   VkSurfaceFormatKHR choose_swap_surface_format(const std::vector<VkSurfaceFormatKHR>& availableFormats);
   VkPresentModeKHR   choose_swap_present_mode(const std::vector<VkPresentModeKHR> availablePresentModes);
   VkExtent2D         choose_swap_extent(const VkSurfaceCapabilitiesKHR& capabilities, SDL_Window* window);
 
-  VkSwapchainKHR             swapchain = VK_NULL_HANDLE;
-  std::vector<VkImage>       swapchainImages;
-  VkFormat                   swapchainImageFormat;
+  VkSwapchainKHR swapchain = VK_NULL_HANDLE;
+
+  std::vector<VkImage>   swapchainImages;
+  VkFormat               swapchainImageFormat;
+  std::vector<ImageView> swapchainImageViews;
+
   VkExtent2D                 swapchainExtent;
-  std::vector<VkImageView>   swapchainImageViews;
   std::vector<VkFramebuffer> swapchainFramebuffers;
 };
 
