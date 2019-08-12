@@ -1,10 +1,17 @@
 #if !defined(VULKAN_H)
 #define VULKAN_H
 
+#include "Instance.h"
+#include "PhysicalDevice.h"
+#include "Surface.h"
+#include "Queue.h"
+#include "SwapChain.h"
+
 #include <iostream>
 #include <vector>
 #include <optional>
 #include <exception>
+#include <array>
 
 #include <vulkan/vulkan.h>
 
@@ -29,81 +36,153 @@ const bool enableValidationLayers = false;
 const bool enableValidationLayers = true;
 #endif
 
-const std::vector<const char*> validationLayers = {"VK_LAYER_LUNARG_standard_validation"};
-
+// Validation Layers/Extensions
 // Add aditional extensions here if needed, defaults handled by SDL.
 const std::vector<const char*> instanceExtensions = {/*"VK_KHR_xcb_surface", "VK_KHR_surface"*/};
+const std::vector<const char*> validationLayers   = {"VK_LAYER_LUNARG_standard_validation"};
 const std::vector<const char*> deviceExtensions   = {"VK_KHR_swapchain"};
 
-VkResult create_debug_util_messenger_ext(VkInstance                                instance,
+VkResult create_debug_util_messenger_ext(const VkInstance&                         instance,
                                          const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
                                          const VkAllocationCallbacks*              pAllocator,
                                          VkDebugUtilsMessengerEXT*                 pCallback);
 
-void destroy_debug_utils_messenger_ext(VkInstance                   instance,
+void destroy_debug_utils_messenger_ext(const VkInstance&            instance,
                                        VkDebugUtilsMessengerEXT     callback,
                                        const VkAllocationCallbacks* pAllocator);
 
-class Core {
-  public:
-  Core(SDL_Window* window);
-  ~Core();
-  // Vulkan Public Interface Methods.
-  static VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT      messageSeverity,
-                                                       VkDebugUtilsMessageTypeFlagsEXT             messageType,
-                                                       const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-                                                       void*                                       pUserData)
+std::vector<const char*> get_required_extensions(const std::vector<const char*>& instanceExtensions);
+bool                     check_validation_layer_support(const std::vector<const char*>& validationLayers);
+
+/**
+ * @class UniformBufferObject
+ * @author ewomer
+ * @date 02/12/18
+ * @file
+ * @brief
+ */
+struct UniformBufferObject {
+  glm::mat4 model;
+  glm::mat4 view;
+  glm::mat4 proj;
+};
+
+/**
+ * @class Vertex
+ * @author ewomer
+ * @date 02/12/18
+ * @file
+ * @brief
+ */
+struct Vertex {
+  glm::vec3 pos;
+  glm::vec3 color;
+  glm::vec2 texCoord;
+
+  static VkVertexInputBindingDescription getBindingDescription()
   {
-    std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
-    return VK_FALSE;
+    VkVertexInputBindingDescription bindingDescription = {};
+    bindingDescription.binding                         = 0;
+    bindingDescription.stride                          = sizeof(Vertex);
+    bindingDescription.inputRate                       = VK_VERTEX_INPUT_RATE_VERTEX;
+
+    return bindingDescription;
   }
 
+  static std::array<VkVertexInputAttributeDescription, 3> getAttributesDescription()
+  {
+    std::array<VkVertexInputAttributeDescription, 3> attributesDescription = {};
+
+    attributesDescription[0].binding  = 0;
+    attributesDescription[0].location = 0;
+    attributesDescription[0].format   = VK_FORMAT_R32G32B32_SFLOAT;
+    attributesDescription[0].offset   = offsetof(Vertex, pos);
+
+    attributesDescription[1].binding  = 0;
+    attributesDescription[1].location = 1;
+    attributesDescription[1].format   = VK_FORMAT_R32G32B32_SFLOAT;
+    attributesDescription[1].offset   = offsetof(Vertex, color);
+
+    attributesDescription[2].binding  = 0;
+    attributesDescription[2].location = 2;
+    attributesDescription[2].format   = VK_FORMAT_R32G32_SFLOAT;
+    attributesDescription[2].offset   = offsetof(Vertex, texCoord);
+
+    return attributesDescription;
+  }
+
+  bool operator==(const Vertex& other) const
+  {
+    return pos == other.pos && color == other.color && texCoord == other.texCoord;
+  }
+};
+
+/**
+ * @class Model
+ * @author ewomer
+ * @date 02/12/18
+ * @file
+ * @brief
+ */
+struct Model {
+  int width;   // = 800;
+  int height;  // = 600;
+
+  std::string modelPath;    // = "data/models/chalet.obj"
+  std::string texturePath;  // = "data/textures/chalet.jpg"
+
+  std::vector<Vertex>   verticies;
+  std::vector<uint32_t> indices;
+  VkBuffer              vertexBuffer;
+  VkDeviceMemory        vertexBufferMemory;
+};
+
+// Vulkan Public Interface Methods.
+static VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT      messageSeverity,
+                                                     VkDebugUtilsMessageTypeFlagsEXT             messageType,
+                                                     const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+                                                     void*                                       pUserData)
+{
+  std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+  return VK_FALSE;
+}
+
+class Core {
+public:
+  // Initialization public methods
   void init(SDL_Window* window);
-  bool draw();  // Vulkan-tutorial.com DrawFrame
   void cleanup();
+
+  // Rendering
+  bool draw();  // Vulkan-tutorial.com DrawFrame
   bool ready_to_draw() { return canRender; }
   bool on_window_size_changed();
 
-  struct QueueFamilyIndices {
-    std::optional<uint32_t> graphicsFamily;
-    std::optional<uint32_t> presentFamily;
-
-    bool is_complete() { return graphicsFamily.has_value() && presentFamily.has_value(); }
-  };
-
-  struct SwapChainSupportDetails {
-    VkSurfaceCapabilitiesKHR        capabilities;
-    std::vector<VkSurfaceFormatKHR> formats;
-    std::vector<VkPresentModeKHR>   presentModes;
-  };
-
-  private:
+private:
   const int MAX_FRAMES_IN_FLIGHT = 2;
   size_t    currentFrame         = 0;
 
   // SDL2
   SDL_Window* window;
 
-  // Core
-  VkInstance               instance;
-  VkDebugUtilsMessengerEXT callback;
-  VkPhysicalDevice         physicalDevice = VK_NULL_HANDLE;
-  VkDevice                 logicalDevice;
+  // Instance
+  Instance instance;
 
-  // Queues
-  VkQueue graphicsQueue;
-  VkQueue presentQueue;
+  // Debug
+  VkDebugUtilsMessengerEXT callback;
 
   // Surface
-  VkSurfaceKHR primarySurface;
+  Surface primarySurface;
 
-  // Swapchain
-  VkSwapchainKHR             swapchain = VK_NULL_HANDLE;
-  std::vector<VkImage>       swapchainImages;
-  VkFormat                   swapchainImageFormat;
-  VkExtent2D                 swapchainExtent;
-  std::vector<VkImageView>   swapchainImageViews;
-  std::vector<VkFramebuffer> swapchainFramebuffers;
+  // Physical Device
+  PhysicalDevice physicalDevice;
+
+  // Logical Device
+  VkDevice logicalDevice;
+
+  Queue queue;
+
+  SwapChain swapchain;
 
   // Graphics Pipeline
   VkRenderPass          renderPass;
@@ -111,18 +190,27 @@ class Core {
   VkPipelineLayout      pipelineLayout;
   VkPipeline            graphicsPipeline;
 
+  // Command Pools
   VkCommandPool                commandPool;
   std::vector<VkCommandBuffer> commandBuffers;
-  VkBuffer                     vertexBuffer = VK_NULL_HANDLE;
-  VkDeviceMemory               vertexBufferMemory;
-  VkBuffer                     indexBuffer;
-  VkDeviceMemory               indexBufferMemory;
-  std::vector<VkBuffer>        uniformBuffers;
-  std::vector<VkDeviceMemory>  uniformBuffersMemory;
+
+  // Vertex Buffers
+  VkBuffer       vertexBuffer = VK_NULL_HANDLE;
+  VkDeviceMemory vertexBufferMemory;
+
+  // Index buffers
+  VkBuffer       indexBuffer;
+  VkDeviceMemory indexBufferMemory;
+
+  // Uniform Buffers
+  std::vector<VkBuffer>       uniformBuffers;
+  std::vector<VkDeviceMemory> uniformBuffersMemory;
+
+  // Descriptor Pools/Sets
   VkDescriptorPool             descriptorPool;
   std::vector<VkDescriptorSet> descriptorSets;
-  VkSampleCountFlagBits        msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 
+  // Images, base/template class texture, depth, color could derive from?
   uint32_t       mipLevels;
   VkImage        textureImage;
   VkDeviceMemory textureImageMemory;
@@ -137,48 +225,53 @@ class Core {
   VkDeviceMemory colorImageMemory;
   VkImageView    colorImageView;
 
+  // Concurrency
   std::vector<VkSemaphore> imageAvailableSemaphore;
   std::vector<VkSemaphore> renderFinishedSemaphore;
   std::vector<VkFence>     inFlightFences;
-  bool                     framebufferResized = false;
 
-  void* VulkanLibrary = nullptr;
-  bool  canRender     = false;
+  // Graphics/Rendering
+  bool framebufferResized = false;
+  bool canRender          = false;
 
-  char*    extensionStringNames[64];  // Eric: why am I char const *?
-  uint32_t extensionCount = 0;
-
-  QueueFamilyIndices familyIndicies;
-
-  // Initializers
-  void create_instance();
+  // Debug
   void setup_debug_callback();
-  void create_surface(SDL_Window* window);
-  void pick_physical_device();
 
-  // Cleanup
+  // Logical Device
+  void create_logical_device();
+
+  // Image Views
+  void create_image_views();
+
+  // Render Pass
+  void create_render_pass();
+
+  // Descriptor Sets
+  void create_descriptor_set_layout();
+
+  // Graphics Pipeline
+  void create_graphics_pipeline();
+
+  // Swapchain
   void cleanup_swapchain();
+  bool recreate_swap_chain();
 
-  // Eric: Clean this area up
-  // Misc
-  std::vector<const char*>      get_required_extensions(const std::vector<const char*>& instanceExtensions);
-  Core::SwapChainSupportDetails query_swap_chain_support(VkPhysicalDevice& device);
-  Core::QueueFamilyIndices      find_queue_families(VkPhysicalDevice& device);
-  bool                          check_validation_layer_support(const std::vector<const char*>& validationLayers);
-  bool                          check_device_extension_support(VkPhysicalDevice device);
-  bool                          is_device_suitable(VkPhysicalDevice device);
-  void                          get_device_queues(VkDevice&                 device,
-                                                  Core::QueueFamilyIndices& familyIndicies,
-                                                  VkQueue&                  presentQueue,
-                                                  VkQueue&                  graphicsQueue);
-  uint32_t find_memory_type(VkPhysicalDevice& physicalDevice, uint32_t& typeFilter, VkMemoryPropertyFlags& properties);
-  VkFormat find_supported_format(VkPhysicalDevice&            device,
-                                 const std::vector<VkFormat>& candidates,
-                                 const VkImageTiling&         tiling,
-                                 const VkFormatFeatureFlags&  features);
-  VkFormat find_depth_format(VkPhysicalDevice& physicalDevice);
-  bool     has_stencil_component(VkFormat& format);
-  VkSampleCountFlagBits get_max_usable_sample_count(VkPhysicalDevice& physicalDevice);
+  // Graphics/Rendering
+  VkImageView create_image_view(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels);
+  VkFormat    find_depth_format(const VkPhysicalDevice& physicalDevice);
+  VkFormat    find_supported_format(const VkPhysicalDevice&      device,
+                                    const std::vector<VkFormat>& candidates,
+                                    const VkImageTiling&         tiling,
+                                    const VkFormatFeatureFlags&  features) const;
+
+  // Image Layout
+  bool has_stencil_component(VkFormat& format);
+
+  // Factory, Object related
+  VkShaderModule create_shader_module(VkDevice device, const std::vector<char> code);
+
+  // Utility
+  std::vector<char> read_file(const std::string& filename);
 };
 
 #endif  // VULKAN_H
