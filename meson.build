@@ -38,11 +38,6 @@ configure_file(input : 'src/config.h.in',
 
 raytrace_src = [
     'src/system/window/vk_core.cpp',
-    'src/system/window/Instance.cpp',
-    'src/system/window/PhysicalDevice.cpp',
-    'src/system/window/Surface.cpp',
-    'src/system/window/Queue.cpp',
-    'src/system/window/SwapChain.cpp',
     'src/system/window/window.cpp',
     'src/scene/scene.cpp',
     'src/rendering/raytracer.cpp',
