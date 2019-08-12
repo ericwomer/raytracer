@@ -21,6 +21,9 @@ Window::Window()
     std::runtime_error("Failed to create SDL window");
     exit;
   }
+
+  Core core;
+  core.init();
 }
 
 Window::~Window()
