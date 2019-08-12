@@ -10,32 +10,32 @@
 
 int writeFilePPM(std::string const& filename, std::string const& contents)
 {
-  std::ofstream ofile;
+    std::ofstream ofile;
 
-  {
-    // Close it in case it was left open.
-    if (ofile.is_open()) {
-      ofile.close();
+    {
+        // Close it in case it was left open.
+        if (ofile.is_open()) {
+            ofile.close();
+        }
+        ofile.open(filename);
+
+        if (!ofile) {
+            std::cerr << "Could not open " << filename << "\n";
+            return -1;
+        }
+
+        ofile << contents;
+        ofile.close();
     }
-    ofile.open(filename);
 
-    if (!ofile) {
-      std::cerr << "Could not open " << filename << "\n";
-      return -1;
-    }
-
-    ofile << contents;
-    ofile.close();
-  }
-
-  return 0;
+    return 0;
 }
 
 // Eric: Implement a flag system to decide on which file format to write too.
 
 int writeFile(const std::string& filename, Vec2<int> res, std::vector<Pixel_t> data)
 {
-  /*
+    /*
     std::vector<pixel> Pixel(sizeof(data));
     // std::uint8_t *Buff = static_cast<uint8_t *>(data.data());
 
@@ -81,9 +81,9 @@ int writeFile(const std::string& filename, Vec2<int> res, std::vector<Pixel_t> d
       ofile.close();
     } */
 
-  // stbi_flip_vertically_on_write(1);
-  std::string tempname = filename;
-  stbi_write_tga(tempname.c_str(), res.x(), res.y(), 4, data.data());
-  // stbi_write_png("scene.png", res.x(), res.y(), 3, data, 0);
-  return 0;
+    // stbi_flip_vertically_on_write(1);
+    std::string tempname = filename;
+    stbi_write_tga(tempname.c_str(), res.x(), res.y(), 4, data.data());
+    // stbi_write_png("scene.png", res.x(), res.y(), 3, data, 0);
+    return 0;
 }

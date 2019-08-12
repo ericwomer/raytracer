@@ -8,14 +8,14 @@
 
 // Used for
 class sector {
-  public:
-  int x_start;
-  int y_start;
+public:
+    int x_start;
+    int y_start;
 
-  int x_end;
-  int y_end;
+    int x_end;
+    int y_end;
 
-  std::vector<std::vector<int>> section;
+    std::vector<std::vector<int>> section;
 };
 
 #endif  // SECTOR_H
