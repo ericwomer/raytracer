@@ -113,9 +113,7 @@ int RaytracingApp::main(std::vector<std::string>& params)
     }
   }
 
-  window.init();
-  window.rendering_loop();
-  return EXIT_SUCCESS;  // main(); disable rendering for now.
+  return main();
 }
 
 void RaytracingApp::help(void)
