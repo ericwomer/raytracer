@@ -109,6 +109,25 @@ std::vector<const char*> get_required_extensions(const std::vector<const char*>&
     }
   }
 
+  //  uint32_t                           instanceExtensionCount = 0;
+  //  std::vector<VkExtensionProperties> vkInstanceExtensions;
+  //  vkEnumerateInstanceExtensionProperties(nullptr, &instanceExtensionCount, nullptr);
+  //  vkInstanceExtensions.resize(instanceExtensionCount);
+  //  vkEnumerateInstanceExtensionProperties(nullptr, &instanceExtensionCount, vkInstanceExtensions.data());
+
+  //  if (enableValidationLayers) {
+  //    std::cout << "\nNumber of availiable instance extensions\t" << vkInstanceExtensions.size() << "\n";
+  //    std::cout << "Available Extension List: \n";
+  //    for (auto& ext : vkInstanceExtensions) {
+  //      std::cout << "\t" << ext.extensionName << "\n";
+  //    }
+  //  }
+
+  //  std::vector<const char*> extensions;
+  //  for (auto& ext : instanceExtensions) {
+  //    extensions.push_back(ext);
+  //  }
+
   if (enableValidationLayers) {
     sdlInstanceExtensions.push_back("VK_EXT_debug_report");
     sdlInstanceExtensions.push_back("VK_EXT_debug_utils");
@@ -159,12 +178,10 @@ void Core::init(SDL_Window* window)
   setup_debug_callback();
   primarySurface.create(instance.get(), window);
   physicalDevice.pick(&instance.get(), &queue, swapchain, primarySurface.get(), deviceExtensions);
-  logicalDevice
-      .create(physicalDevice, primarySurface, queue, enableValidationLayers, deviceExtensions, validationLayers);
-
-  queue.init(logicalDevice.get());
-  canRender = swapchain.create(physicalDevice.get(), logicalDevice.get(), primarySurface.get(), queue, window);
-  swapchain.create_image_views(logicalDevice.get());
+  create_logical_device();
+  queue.init(logicalDevice);
+  canRender = swapchain.create(physicalDevice.get(), logicalDevice, primarySurface.get(), queue, window);
+  create_image_views();
   create_render_pass();
   create_descriptor_set_layout();
   create_graphics_pipeline();
@@ -185,15 +202,15 @@ bool Core::on_window_size_changed()
  */
 bool Core::recreate_swap_chain()
 {
-  if (logicalDevice.get() != VK_NULL_HANDLE) {
-    vkDeviceWaitIdle(logicalDevice.get());
+  if (logicalDevice != VK_NULL_HANDLE) {
+    vkDeviceWaitIdle(logicalDevice);
   }
 
   cleanup_swapchain();
-  swapchain.create(physicalDevice.get(), logicalDevice.get(), primarySurface.get(), queue, window);
+  swapchain.create(physicalDevice.get(), logicalDevice, primarySurface.get(), queue, window);
 
   if (canRender) {
-    swapchain.create_image_views(logicalDevice.get());
+    create_image_views();
     create_render_pass();
     create_graphics_pipeline();
     //    create_color_resources();
@@ -293,111 +310,6 @@ bool Core::draw()  // Eric: Draw is draw frame.
 }
 
 /**
- * @brief
- */
-void Core::cleanup()
-{
-  /*
-  if (device != VK_NULL_HANDLE) {
-    vkDeviceWaitIdle(device);
-  }
-
-  cleanup_swapchain();
-
-  vkDestroySampler(device, textureSampler, nullptr);
-  vkDestroyImageView(device, textureImageView, nullptr);
-  vkDestroyImage(device, textureImage, nullptr);
-  vkFreeMemory(device, textureImageMemory, nullptr);
-
-  vkDestroyDescriptorPool(device, descriptorPool, nullptr);
-  vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
-
-  for (size_t i = 0; i < swapchainImages.size(); i++) {
-    vkDestroyBuffer(device, uniformBuffers[i], nullptr);
-    vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
-  }
-
-  vkDestroyBuffer(device, indexBuffer, nullptr);
-  vkFreeMemory(device, indexBufferMemory, nullptr);
-  vkDestroyBuffer(device, vertexBuffer, nullptr);
-  vkFreeMemory(device, vertexBufferMemory, nullptr);
-
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-    vkDestroySemaphore(device, renderFinishedSemaphore[i], nullptr);
-    vkDestroySemaphore(device, imageAvailableSemaphore[i], nullptr);
-    vkDestroyFence(device, inFlightFences[i], nullptr);
-  }
-
-  vkDestroyCommandPool(device, commandPool, nullptr);
-  vkDestroyDevice(device, nullptr);
-
-  if (enableValidationLayers) {
-    destroy_debug_utils_messenger_ext(instance, callback, nullptr);
-  }
-
-  vkDestroySurfaceKHR(instance, surface, nullptr);
-  vkDestroyInstance(instance, nullptr);
-*/
-  logicalDevice.cleanup();
-
-  cleanup_swapchain();
-
-  if (enableValidationLayers) {
-    destroy_debug_utils_messenger_ext(instance.get(), callback, nullptr);
-  }
-
-  primarySurface.cleanup(instance.get());
-  instance.cleanup();
-}
-
-/**
- * @brief
- */
-void Core::cleanup_swapchain()
-{
-  /*
-  switch (auto result = vkGetFenceStatus(logicalDevice, inFlightFences[currentFrame]); result) {
-    case VK_SUCCESS:
-      break;
-    case VK_NOT_READY:
-      vkDeviceWaitIdle(logicalDevice);
-      break;
-    case VK_ERROR_OUT_OF_HOST_MEMORY:
-    case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-    case VK_ERROR_DEVICE_LOST:
-      throw std::runtime_error("Fence Status Error!");
-      return;
-  }
-
-  vkDestroyImageView(logicalDevice, colorImageView, nullptr);
-  vkDestroyImage(logicalDevice, colorImage, nullptr);
-  vkFreeMemory(logicalDevice, colorImageMemory, nullptr);
-
-  for (auto framebuffer : swapchainFramebuffers) {
-    vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
-  }
-
-  vkDestroyImageView(logicalDevice, depthImageView, nullptr);
-  vkDestroyImage(logicalDevice, depthImage, nullptr);
-  vkFreeMemory(logicalDevice, depthImageMemory, nullptr);
-
-
-  vkFreeCommandBuffers(logicalDevice, commandPool, static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
-  commandBuffers.clear();
-*/
-
-  vkDestroyPipeline(logicalDevice.get(), graphicsPipeline, nullptr);
-  vkDestroyPipelineLayout(logicalDevice.get(), pipelineLayout, nullptr);
-  vkDestroyRenderPass(logicalDevice.get(), renderPass, nullptr);
-
-  swapchain.destroy_image_views(logicalDevice.get());
-
-  if (swapchain.get() != VK_NULL_HANDLE) {
-    swapchain.cleanup(logicalDevice.get());
-  }
-}
-
-/**
 * @brief
 *
 */
@@ -409,8 +321,8 @@ void Core::create_graphics_pipeline()
   VkShaderModule vertShaderModule;
   VkShaderModule fragShaderModule;
 
-  vertShaderModule = create_shader_module(logicalDevice.get(), vertShaderCode);
-  fragShaderModule = create_shader_module(logicalDevice.get(), fragShaderCode);
+  vertShaderModule = create_shader_module(logicalDevice, vertShaderCode);
+  fragShaderModule = create_shader_module(logicalDevice, fragShaderCode);
 
   VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
   vertShaderStageInfo.sType                           = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -523,7 +435,7 @@ void Core::create_graphics_pipeline()
   pipelineLayoutInfo.pSetLayouts                = &descriptorSetLayout;  // optional
   pipelineLayoutInfo.pushConstantRangeCount     = 0;                     // optional
 
-  if (vkCreatePipelineLayout(logicalDevice.get(), &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
+  if (vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
     throw std::runtime_error("Failed to create pipeline layout!");
   }
 
@@ -546,13 +458,34 @@ void Core::create_graphics_pipeline()
 
   pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;  // optional
 
-  if (vkCreateGraphicsPipelines(logicalDevice.get(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &graphicsPipeline) !=
+  if (vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &graphicsPipeline) !=
       VK_SUCCESS) {
     throw std::runtime_error("Failed to create graphics pipeline!");
   }
 
-  vkDestroyShaderModule(logicalDevice.get(), fragShaderModule, nullptr);
-  vkDestroyShaderModule(logicalDevice.get(), vertShaderModule, nullptr);
+  vkDestroyShaderModule(logicalDevice, fragShaderModule, nullptr);
+  vkDestroyShaderModule(logicalDevice, vertShaderModule, nullptr);
+}
+
+/**
+ * @brief
+ *
+ * @param code
+ * @return VkShaderModule
+ */
+VkShaderModule Core::create_shader_module(VkDevice device, const std::vector<char> code)
+{
+  VkShaderModuleCreateInfo createInfo = {};
+  createInfo.sType                    = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+  createInfo.codeSize                 = code.size();
+  createInfo.pCode                    = reinterpret_cast<const uint32_t*>(code.data());
+
+  VkShaderModule shaderModule;
+
+  if (auto result = vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule); result != VK_SUCCESS) {
+    throw std::runtime_error("Failed to create shader module!");
+  }
+  return shaderModule;
 }
 
 /**
@@ -581,9 +514,34 @@ void Core::create_descriptor_set_layout()
   layoutInfo.bindingCount                    = static_cast<uint32_t>(bindings.size());
   layoutInfo.pBindings                       = bindings.data();
 
-  if (vkCreateDescriptorSetLayout(logicalDevice.get(), &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+  if (vkCreateDescriptorSetLayout(logicalDevice, &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
     throw std::runtime_error("Failed to create descriptor set layout!");
   }
+}
+
+/**
+ * @brief
+ *
+ * @param filename
+ * @return std::vector<char>
+ */
+std::vector<char> Core::read_file(const std::string& filename)
+{
+  std::ifstream file(filename, std::ios::ate | std::ios::binary);
+
+  if (!file.is_open()) {
+    throw std::runtime_error("Failed to open file!");
+  }
+
+  size_t            fileSize = (size_t)file.tellg();
+  std::vector<char> buffer(fileSize);
+
+  file.seekg(0);
+  file.read(buffer.data(), fileSize);
+
+  file.close();
+
+  return buffer;
 }
 
 /**
@@ -659,7 +617,7 @@ void Core::create_render_pass()
   renderPassInfo.dependencyCount        = 1;
   renderPassInfo.pDependencies          = &dependency;
 
-  if (vkCreateRenderPass(logicalDevice.get(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
+  if (vkCreateRenderPass(logicalDevice, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
     throw std::runtime_error("Failed to create render pass!");
   }
 }
@@ -705,45 +663,195 @@ VkFormat Core::find_supported_format(const VkPhysicalDevice&      physicalDevice
 /**
  * @brief
  *
- * @param filename
- * @return std::vector<char>
  */
-std::vector<char> Core::read_file(const std::string& filename)
+void Core::create_image_views()
 {
-  std::ifstream file(filename, std::ios::ate | std::ios::binary);
+  swapchain.resize_image_views(swapchain.images().size());
 
-  if (!file.is_open()) {
-    throw std::runtime_error("Failed to open file!");
+  for (size_t i = 0; i < swapchain.images().size(); i++) {
+    VkImageView imageView =
+        create_image_view(swapchain.images()[i], swapchain.image_format(), VK_IMAGE_ASPECT_COLOR_BIT, 1);
+    swapchain.add_image_view(imageView, i);
+    canRender = true;
   }
+}
 
-  size_t            fileSize = (size_t)file.tellg();
-  std::vector<char> buffer(fileSize);
+/**
+ * @brief
+ * @param image
+ * @param format
+ * @return
+ */
+VkImageView Core::create_image_view(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels)
+{
+  VkImageViewCreateInfo viewInfo           = {};
+  viewInfo.sType                           = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+  viewInfo.image                           = image;
+  viewInfo.viewType                        = VK_IMAGE_VIEW_TYPE_2D;
+  viewInfo.format                          = format;
+  viewInfo.subresourceRange.aspectMask     = aspectFlags;
+  viewInfo.subresourceRange.baseMipLevel   = 0;
+  viewInfo.subresourceRange.levelCount     = mipLevels;
+  viewInfo.subresourceRange.baseArrayLayer = 0;
+  viewInfo.subresourceRange.layerCount     = 1;
 
-  file.seekg(0);
-  file.read(buffer.data(), fileSize);
-
-  file.close();
-
-  return buffer;
+  VkImageView imageView;
+  if (vkCreateImageView(logicalDevice, &viewInfo, nullptr, &imageView) != VK_SUCCESS) {
+    throw std::runtime_error("Failed to create texture image view!");
+  }
+  return imageView;
 }
 
 /**
  * @brief
  *
- * @param code
- * @return VkShaderModule
  */
-VkShaderModule Core::create_shader_module(VkDevice device, const std::vector<char> code)
+void Core::create_logical_device()
 {
-  VkShaderModuleCreateInfo createInfo = {};
-  createInfo.sType                    = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-  createInfo.codeSize                 = code.size();
-  createInfo.pCode                    = reinterpret_cast<const uint32_t*>(code.data());
+  QueueFamilyIndices familyIndicies = queue.find_queue_families(physicalDevice.get(), primarySurface.get());
+  queue.init_faily_indicies(familyIndicies);
+  std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+  std::set<uint32_t>                   uniqueQueueFamilies = {familyIndicies.graphicsFamily.value(),
+                                            familyIndicies.presentFamily.value()};
 
-  VkShaderModule shaderModule;
-
-  if (auto result = vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule); result != VK_SUCCESS) {
-    throw std::runtime_error("Failed to create shader module!");
+  float queuePriority = 1.0f;
+  for (uint32_t queueFamily : uniqueQueueFamilies) {
+    VkDeviceQueueCreateInfo queueCreateInfo = {};
+    queueCreateInfo.sType                   = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    queueCreateInfo.queueFamilyIndex        = queueFamily;
+    queueCreateInfo.queueCount              = 1;
+    queueCreateInfo.pQueuePriorities        = &queuePriority;
+    queueCreateInfos.push_back(queueCreateInfo);
   }
-  return shaderModule;
+
+  VkPhysicalDeviceFeatures deviceFeatures = {};
+  deviceFeatures.samplerAnisotropy        = VK_TRUE;
+  deviceFeatures.sampleRateShading        = VK_TRUE;
+
+  VkDeviceCreateInfo createInfo      = {};
+  createInfo.sType                   = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+  createInfo.queueCreateInfoCount    = queueCreateInfos.size();
+  createInfo.pQueueCreateInfos       = queueCreateInfos.data();
+  createInfo.pEnabledFeatures        = &deviceFeatures;
+  createInfo.enabledExtensionCount   = static_cast<uint32_t>(deviceExtensions.size());
+  createInfo.ppEnabledExtensionNames = deviceExtensions.data();
+
+  if (enableValidationLayers) {
+    createInfo.enabledLayerCount   = validationLayers.size();
+    createInfo.ppEnabledLayerNames = validationLayers.data();
+  } else {
+    createInfo.enabledLayerCount = 0;
+  }
+
+  if (vkCreateDevice(physicalDevice.get(), &createInfo, nullptr, &logicalDevice) != VK_SUCCESS) {
+    throw std::runtime_error("failed to create logical device!");
+  }
+}
+
+/**
+ * @brief
+ */
+void Core::cleanup()
+{
+  /*
+  if (device != VK_NULL_HANDLE) {
+    vkDeviceWaitIdle(device);
+  }
+
+  cleanup_swapchain();
+
+  vkDestroySampler(device, textureSampler, nullptr);
+  vkDestroyImageView(device, textureImageView, nullptr);
+  vkDestroyImage(device, textureImage, nullptr);
+  vkFreeMemory(device, textureImageMemory, nullptr);
+
+  vkDestroyDescriptorPool(device, descriptorPool, nullptr);
+  vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
+
+  for (size_t i = 0; i < swapchainImages.size(); i++) {
+    vkDestroyBuffer(device, uniformBuffers[i], nullptr);
+    vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
+  }
+
+  vkDestroyBuffer(device, indexBuffer, nullptr);
+  vkFreeMemory(device, indexBufferMemory, nullptr);
+  vkDestroyBuffer(device, vertexBuffer, nullptr);
+  vkFreeMemory(device, vertexBufferMemory, nullptr);
+
+  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+    vkDestroySemaphore(device, renderFinishedSemaphore[i], nullptr);
+    vkDestroySemaphore(device, imageAvailableSemaphore[i], nullptr);
+    vkDestroyFence(device, inFlightFences[i], nullptr);
+  }
+
+  vkDestroyCommandPool(device, commandPool, nullptr);
+  vkDestroyDevice(device, nullptr);
+
+  if (enableValidationLayers) {
+    destroy_debug_utils_messenger_ext(instance, callback, nullptr);
+  }
+
+  vkDestroySurfaceKHR(instance, surface, nullptr);
+  vkDestroyInstance(instance, nullptr);
+*/
+
+  if (logicalDevice != VK_NULL_HANDLE) {
+    vkDeviceWaitIdle(logicalDevice);
+  }  // Enter destruction code after here.
+
+  cleanup_swapchain();
+
+  if (enableValidationLayers) {
+    destroy_debug_utils_messenger_ext(instance.get(), callback, nullptr);
+  }
+
+  primarySurface.cleanup(instance.get());
+  instance.cleanup();
+}
+
+/**
+ * @brief
+ */
+void Core::cleanup_swapchain()
+{
+  /*
+  switch (auto result = vkGetFenceStatus(logicalDevice, inFlightFences[currentFrame]); result) {
+    case VK_SUCCESS:
+      break;
+    case VK_NOT_READY:
+      vkDeviceWaitIdle(logicalDevice);
+      break;
+    case VK_ERROR_OUT_OF_HOST_MEMORY:
+    case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+    case VK_ERROR_DEVICE_LOST:
+      throw std::runtime_error("Fence Status Error!");
+      return;
+  }
+
+  vkDestroyImageView(logicalDevice, colorImageView, nullptr);
+  vkDestroyImage(logicalDevice, colorImage, nullptr);
+  vkFreeMemory(logicalDevice, colorImageMemory, nullptr);
+
+  for (auto framebuffer : swapchainFramebuffers) {
+    vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
+  }
+
+  vkDestroyImageView(logicalDevice, depthImageView, nullptr);
+  vkDestroyImage(logicalDevice, depthImage, nullptr);
+  vkFreeMemory(logicalDevice, depthImageMemory, nullptr);
+
+
+  vkFreeCommandBuffers(logicalDevice, commandPool, static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
+  commandBuffers.clear();
+*/
+
+  vkDestroyPipeline(logicalDevice, graphicsPipeline, nullptr);
+  vkDestroyPipelineLayout(logicalDevice, pipelineLayout, nullptr);
+  vkDestroyRenderPass(logicalDevice, renderPass, nullptr);
+
+  swapchain.image_view_cleanup(logicalDevice);
+
+  if (swapchain.get() != VK_NULL_HANDLE) {
+    swapchain.cleanup(logicalDevice);
+  }
 }

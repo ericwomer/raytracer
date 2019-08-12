@@ -7,7 +7,7 @@ project(
         'cpp_std=c++17',
         'b_lundef=false',
         'b_sanitize=none',
-        'warning_level=1'
+        'warning_level=3'
     ],
     meson_version: '>=0.48.0'
 )
@@ -43,8 +43,6 @@ raytrace_src = [
     'src/system/window/Surface.cpp',
     'src/system/window/Queue.cpp',
     'src/system/window/SwapChain.cpp',
-    'src/system/window/LogicalDevice.cpp',
-    'src/system/window/ImageView.cpp',
     'src/system/window/window.cpp',
     'src/scene/scene.cpp',
     'src/rendering/raytracer.cpp',
@@ -64,7 +62,7 @@ raytrace_include_directories = [
 
 raytrace_cflags = [
   '-stdlib=libc++',
-  '-D_LIBCPP_DEBUG=1'
+  #'-DVK_USE_PLATFORM_XCB_KHR'
   ]
 raytrace_ldflags = [
     '-lm',
