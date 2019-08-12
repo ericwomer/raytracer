@@ -50,13 +50,14 @@ raytrace_src = [
     ]
 
 raytrace_include_directories = [
+    include_directories('thirdparty/include/'),
     include_directories('src/'),
     include_directories('/usr/include/c++/v1/')
     ]
 
 raytrace_cflags = [
   '-stdlib=libc++',
-  '-DVK_USE_PLATFORM_XCB_KHR'
+  #'-DVK_USE_PLATFORM_XCB_KHR'
   ]
 raytrace_ldflags = [
     '-lm',
@@ -107,3 +108,4 @@ raytrace = executable(
     cpp_args: raytrace_cflags,
     link_args: raytrace_ldflags
 )
+
