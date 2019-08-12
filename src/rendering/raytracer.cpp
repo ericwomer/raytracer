@@ -20,8 +20,8 @@ struct sample_s {
       , _j(other._j)
       , _cam(other._cam)
       , _res(other._res)
-      , _col(other._col)
       , _world(other._world)
+      , _col(other._col)
 
   {
   }
@@ -30,8 +30,8 @@ struct sample_s {
       , _j(j)
       , _cam(cam)
       , _res(res)
-      , _col(col)
       , _world(world)
+      , _col(col)
 
   {
   }
@@ -49,8 +49,6 @@ struct sample_s {
   }
 };
 
-// Eric: Rewrite this so it renders to the screen instead of blotting to it. like, takes in an
-// object that can write the pixels to the screen after the sample bit maybe.
 std::stringstream raytracer::renderPPM(camera* cam, Vec2<int> res, int samples, std::vector<hitable*> elements)
 {
   std::stringstream buf;
@@ -62,20 +60,11 @@ std::stringstream raytracer::renderPPM(camera* cam, Vec2<int> res, int samples, 
     for (int i = 0; i < res.x(); i++) {
       Vec3 col(0, 0, 0);
 
-      /*
       struct sample_s sample {
         i, j, cam, res, world, col
       };
 
       tbb::parallel_for(tbb::blocked_range<size_t>(0, samples), sample);
-      */
-
-      for (int s = 0; s < samples; s++) {
-        double u = double(i + drand48()) / double(res.x());
-        double v = double(j + drand48()) / double(res.y());
-        ray    r = cam->get_ray(u, v);
-        col += color(r, world, 0);
-      }
 
       col /= double(samples);
       col    = Vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
