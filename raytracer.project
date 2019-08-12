@@ -1480,18 +1480,6 @@
     </VirtualDirectory>
     <VirtualDirectory Name="system">
       <VirtualDirectory Name="window">
-        <File Name="src/system/window/SwapChain.cpp"/>
-        <File Name="src/system/window/SwapChain.h"/>
-        <File Name="src/system/window/Queue.cpp"/>
-        <File Name="src/system/window/Queue.h"/>
-        <File Name="src/system/window/Surface.cpp"/>
-        <File Name="src/system/window/Surface.h"/>
-        <File Name="src/system/window/PhysicalDevice.cpp"/>
-        <File Name="src/system/window/PhysicalDevice.h"/>
-        <File Name="src/system/window/Instance.cpp"/>
-        <File Name="src/system/window/Instance.h"/>
-        <File Name="src/system/window/Vulkan.cpp"/>
-        <File Name="src/system/window/Vulkan.h"/>
         <File Name="src/system/window/vk_core.cpp"/>
         <File Name="src/system/window/vk_core.h"/>
         <File Name="src/system/window/window.h"/>
