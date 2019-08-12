@@ -2,7 +2,7 @@ project(
     'Ray Tracing App',
     'cpp',
     version : '0.0.1',
-    default_options:
+    default_options: 
     [
         'cpp_std=c++17',
         'b_lundef=false',
@@ -37,8 +37,6 @@ configure_file(input : 'src/config.h.in',
               configuration : conf_data)
 
 raytrace_src = [
-    'src/system/window/vk_core.cpp',
-    'src/system/window/window.cpp',
     'src/scene/scene.cpp',
     'src/rendering/raytracer.cpp',
     'src/system/system.cpp',
@@ -54,27 +52,20 @@ raytrace_include_directories = [
     include_directories('/usr/lib/llvm-8/include/c++/v1/')
     ]
 
-raytrace_cflags = [
-  '-stdlib=libc++',
-  '-DVK_USE_PLATFORM_XCB_KHR'
-  ]
+raytrace_cflags = ['-stdlib=libc++']
 raytrace_ldflags = [
     '-lm',
     '-lc++',
     '-lc++abi']
 
-xcb = dependency('xcb')
-glm = dependency('glm')
 threads = dependency('threads')
-sdl2 = dependency('sdl2')
-vulkan = dependency('vulkan')
 
-raytrace_deps = [threads, sdl2, vulkan, xcb, glm]
+raytrace_deps = [threads]
 
 if not get_option('with_system_tbb')
     tbb_prefix = 'thirdparty/'
 
-# tbb build command, replace clang with cpp's name and the stdver and
+# tbb build command, replace clang with cpp's name and the stdver and 
 # make compiler=clang stdlib=libc++ stdver=c++17 tbb_build_prefix=lib
 
     if get_option('buildtype') == 'debug'
@@ -100,7 +91,7 @@ raytrace_deps += declare_dependency(
 endif
 
 raytrace = executable(
-    'raytracer',
+    'raytracer', 
     raytrace_src,
     dependencies: raytrace_deps,
     include_directories: raytrace_include_directories,

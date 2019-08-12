@@ -1,12 +1,12 @@
 Language: Cpp
 Standard: Cpp11
-BasedOnStyle: "Chromium"
-ColumnLimit: 120
-IndentWidth: 2
+BasedOnStyle: "Chromium" 
+ColumnLimit: 160
+IndentWidth: 4
 UseTab: Never
 
 BreakBeforeBraces: Custom
-BraceWrapping:
+BraceWrapping:   
   AfterEnum: true
   AfterClass: false
   AfterControlStatement: false
@@ -16,23 +16,18 @@ BraceWrapping:
   AfterUnion: false
   BeforeCatch: false
   BeforeElse: false
-  SplitEmptyFunction: true
+  SplitEmptyFunction: false
   SplitEmptyNamespace: true
 
 
 AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: true
+AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: true
-AllowAllParametersOfDeclarationOnNextLine: false
-BinPackArguments: false
-AllowShortFunctionsOnASingleLine: InlineOnly
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-BreakConstructorInitializers: BeforeColon
+AllowShortFunctionsOnASingleLine: InlineOnly  
+BreakConstructorInitializers: BeforeColon 
 BreakConstructorInitializersBeforeComma: true
 IndentCaseLabels: true
-ReflowComments: false
+ReflowComments: false 
 Cpp11BracedListStyle: true
 ContinuationIndentWidth: 4
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
