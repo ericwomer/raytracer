@@ -9,17 +9,14 @@
 
 class Window {
   public:
-  void init();
-  void cleanup();
-
-  bool rendering_loop();
+  Window();
+  ~Window();
 
   private:
-  int width  = 640;
-  int height = 480;
+  int width;
+  int height;
 
-  SDL_Window* window = nullptr;
-  Core        core;
+  SDL_Window* window;
 };
 
 #endif  // WINDOW_H
