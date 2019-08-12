@@ -49,7 +49,8 @@ raytrace_src = [
 
 raytrace_include_directories = [
     include_directories('src/'),
-    include_directories('/usr/lib/llvm-8/include/c++/v1/')
+    include_directories('/usr/include/c++/v1/'),
+    include_directories('thirdparty/include/')
     ]
 
 raytrace_cflags = ['-stdlib=libc++']
@@ -63,32 +64,36 @@ threads = dependency('threads')
 raytrace_deps = [threads]
 
 if not get_option('with_system_tbb')
-    tbb_prefix = 'thirdparty/'
+    tbb_prefix = 'src/thirdparty/tbb'
 
 # tbb build command, replace clang with cpp's name and the stdver and 
 # make compiler=clang stdlib=libc++ stdver=c++17 tbb_build_prefix=lib
 
+ message(tbb_prefix)
+ paths_joined = join_paths(meson.source_root(),tbb_prefix, 'build/lib_debug')
+ message(paths_joined)
+
     if get_option('buildtype') == 'debug'
         libtbb = cpp.find_library(
                 'tbb_debug',
-                dirs : join_paths(meson.source_root(), tbb_prefix, 'lib')
+                dirs : join_paths(meson.source_root(), tbb_prefix, 'build/lib_debug/')
             )
-            tbb_link_path = '-L' + meson.source_root() + '/' + tbb_prefix + 'lib'
+            tbb_link_path = '-L' + meson.source_root() + '/' + tbb_prefix + '/build/lib_debug/'
     else
          libtbb = cpp.find_library(
                 'tbb',
                 dirs : join_paths(meson.source_root(), tbb_prefix, 'build/lib_release')
             )
-            tbb_link_path = '-L' + meson.source_root() + '/' + tbb_prefix + 'build/lib_release'
+            tbb_link_path = '-L' + meson.source_root() + '/' + tbb_prefix + '/build/lib_release'
     endif
 
-raytrace_deps += declare_dependency(
-    include_directories: include_directories(tbb_prefix + '/include'),
-    dependencies: [libtbb],
-    link_args: ['-latomic', tbb_link_path]
-)
+ raytrace_deps += declare_dependency(
+     include_directories: include_directories(tbb_prefix + '/include'),
+     dependencies: [libtbb],
+     link_args: ['-latomic', tbb_link_path]
+ )
 
-endif
+endif # 'with_system_tbb'
 
 raytrace = executable(
     'raytracer', 
