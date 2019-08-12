@@ -6,7 +6,6 @@
 #include "Surface.h"
 #include "Queue.h"
 #include "SwapChain.h"
-#include "LogicalDevice.h"
 
 #include <iostream>
 #include <vector>
@@ -166,15 +165,24 @@ private:
   // SDL2
   SDL_Window* window;
 
-  Instance       instance;
-  Surface        primarySurface;
-  PhysicalDevice physicalDevice;
-  LogicalDevice  logicalDevice;
-  Queue          queue;
-  SwapChain      swapchain;
+  // Instance
+  Instance instance;
 
   // Debug
   VkDebugUtilsMessengerEXT callback;
+
+  // Surface
+  Surface primarySurface;
+
+  // Physical Device
+  PhysicalDevice physicalDevice;
+
+  // Logical Device
+  VkDevice logicalDevice;
+
+  Queue queue;
+
+  SwapChain swapchain;
 
   // Graphics Pipeline
   VkRenderPass          renderPass;
@@ -229,7 +237,11 @@ private:
   // Debug
   void setup_debug_callback();
 
+  // Logical Device
+  void create_logical_device();
+
   // Image Views
+  void create_image_views();
 
   // Render Pass
   void create_render_pass();
@@ -245,12 +257,12 @@ private:
   bool recreate_swap_chain();
 
   // Graphics/Rendering
-
-  VkFormat find_depth_format(const VkPhysicalDevice& physicalDevice);
-  VkFormat find_supported_format(const VkPhysicalDevice&      device,
-                                 const std::vector<VkFormat>& candidates,
-                                 const VkImageTiling&         tiling,
-                                 const VkFormatFeatureFlags&  features) const;
+  VkImageView create_image_view(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels);
+  VkFormat    find_depth_format(const VkPhysicalDevice& physicalDevice);
+  VkFormat    find_supported_format(const VkPhysicalDevice&      device,
+                                    const std::vector<VkFormat>& candidates,
+                                    const VkImageTiling&         tiling,
+                                    const VkFormatFeatureFlags&  features) const;
 
   // Image Layout
   bool has_stencil_component(VkFormat& format);
