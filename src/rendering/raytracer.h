@@ -39,8 +39,6 @@ inline Vec3 color(const ray& r, hitable* world, int depth)
 class raytracer {
 public:
     raytracer(){};
-    std::stringstream renderPPM(camera* cam, Vec2<int> res, int samples, std::vector<hitable*> elements);
-
     std::vector<Pixel_t> render(camera* cam, Vec2<int> res, int samples, std::vector<hitable*> elements);
 };
 
