@@ -1,6 +1,6 @@
-# README
+# README.md
 
-# BUILDING
+# Building raytracer
 
  # Dependicies
  * cmake >= 3.15 or meson >=0.48.0 with ninja
@@ -16,7 +16,8 @@ sudo apt-get install clang-8 cmake libc++-8-dev libc++abi-8-dev
 ```
 
 
-# BUILDING DOCUMENTATION
+# Building documentation
+Building the documentation depends on graphviz and doxygen
 # On Ubuntu
 ```
 sudo apt-get install doxygen graphviz
