@@ -7,7 +7,7 @@ inline Vec3 random_in_unit_disk()
 {
     Vec3 p;
     do {
-        p = 2.0 * Vec3(drand48(), drand48(), 0) - Vec3(1, 1, 0);
+        p = 2.0 * Vec3(double(rand())/ RAND_MAX, double(rand())/ RAND_MAX, 0) - Vec3(1, 1, 0);
     } while (dot(p, p) >= 1.0);
     return p;
 }

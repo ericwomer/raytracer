@@ -2,7 +2,7 @@
 #define VEC2_H
 
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <stdlib.h>
 
 template <class T>

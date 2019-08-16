@@ -24,13 +24,13 @@ struct sample_s {
         , _world(world)
     {}
 
-    Vec3 operator()(const tbb::blocked_range<size_t>& range) const
+    void operator()(const tbb::blocked_range<size_t>& range) const
     {
         std::cout << "Begin: " << range.begin() << " End: " << range.end() << "\n";
         for (size_t s = range.begin(); s != range.end(); ++s) {
             std::cout << s << "\n";
-            double u = double(_i + drand48()) / double(_res.x());
-            double v = double(_j + drand48()) / double(_res.y());
+            double u = double(_i + double(rand())/RAND_MAX) / double(_res.x());
+            double v = double(_j + double(rand())/RAND_MAX) / double(_res.y());
             ray    r = _cam->get_ray(u, v);
             _col += color(r, _world, 0);
         }
@@ -74,8 +74,8 @@ std::vector<Pixel_t> raytracer::render(camera* cam, Vec2<int> res, int samples, 
         for (int i = 0; i < res.x(); i++) {
             Vec3 col(0, 0, 0);
             for (int s = 0; s < samples; s++) {
-                double u = double(i + drand48()) / double(res.x());
-                double v = double(j + drand48()) / double(res.y());
+                double u = double(i + double(rand())/RAND_MAX) / double(res.x());
+                double v = double(j + double(rand())/RAND_MAX) / double(res.y());
                 ray    r = cam->get_ray(u, v);
                 // Vec3 p = r.point_at_parameter(2.0);
                 col += color(r, world, 0);
