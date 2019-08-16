@@ -1,9 +1,28 @@
-renders*
-render-scene
-.directory
+# Ignore the build and thirdparty dirs
 build/**
 thirdparty/**
-nbproject/**
+
+# Ignore any executables
+dist/bin/*
+dist/lib/*
+dist/include/*
+dist/share/*
+
+# Ignore IDE generated files
+.codelite/**
+.idea/**
+.nbproject/**
+*.project
+
+# Ignore IDE (Usually clion created) cmake build directories.
+cmake-build*/*
+
+# Ignore OS specific files
+.DS_Store
+.directory
+
+# Ignore editor backup files
 *~
 
+# Do not ignore .keep files
 !.keep
