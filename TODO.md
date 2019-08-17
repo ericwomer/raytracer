@@ -53,3 +53,5 @@ class Renderer {
 [] Edit settings without having to recompile
 [] Enable multithread rendering
 [] Render to screen
+
+Problem: changing the render size changes the camera's viewport ratio, which may not be the desired result.
