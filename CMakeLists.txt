@@ -2,6 +2,19 @@ cmake_minimum_required(VERSION 3.14)
 project(raytrace VERSION 0.0.1.0)
 
 option(with_system_tbb "Use systems tbb install" ON)
+option(build_docs "Build docs" OFF)
+
+option(onative
+        "Optimize for the host CPU" OFF)
+
+option(winrt
+        "Build for Windows RT" OFF)
+
+set(cpu_type "" CACHE STRING "When set, passes this string as CPU-ID which will be embedded into the binary.")
+
+set(cpu_optimizations "-mmmx -msse -msse2" CACHE STRING "Which CPU specific optimitations should be used beside the compiler's default?")
+
+option(use_intrinsics "Compile using intrinsics (e.g mmx, sse, msse2)" ON)
 
 if(MSVC)
     #message(STATUS CMAKE_ROOT: ${CMAKE_ROOT})
@@ -30,18 +43,13 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
     if (CPU_OPTIMIZATION)
         add_definitions(${CPU_OPTIMIZATION})
     endif()
-    if (USE_INTRINSICS)
+    if (use_intrinsics)
         add_definitions(-DUSE_INTRINSICS)
     endif()
     if(WIN32)
         # require msvcr70.dll or newer for _aligned_malloc etc
         # I think it is from Visual C++ .NET 2002, so it should be available on any remotely modern system.
         add_definitions(-D__MSVCRT_VERSION__=0x0700)
-
-        find_package(DirectX REQUIRED)
-        include_directories(libs/mingw-hacks)
-        include_directories(${DirectX_INCLUDE_DIR})
-        add_definitions(-DUSE_XINPUT)
     endif()
 
     #if(NOT ANDROID)
@@ -55,7 +63,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
         add_compile_options(-Wno-local-type-template-args -Wno-unknown-warning-option -Wno-inline-new-delete -Wno-switch-enum)
     endif()
 
-    if(NOT CMAKE_CROSSCOMPILING AND ONATIVE)
+    if(NOT CMAKE_CROSSCOMPILING AND onative)
         add_definitions(-march=native)
     endif()
 
@@ -147,25 +155,12 @@ elseif(MSVC)
             #-DUSE_OPENAL
             -DUSE_EXCEPTIONS)
     ## Check for Version ##
-    if( WINRT OR WINDOWS10 ) # Windows RT
+    if( winrt OR WINDOWS10 ) # Windows RT
         add_definitions(-DUSE_WINRT)
     endif()
 
-    if (USE_INTRINSICS)
+    if (use_intrinsics) # Rake: Is this needed?
         add_definitions(-DUSE_INTRINSICS)
-    endif()
-
-    if(NOT CMAKE_CL_64)
-        add_definitions(-D_USE_32BIT_TIME_T)
-    endif()
-
-    if(USE_MFC_TOOLS)
-        add_definitions(-D_AFXDLL)
-
-        # 0: Use Standard Windows Libraries
-        # 1: Use MFC in a Static Library
-        # 2: Use MFC in a Shared DLL
-        set(CMAKE_MFC_FLAG 2)
     endif()
 endif()
 
@@ -176,6 +171,7 @@ if(MSVC)
     include_directories ("${PROJECT_BINARY_DIR}")
 
     add_compile_options("-std:c++17")
+
     add_definitions("-D_USE_MATH_DEFINES")
     add_definitions("-DNOMINMAX")
 
@@ -186,7 +182,7 @@ else()
     if(with_system_tbb)
         pkg_check_modules(tbb REQUIRED tbb)
         include_directories("${tbb_INCLUDEDIR}")
-    else()
+    else() # Rake: Maybe add an option to build this if its not already built.
         find_library(TBB_LIB tbb_debug "${PROJECT_SOURCE_DIR}/src/thirdparty/tbb/build/lib_debug")
         include_directories("${PROJECT_SOURCE_DIR}/src/thirdparty/tbb/include")
     endif()
@@ -198,15 +194,13 @@ else()
     include_directories ("${PROJECT_SOURCE_DIR}/thirdparty/include")
     include_directories ("${PROJECT_BINARY_DIR}")
 
-    include_directories("/usr/lib/llvm-8/include/c++/v1/")
-
+    include_directories("/usr/lib/llvm-8/include/c++/v1/") # Rake: I don't like this hard coded here, find a way to find it, maybe pkg-config?
     add_compile_options("-std=c++17")
     add_compile_options("-stdlib=libc++")
 
     link_libraries("c++")
     link_libraries("c++abi")
     link_libraries("m")
-
 endif()
 
 
@@ -229,44 +223,6 @@ configure_file(
         ${PROJECT_BINARY_DIR}/config.h
 )
 
-## Move to doc/CMakeListst.txt
-# check if Doxygen is installed
-find_package(Doxygen)
-if (DOXYGEN_FOUND)
-    set(TOP_SRCDIR "${CMAKE_SOURCE_DIR}/src")
-    set(TOP_BUILDDIR "${CMAKE_BINARY_DIR}")
-    set(OUTPUT_DIR "${CMAKE_BINARY_DIR}/Documents")
-    set(README_PATH "${CMAKE_SOURCE_DIR}/README.md")
-    set(VERSION "${CMAKE_PROJECT_VERSION}")
-    set(PROJECT_NAME "${CMAKE_PROJECT_NAME}")
-
-    # set input and output files
-    set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/doc/Doxyfile.in)
-    set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
-
-    # request to configure the file
-    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-    message("Doxygen build started")
-
-    # note the option ALL which allows to build the docs together with the application
-    add_custom_target( doc
-            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-            COMMENT "Generating API documentation with Doxygen"
-            VERBATIM )
-else (DOXYGEN_FOUND)
-    message("Doxygen need to be installed to generate the doxygen documentation")
-endif (DOXYGEN_FOUND)
-
-#[[
-cdata.set('TOP_SRCDIR', meson.source_root())
-cdata.set('TOP_BUILDDIR', meson.build_root())
-cdata.set('OUTPUT_DIR', join_paths(meson.build_root(),'Documents'))
-cdata.set('README_PATH', join_paths(meson.source_root(),'README.md'))
-cdata.set('VERSION', meson.project_version())
-cdata.set('PROJECT_NAME', meson.project_name())
-]]
-
 set (raytrace_src
     "src/scene/scene.cpp"
     "src/rendering/raytracer.cpp"
@@ -285,6 +241,10 @@ if(MSVC)
 else()
     add_executable(raytrace ${raytrace_src})
     target_link_libraries(raytrace ${TBB_LIB})
+endif()
+
+if(build_docs)
+    add_subdirectory(doc)
 endif()
 
 #[[
