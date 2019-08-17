@@ -6,7 +6,6 @@
 
 class Base {
 public:  // data types
-
     // Public Interface
     Base(){};
     virtual ~Base(){};

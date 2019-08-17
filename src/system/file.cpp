@@ -8,6 +8,7 @@
 #include "file.h"
 #include "types/types.h"
 
+/*
 int writeFilePPM(std::string const& filename, std::string const& contents)
 {
     std::ofstream ofile;
@@ -30,7 +31,7 @@ int writeFilePPM(std::string const& filename, std::string const& contents)
 
     return 0;
 }
-
+*/
 // Eric: Implement a flag system to decide on which file format to write too.
 
 int writeFile(const std::string& filename, Vec2<int> res, std::vector<Pixel_t> data)

@@ -1,24 +1,24 @@
 #include <iostream>
 #include <limits>
-#include <sstream>
 #include <string>
-#include <sstream>
 #include <tbb/tbb.h>
 
 #include "raytracerapp.h"
-#include "types/types.h"
 
 RaytracingApp::RaytracingApp()
 {
-  app_name = project.name;
-  version_number = project.version_number;
-  project.version_number;
+    app_name = project.name;
+    version_number = project.version_number;
+    project.version_number;
 
     out_format.resolution.e[0] = 640;
     out_format.resolution.e[1] = 480;
     out_format.samples = 10;
     out_format.name = "default";  // fix it so the extension is selected by the output format.
     out_format.ext = ".tga";
+
+    render_parameters.threaded = true;
+    render_parameters.grains = 50000;
 }
 
 // All of the application starts here
@@ -44,7 +44,8 @@ int RaytracingApp::main()
     double aperture = 0.0;
 
     camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(out_format.resolution.x()) / double(out_format.resolution.y()), aperture, dist_to_focus);
-    pixels = tracer.render(&cam, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), out_format.samples, list);
+    pixels = tracer.render(&cam, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), out_format.samples, list, render_parameters.threaded,
+                           render_parameters.grains);
 
     std::stringstream stream_name;
     stream_name << out_format.name << "-" << out_format.resolution.x() << "x" << out_format.resolution.y() << "-" << out_format.samples << out_format.ext;
@@ -60,17 +61,30 @@ int RaytracingApp::main(std::vector<std::string>& params)
 {
     tbb::task_scheduler_init init;
 
-    /* std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
+    std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
     std::cout << "threads: " << init.default_num_threads() << "\n";
-*/
+
     // std::vector<std::string> actions;
     std::vector<std::string> dump;
 
+    // Set the internal application name as called from the terminal/console
     app_name = params[0].data();
+
+    // and then strip the ./ or full path plus application (Windows) from the internal name to clean it up
+#if defined(_WINDOWS)
+    std::string::size_type n;
+    n = app_name.rfind("\\");
+    app_name = app_name.substr(n);
+    app_name.erase(0, 1);
+#else
     app_name.erase(0, 2);
+#endif
+
+    // Since its no longer needed dump the first parameter of params
+    params.erase(params.begin());
 
     // Eric: !!! REWRITE Fix this slow mess, have it processed in one section.
-    // Switch throught the parameters.
+    // Switch throughout the parameters.
     for (std::vector<std::string>::const_iterator i = params.begin(); i != params.end(); ++i) {
         if (*i == "--help" || *i == "-h") {
             help();
@@ -86,13 +100,44 @@ int RaytracingApp::main(std::vector<std::string>& params)
         } else if (*i == "--samples" || *i == "-s") {
             ++i;
             out_format.samples = std::stoi(*i);
+            // For error checking message [Number between 1 and " << std::numeric_limits<unsigned int>::max()  << "
         } else if (*i == "--width" || *i == "-x") {
             ++i;
             out_format.resolution.e[0] = std::stoi(*i);
         } else if (*i == "--height" || *i == "-y") {
             ++i;
             out_format.resolution.e[1] = std::stoi(*i);
+        } else if (*i == "--threaded" || *i == "-t") {
+            ++i;
+            std::string result;
+            for (auto c : *i) {
+                result += std::tolower(c);
+            }
+
+            if (result == "true") {
+                render_parameters.threaded = true;
+            } else if (result == "false") {
+                render_parameters.threaded = false;
+            } else {
+                std::cout << "Unknown value " << result << " for --threaded or -t, must be in the form of 'true' or 'false'.\n";
+                return EXIT_FAILURE;
+            }
+        } else if (*i == "--grains" || *i == "-g") {
+            ++i;
+
+            // test to see if the string contains numbers only
+            if (i->find_first_not_of("0123456789") == std::string::npos) {
+                render_parameters.grains = std::stoi(*i);
+            } else {
+                std::cout << "Error: Only numbers are valid option for --grains or -g in the range of 1 and " << std::numeric_limits<unsigned int>::max()
+                          << "\n";
+                return EXIT_FAILURE;
+            }
+
         } else {  // catch all to make sure there are no invalid parameters
+            std::cout << "Error: Use of unknown parameter " << *i << "\n";
+            std::cout << "type " << app_name << "--help|-h to see usage\n\n";
+            return EXIT_FAILURE;
             dump.push_back(*i);
         }
     }
@@ -103,15 +148,16 @@ int RaytracingApp::main(std::vector<std::string>& params)
 void RaytracingApp::help(void)
 {
     version();
-    
     std::cout << "Usage: " << app_name << " [options] [output file options] [rendering options]...\n";
     std::cout << "\nInformation: \n";
     std::cout << " -h, --help \t\t Print this help message and exit.\n";
     std::cout << " -V, --version \t\t Print the version and exit.\n";
     std::cout << "\nOptions: \n";
     std::cout << " -o, --output \t\t Output file name.\n";
-    std::cout << " -s, --samples \t\t Number of samples taken of each pixel. (?)\n";
+    std::cout << " -s, --samples \t\t Number of samples taken of each pixel. \n";
     std::cout << " -x, --width \t\t Image width. \n";
     std::cout << " -y, --height \t\t Image height. \n";
     std::cout << " -f, --format \t\t Output format [future use] \n";
+    std::cout << " -t, --threaded \t Render using threading \n";
+    std::cout << " -g, --grains \t\t If threaded, what number of grains to use. \n";
 }

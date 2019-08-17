@@ -8,7 +8,7 @@
 #include "types/types.h"
 #include "types/vec2.h"
 
-int writeFilePPM(std::string const& filename, std::string const& contents);
+// int writeFilePPM(std::string const& filename, std::string const& contents);
 
 int writeFile(std::string const& filename, Vec2<int> res, std::vector<Pixel_t> data);
 

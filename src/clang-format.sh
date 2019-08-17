@@ -1,4 +1,5 @@
 #!/bin/bash
 
-clang-format -i -style=file -verbose `find . -type f \( -name '*.h' -o -name '*.cpp' \)` "$@"
+clang-format -i -style=file -assume-filename=../.clang-format -verbose `find . -type f \( -name '*.h' \) -not -path './thirdparty/*'`
+clang-format -i -style=file -assume-filename=../.clagn-format -verbose `find . -type f \( -name '*.cpp' -o -name '*.inl' \) -not -path './thirdparty/*'` # ! -wholename './d3xp/gamesys/SysCvar.cpp' ! -wholename './d3xp/gamesys/Callbacks.cpp' ! -wholename './sys/win32/win_cpu.cpp' ! -wholename './sys/win32/win_main.cpp' -not -path './libs/*' `
 
