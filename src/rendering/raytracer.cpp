@@ -3,6 +3,8 @@
 
 #include "raytracer.h"
 #include "ray.h"
+#include "system/file.h"
+
 // Vec3 sample(
 
 // Rake: Speed this up, or find a better method of parallel computing.
@@ -77,6 +79,7 @@ std::vector<Pixel_t> raytracer::render(camera* cam, Vec2<int> res, int samples, 
             pixels[(res.y() - 1 - j) * res.x() + i].pixelData.g = ig;
             pixels[(res.y() - 1 - j) * res.x() + i].pixelData.b = ib;
             pixels[(res.y() - 1 - j) * res.x() + i].pixelData.a = ia;
+            writeFile("default.tga", Vec2<int>(640, 480), pixels);
         }
     }
     return pixels;

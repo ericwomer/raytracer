@@ -14,9 +14,11 @@ inline Vec3 random_in_unit_disk()
 
 class camera {
 public:
-    camera(Vec3 lookfrom, Vec3 lookat, Vec3 vup, double vfow, double aspect, double aperture, double focus_dist)
+    camera(Vec3 lookfrom, Vec3 lookat, Vec3 vup, double vfow, double aspect, double aperture, double focus_dist, double t0, double t1)
     {  // vfow is top to bottom in degrees
         lens_radius = aperture / 2;
+        time0 = t0;
+        time1 = t1;
         double theta = vfow * M_PI / 180;
         double half_height = tan(theta / 2);
         double half_width = aspect * half_height;
@@ -34,7 +36,8 @@ public:
     {
         Vec3 rd = lens_radius * random_in_unit_disk();
         Vec3 offset = u * rd.x() + v * rd.y();
-        return ray(origin + offset, lower_left_corner + s * horizontal + t * verticle - origin - offset);
+        double time = time0 + (double(rand()) / RAND_MAX) * (time1 - time0);
+        return ray(origin + offset, lower_left_corner + s * horizontal + t * verticle - origin - offset, time);
     }
 
     Vec3   origin;
@@ -42,6 +45,7 @@ public:
     Vec3   horizontal;
     Vec3   verticle;
     Vec3   u, w, v;
+    double time0, time1;
     double lens_radius;
 };
 #endif  // CAMERA_H

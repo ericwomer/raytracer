@@ -4,6 +4,35 @@
 #include <tbb/tbb.h>
 
 #include "raytracerapp.h"
+std::vector<hitable*> random_scene()
+{
+    int n = 50000;
+    std::vector<hitable*> list;
+    list.push_back(new sphere(Vec3(0, -1000,0), 1000, new Lambertian(Vec3(0.5, 0.5, 0.5))));
+    int i = 1;
+    for(int a = -10; a < 10; a++) {
+        for(int b = -10; b < 10; b++) {
+            double choose_mat = double(rand()) / RAND_MAX;
+            Vec3 center(a+0.9*(double(rand())/RAND_MAX), 0.2, b+0.9*(double(rand())/ RAND_MAX));
+            if((center-Vec3(4, 0.2,0)).length() > 0.9) {
+                if(choose_mat < 0.8) { //diffuse
+                    list.push_back(new moving_sphere(center, center+Vec3(0,0.5*( double(rand())/RAND_MAX), 0), 0.0, 1.0, 0.2,
+                            new Lambertian( Vec3((double(rand())/ RAND_MAX) * (double(rand())/ RAND_MAX), (double(rand())/ RAND_MAX) * (double(rand())/ RAND_MAX), (double(rand())/ RAND_MAX) * (double(rand())/ RAND_MAX)))));
+                } else if (choose_mat < 0.95) { // metal
+                    list.push_back(new sphere(center, 0.2,
+                            new Metal(Vec3(0.5*(1 + (double(rand()) / RAND_MAX)),0.5*(1 + (double(rand()) / RAND_MAX)), 0.5*(1 + (double(rand()) / RAND_MAX))), 0.5*(1 + (double(rand()) / RAND_MAX)))));
+                } else { // glass
+                    list.push_back(new sphere(center, 0.2, new Dielectric(1.5)));
+                }
+            }
+        }
+    }
+    list.push_back(new sphere(Vec3(0, 1,0), 1.0, new Dielectric(1.5)));
+    list.push_back(new sphere(Vec3(-4, 1, 0), 1.0, new Lambertian(Vec3(0.4, 0.2, 0.1))));
+    list.push_back(new sphere(Vec3(4,1,0), 1.0, new Metal(Vec3(0.7, 0.6, 0.5), 0.0)));
+    std::cout << "list.size(): " << list.size() << "\n";
+    return list;
+}
 
 RaytracingApp::RaytracingApp()
 {
@@ -11,12 +40,12 @@ RaytracingApp::RaytracingApp()
     version_number = project.version_number;
     project.version_number;
 
-    out_format.resolution.e[0] = 640;
-    out_format.resolution.e[1] = 480;
-    out_format.samples = 10;
     out_format.name = "default";  // fix it so the extension is selected by the output format.
     out_format.ext = ".tga";
 
+    render_parameters.resolution.e[0] = 640;
+    render_parameters.resolution.e[1] = 480;
+    render_parameters.samples = 10;
     render_parameters.threaded = true;
     render_parameters.grains = 50000;
 }
@@ -27,7 +56,6 @@ RaytracingApp::RaytracingApp()
 int RaytracingApp::main()
 {
     // Do threading, brake up the view port and split off threads based on that
-
     std::vector<Pixel_t> pixels;  // lower case this
 
     // Convert this list to a class scene::objects or something
@@ -38,20 +66,20 @@ int RaytracingApp::main()
     list.push_back(new sphere(Vec3(-4, 1, 0), 1.0, new Lambertian(Vec3(0.4, 0.2, 0.1))));
     list.push_back(new sphere(Vec3(4, 1, 0), 1.0, new Metal(Vec3(0.1, 0.1, 0.1), 0.0)));
 
-    Vec3   lookfrom(13, 2, -10);
+    Vec3   lookfrom(13, 2, 3);
     Vec3   lookat(0, 0, 0);
     double dist_to_focus = 10;  // (lookfrom - lookat).length();
     double aperture = 0.0;
 
-    camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(out_format.resolution.x()) / double(out_format.resolution.y()), aperture, dist_to_focus);
-    pixels = tracer.render(&cam, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), out_format.samples, list, render_parameters.threaded,
+    camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(render_parameters.resolution.x()) / double(render_parameters.resolution.y()), aperture, dist_to_focus, 0.0, 1.0);
+    pixels = tracer.render(&cam, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), render_parameters.samples, random_scene(), render_parameters.threaded,
                            render_parameters.grains);
 
     std::stringstream stream_name;
-    stream_name << out_format.name << "-" << out_format.resolution.x() << "x" << out_format.resolution.y() << "-" << out_format.samples << out_format.ext;
+    stream_name << out_format.name << "-" << render_parameters.resolution.x() << "x" << render_parameters.resolution.y() << "-" << render_parameters.samples << out_format.ext;
     out_format.name = stream_name.str();
     std::cout << "name: " << out_format.name << " \nstream_name: " << stream_name.str() << "\n";
-    writeFile(out_format.name, Vec2<int>(out_format.resolution.x(), out_format.resolution.y()), pixels);
+    // writeFile(out_format.name, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), pixels);
 
     return EXIT_SUCCESS;
 }
@@ -99,14 +127,20 @@ int RaytracingApp::main(std::vector<std::string>& params)
                                    // to see if its another parameter or not.
         } else if (*i == "--samples" || *i == "-s") {
             ++i;
-            out_format.samples = std::stoi(*i);
-            // For error checking message [Number between 1 and " << std::numeric_limits<unsigned int>::max()  << "
+            // test to see if the string contains numbers only
+            if (i->find_first_not_of("0123456789") == std::string::npos) {
+                render_parameters.samples = std::stoi(*i);
+            } else {
+                std::cout << "Error: Only numbers are valid option for --grains or -g in the range of 1 and " << std::numeric_limits<unsigned int>::max()
+                          << "\n";
+                return EXIT_FAILURE;
+            }
         } else if (*i == "--width" || *i == "-x") {
             ++i;
-            out_format.resolution.e[0] = std::stoi(*i);
+            render_parameters.resolution.e[0] = std::stoi(*i);
         } else if (*i == "--height" || *i == "-y") {
             ++i;
-            out_format.resolution.e[1] = std::stoi(*i);
+            render_parameters.resolution.e[1] = std::stoi(*i);
         } else if (*i == "--threaded" || *i == "-t") {
             ++i;
             std::string result;

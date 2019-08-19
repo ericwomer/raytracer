@@ -17,6 +17,7 @@
 #include "materials/material.h"
 #include "objects/hitable_list.h"
 #include "objects/sphere.h"
+#include "objects/moving_sphere.h"
 #include "rendering/raytracer.h"
 #include "system/file.h"
 #include "system/system.h"
@@ -37,11 +38,11 @@
 typedef struct OutFile_s {  // for a lack of a better name
     std::string  name;
     std::string  ext;
-    Vec2<int>    resolution;
-    unsigned int samples;
 } OutFile_t;
 
 typedef struct Render_s {
+    Vec2<int>    resolution;
+    unsigned int samples;
     std::size_t grains;
     bool        threaded;
 } Render_t;
