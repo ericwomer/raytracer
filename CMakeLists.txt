@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(raytrace VERSION 0.0.1.0)
 
 option(with_system_tbb "Use systems tbb install" ON)
@@ -232,7 +232,7 @@ set (raytrace_src
     "src/objects/hitable.cpp"
     "src/main.cpp"
     "src/raytracerapp.cpp"
-)
+        src/objects/moving_sphere.cpp src/objects/moving_sphere.h)
 
 if(MSVC)
     link_directories("${CMAKE_SOURCE_DIR}/thirdparty/tbb2019_20190605oss/lib/intel64/vc14")
