@@ -88,10 +88,10 @@ int RaytracingApp::main()
 // This is the main that handles parameters
 int RaytracingApp::main(std::vector<std::string>& params)
 {
-    tbb::task_scheduler_init init;
+    // tbb::task_scheduler_init init;
 
-    std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
-    std::cout << "threads: " << init.default_num_threads() << "\n";
+    // std::cout << "Task Scheduler Active: " << init.is_active() << "\n";
+    // std::cout << "threads: " << init.default_num_threads() << "\n";
 
     // std::vector<std::string> actions;
     std::vector<std::string> dump;

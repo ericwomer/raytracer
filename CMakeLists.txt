@@ -1,20 +1,22 @@
 cmake_minimum_required(VERSION 3.15)
 project(raytrace VERSION 0.0.1.0)
 
-option(with_system_tbb "Use systems tbb install" ON)
-option(build_docs "Build docs" OFF)
-
+option(with_system_tbb
+        "Use systems tbb install" ON)
+option(build_docs
+        "Build docs" OFF)
 option(onative
         "Optimize for the host CPU" OFF)
-
 option(winrt
         "Build for Windows RT" OFF)
+option(use_intrinsics
+        "Compile using intrinsics (e.g mmx, sse, msse2)" ON) # Rake: is this needed?
 
 set(cpu_type "" CACHE STRING "When set, passes this string as CPU-ID which will be embedded into the binary.")
 
 set(cpu_optimizations "-mmmx -msse -msse2" CACHE STRING "Which CPU specific optimitations should be used beside the compiler's default?")
 
-option(use_intrinsics "Compile using intrinsics (e.g mmx, sse, msse2)" ON)
+
 
 if(MSVC)
     #message(STATUS CMAKE_ROOT: ${CMAKE_ROOT})
@@ -37,11 +39,11 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
     #add_definitions(-Wall)
     add_definitions(-Werror=format-security)
     add_definitions(-Werror=format)
-    if(CPU_TYPE)
-        add_definitions(-DCPUSTRING="${CPU_TYPE}")
+    if(cpu_type)
+        add_definitions(-DCPUSTRING="${cpu_type}")
     endif()
-    if (CPU_OPTIMIZATION)
-        add_definitions(${CPU_OPTIMIZATION})
+    if (cpu_optimization)
+        add_definitions(${cpu_optimization})
     endif()
     if (use_intrinsics)
         add_definitions(-DUSE_INTRINSICS)
@@ -178,13 +180,25 @@ if(MSVC)
 else()
     include(FindPkgConfig)
     find_package(PkgConfig REQUIRED)
+
     # Hard code to local built version?
+    # make compiler=clang stdlib=libc++ stdver=c++17 tbb_build_prefix=lib
     if(with_system_tbb)
+        message(STATUS "Using system installed tbb")
         pkg_check_modules(tbb REQUIRED tbb)
         include_directories("${tbb_INCLUDEDIR}")
     else() # Rake: Maybe add an option to build this if its not already built.
-        find_library(TBB_LIB tbb_debug "${PROJECT_SOURCE_DIR}/src/thirdparty/tbb/build/lib_debug")
-        include_directories("${PROJECT_SOURCE_DIR}/src/thirdparty/tbb/include")
+        message(STATUS "Using locally built tbb")
+        find_library(TBB tbb PATHS "${PROJECT_SOURCE_DIR}/src/thirdparty/tbb/build/lib_release" NO_DEFAULT_PATH)
+        if(TBB)
+            message(STATUS "tbb found!")
+            message(STATUS "Using local tbb for threading.")
+            message(STATUS ${TBB})
+            add_definitions("-DUSING_TBB")
+            include_directories("${PROJECT_SOURCE_DIR}/src/thirdparty/tbb/include")
+        elseif()
+            message(WARNING "tbb not found! Threading is disabled for this project.")
+        endif()
     endif()
 
     # Inforce use of clang++
@@ -224,23 +238,26 @@ configure_file(
 )
 
 set (raytrace_src
-    "src/scene/scene.cpp"
-    "src/rendering/raytracer.cpp"
-    "src/system/system.cpp"
-    "src/system/file.cpp"
-    "src/objects/sphere.cpp"
-    "src/objects/hitable.cpp"
-    "src/main.cpp"
-    "src/raytracerapp.cpp"
-        src/objects/moving_sphere.cpp src/objects/moving_sphere.h)
+        "src/scene/scene.cpp"
+        "src/rendering/raytracer.cpp"
+        "src/system/system.cpp"
+        "src/system/file.cpp"
+        "src/objects/sphere.cpp"
+        "src/objects/hitable.cpp"
+        "src/main.cpp"
+        "src/raytracerapp.cpp"
+        "src/objects/moving_sphere.cpp"
+        "src/objects/moving_sphere.h"
+        )
 
 if(MSVC)
     link_directories("${CMAKE_SOURCE_DIR}/thirdparty/tbb2019_20190605oss/lib/intel64/vc14")
     add_executable(raytrace ${raytrace_src})
     target_link_libraries(raytrace tbb_debug)
 else()
+    link_directories("${CMAKE_SOURCE_DIR}/src/thridparty/tbb/build/lib_release") # Is this needed?
     add_executable(raytrace ${raytrace_src})
-    target_link_libraries(raytrace ${TBB_LIB})
+    target_link_libraries(raytrace ${TBB})
 endif()
 
 if(build_docs)

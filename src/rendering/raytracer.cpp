@@ -103,6 +103,7 @@ std::vector<Pixel_t> raytracer::render(camera* cam, Vec2<int> res, int samples, 
     std::vector<Pixel_t> pixels;
     pixels.resize(res.x() * res.y());
 
+#if defined(USING_TBB)
     if (threaded) {
         rendering_s rendering(cam, res, samples, elements,  world, &render_data);
         tbb::parallel_for(tbb::blocked_range3d<size_t>(0, samples, grains, 0, res.y() + 1, grains, 0, res.x() + 1, grains), rendering, tbb::simple_partitioner());
@@ -111,6 +112,7 @@ std::vector<Pixel_t> raytracer::render(camera* cam, Vec2<int> res, int samples, 
         //tbb::parallel_for(tbb::blocked_range<size_t>(0, samples, grains), sample, tbb::simple_partitioner());
 
     } else { // Single threaded rendering.
+#endif // USING_TBB
         for (int j = res.y() - 1; j >= 0; j--) {
             for (int i = 0; i < res.x(); i++) {
                 Vec3 col(0, 0, 0);
@@ -137,7 +139,8 @@ std::vector<Pixel_t> raytracer::render(camera* cam, Vec2<int> res, int samples, 
                 // writeFile("default.tga", Vec2<int>(640, 480), pixels);
             }
         }
+#if defined(USING_TBB)
     }
-
+#endif // USING_TBB
     return render_data.pixels;
 }
