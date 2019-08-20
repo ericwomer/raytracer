@@ -5,6 +5,9 @@
 #include <sstream>
 #include <vector>
 
+#include <tbb/parallel_for.h>
+#include <tbb/blocked_range.h>
+
 #include "camera/camera.h"
 #include "materials/material.h"
 #include "objects/hitable_list.h"
@@ -34,6 +37,10 @@ inline Vec3 color(const ray& r, hitable* world, int depth)
         return (1.0 - t) * Vec3(1.0, 1.0, 1.0) + t * Vec3(0.5, 0.7, 1.0);
     }
 }
+
+struct render_data_s {
+    std::vector<Pixel_t> pixels;
+};
 
 // determine the size of the pixel
 class raytracer {

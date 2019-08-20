@@ -55,6 +55,11 @@ RaytracingApp::RaytracingApp()
 // with member vars.
 int RaytracingApp::main()
 {
+    std::stringstream stream_name;
+    stream_name << out_format.name << "-" << render_parameters.resolution.x() << "x" << render_parameters.resolution.y() << "-" << render_parameters.samples << out_format.ext;
+    out_format.name = stream_name.str();
+    std::cout << "name: " << out_format.name << " \nstream_name: " << stream_name.str() << "\n";
+
     // Do threading, brake up the view port and split off threads based on that
     std::vector<Pixel_t> pixels;  // lower case this
 
@@ -75,11 +80,7 @@ int RaytracingApp::main()
     pixels = tracer.render(&cam, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), render_parameters.samples, random_scene(), render_parameters.threaded,
                            render_parameters.grains);
 
-    std::stringstream stream_name;
-    stream_name << out_format.name << "-" << render_parameters.resolution.x() << "x" << render_parameters.resolution.y() << "-" << render_parameters.samples << out_format.ext;
-    out_format.name = stream_name.str();
-    std::cout << "name: " << out_format.name << " \nstream_name: " << stream_name.str() << "\n";
-    // writeFile(out_format.name, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), pixels);
+    writeFile(out_format.name, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), pixels);
 
     return EXIT_SUCCESS;
 }
