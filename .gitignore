@@ -12,6 +12,7 @@ dist/share/*
 .codelite/**
 .idea/**
 .nbproject/**
+.vscode/**
 *.project
 
 # Ignore IDE (Usually clion created) cmake build directories.
