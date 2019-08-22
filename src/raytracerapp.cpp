@@ -4,7 +4,7 @@
 #include <tbb/tbb.h>
 
 #include "raytracerapp.h"
-std::vector<hitable*> random_scene()
+hitable* random_scene()
 {
     int n = 50000;
     std::vector<hitable*> list;
@@ -31,7 +31,7 @@ std::vector<hitable*> random_scene()
     list.push_back(new sphere(Vec3(-4, 1, 0), 1.0, new Lambertian(Vec3(0.4, 0.2, 0.1))));
     list.push_back(new sphere(Vec3(4,1,0), 1.0, new Metal(Vec3(0.7, 0.6, 0.5), 0.0)));
     std::cout << "list.size(): " << list.size() << "\n";
-    return list;
+    return new hitable_list(list.data(), list.size());;
 }
 
 RaytracingApp::RaytracingApp()
@@ -43,8 +43,8 @@ RaytracingApp::RaytracingApp()
     out_format.name = "default";  // fix it so the extension is selected by the output format.
     out_format.ext = ".tga";
 
-    render_parameters.resolution.e[0] = 640;
-    render_parameters.resolution.e[1] = 480;
+    render_parameters.res.e[0] = 640;
+    render_parameters.res.e[1] = 480;
     render_parameters.samples = 10;
     render_parameters.threaded = true;
     render_parameters.grains = 50000;
@@ -56,7 +56,7 @@ RaytracingApp::RaytracingApp()
 int RaytracingApp::main()
 {
     std::stringstream stream_name;
-    stream_name << out_format.name << "-" << render_parameters.resolution.x() << "x" << render_parameters.resolution.y() << "-" << render_parameters.samples << out_format.ext;
+    stream_name << out_format.name << "-" << render_parameters.res.x() << "x" << render_parameters.res.y() << "-" << render_parameters.samples << out_format.ext;
     out_format.name = stream_name.str();
     std::cout << "name: " << out_format.name << " \nstream_name: " << stream_name.str() << "\n";
 
@@ -76,11 +76,21 @@ int RaytracingApp::main()
     double dist_to_focus = 10;  // (lookfrom - lookat).length();
     double aperture = 0.0;
 
-    camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(render_parameters.resolution.x()) / double(render_parameters.resolution.y()), aperture, dist_to_focus, 0.0, 1.0);
-    pixels = tracer.render(&cam, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), render_parameters.samples, random_scene(), render_parameters.threaded,
-                           render_parameters.grains);
+    camera cam(lookfrom, lookat, Vec3(0, 1, 0), 20, double(render_parameters.res.x()) / double(render_parameters.res.y()), aperture, dist_to_focus, 0.0, 1.0);
+    hitable* world = /*random_scene(); //*/ new hitable_list(list.data(), list.size());
+    Render_t render {
+        &cam,
+        Vec2<int>(render_parameters.res.x(), render_parameters.res.y()),
+        render_parameters.samples,
+        world,
+        render_parameters.grains,
+        render_parameters.threaded,
+        pixels
+        };
 
-    writeFile(out_format.name, Vec2<int>(render_parameters.resolution.x(), render_parameters.resolution.y()), pixels);
+    pixels = tracer.render(render);
+
+    writeFile(out_format.name, Vec2<int>(render_parameters.res.x(), render_parameters.res.y()), pixels);
 
     return EXIT_SUCCESS;
 }
@@ -138,10 +148,10 @@ int RaytracingApp::main(std::vector<std::string>& params)
             }
         } else if (*i == "--width" || *i == "-x") {
             ++i;
-            render_parameters.resolution.e[0] = std::stoi(*i);
+            render_parameters.res.e[0] = std::stoi(*i);
         } else if (*i == "--height" || *i == "-y") {
             ++i;
-            render_parameters.resolution.e[1] = std::stoi(*i);
+            render_parameters.res.e[1] = std::stoi(*i);
         } else if (*i == "--threaded" || *i == "-t") {
             ++i;
             std::string result;
@@ -184,7 +194,7 @@ void RaytracingApp::help(void)
 {
     version();
     std::cout << "Usage: " << app_name << " [options] [output file options] [rendering options]...\n";
-    std::cout << "\nInformation: \n";
+    std::cout << "Information: \n";
     std::cout << " -h, --help \t\t Print this help message and exit.\n";
     std::cout << " -V, --version \t\t Print the version and exit.\n";
     std::cout << "\nOptions: \n";

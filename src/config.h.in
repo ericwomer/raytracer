@@ -11,6 +11,7 @@ typedef struct Project_s
     std::string compiler_version;
     std::string operating_system;
     std::string cpu_family;
+    std::string threading;
     
     Project_s() 
     {
@@ -20,6 +21,12 @@ typedef struct Project_s
         compiler_version = "@compiler_version@";
         operating_system = "@host_machine@";
         cpu_family = "@cpu_family@";
+#if defined(USING_TBB)
+        threading = "TBB Threading is enabled for this build.\n";
+#else
+        threading = "TBB Threading is disabled for this build.\n";
+#endif
+
     }
 }Project_t;
 

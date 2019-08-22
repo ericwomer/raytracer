@@ -15,6 +15,8 @@ public:
     : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r), mat_ptr(m) {};
 
     virtual bool hit(const ray& r, double tmin, double tmax, hit_record& rec) const;
+    virtual bool bounding_box(double t0, double t1, aabb& box) const;
+
     Vec3 center(double time) const;
 
     Vec3 center0, center1;

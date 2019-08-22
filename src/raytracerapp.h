@@ -21,6 +21,7 @@
 #include "rendering/raytracer.h"
 #include "system/file.h"
 #include "system/system.h"
+#include "types/types.h"
 
 #include "config.h"
 
@@ -33,19 +34,6 @@
  * Parameter param = { "-h", "--help", " ", " ", Class::method, nullptr,
  *  "-o", "--output", " ", OutFile_t.name, RaytracingApp::help, nullptr} 
  */
-
-// Eric: Placeholder for now, don't pass this down to other functions yet
-typedef struct OutFile_s {  // for a lack of a better name
-    std::string  name;
-    std::string  ext;
-} OutFile_t;
-
-typedef struct Render_s {
-    Vec2<int>    resolution;
-    unsigned int samples;
-    std::size_t grains;
-    bool        threaded;
-} Render_t;
 
 class RaytracingApp : public Base {
 public:
@@ -67,7 +55,8 @@ public:
         std::cout << project.name << " version " << project.version_number << "\n";
         std::cout << "Compiler: " << project.compiler_name << " " << project.compiler_version << "\n";
         std::cout << "Operating System: " << project.operating_system << "\n";
-        std::cout << "Architecture: " << project.cpu_family << "\n" << std::endl;
+        std::cout << "Architecture: " << project.cpu_family << "\n";
+        std::cout << "Threading: " << project.threading << "\n";
     }
 
 private:

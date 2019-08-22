@@ -1,6 +1,4 @@
 #include <tbb/parallel_for.h>
-#include <tbb/blocked_range.h>
-#include <tbb/blocked_range2d.h>
 #include <tbb/blocked_range3d.h>
 
 #include "raytracer.h"
@@ -39,15 +37,9 @@ struct sample_s {
 
 
 struct rendering_s {
-    camera* _cam;
-    Vec2<int> _resolution;
-    int _samples;
-    std::vector<hitable*> _elements;
-    hitable* _world;
-    render_data_s* _data;
-
-    rendering_s(camera* cam, Vec2<int>& res, int samples, std::vector<hitable*> elements, hitable* world, render_data_s* data)
-            : _cam(cam), _resolution(res), _samples(samples), _elements(elements), _world(world), _data(data)
+    Render_t* _render;
+    rendering_s(Render_t* render)
+            : _render(render)
     {}
 
     void operator()(const tbb::blocked_range3d<size_t>& range) const {
@@ -56,15 +48,15 @@ struct rendering_s {
                 Vec3 col(0, 0, 0);
                 // Single threaded rendering.
                 for (size_t s = range.pages().begin(); s != range.pages().end(); s++) {
-                    double u = double(i + double(rand()) / RAND_MAX) / double(_resolution.x());
-                    double v = double(j + double(rand()) / RAND_MAX) / double(_resolution.y());
-                    ray r = _cam->get_ray(u, v);
+                    double u = double(i + double(rand()) / RAND_MAX) / double(_render->res.x());
+                    double v = double(j + double(rand()) / RAND_MAX) / double(_render->res.y());
+                    ray r = _render->cam->get_ray(u, v);
                     // Vec3 p = r.point_at_parameter(2.0);
-                    col += color(r, _world, 0);
+                    col += color(r, _render->world, 0);
                     // std::cout << "s:" << s << " u: " << u << " v: " << v << "\n";
                 }
 
-                col /= double(_samples);
+                col /= double(_render->samples);
                 col = Vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
                 uint8_t ir = uint8_t(255.99 * col[0]);
                 uint8_t ig = uint8_t(255.99 * col[1]);
@@ -73,10 +65,10 @@ struct rendering_s {
 
                 // _data->pixels[(_resolution.x() - 1 - j) * _resolution.y() + i].pixelData.r = ir;
                 // (1 + j - _resolution.x()) * _resolution.y() - i
-                _data->pixels[(_resolution.y() - j) * _resolution.x() + i].pixelData.r = ir;
-                _data->pixels[(_resolution.y() - j) * _resolution.x() + i].pixelData.g = ig;
-                _data->pixels[(_resolution.y() - j) * _resolution.x() + i].pixelData.b = ib;
-                _data->pixels[(_resolution.y() - j) * _resolution.x() + i].pixelData.a = ia;
+                _render->pixels[(_render->res.y() - j) * _render->res.x() + i].pixelData.r = ir;
+                _render->pixels[(_render->res.y() - j) * _render->res.x() + i].pixelData.g = ig;
+                _render->pixels[(_render->res.y() - j) * _render->res.x() + i].pixelData.b = ib;
+                _render->pixels[(_render->res.y() - j) * _render->res.x() + i].pixelData.a = ia;
                 // std::cout << "i: " << i << " j: " << j << "\n";
                 // writeFile("default.tga", Vec2<int>(640, 480),_data->pixels);
             }
@@ -92,55 +84,53 @@ struct rendering_s {
  * @param elements
  * @return
  */
-std::vector<Pixel_t> raytracer::render(camera* cam, Vec2<int> res, int samples, std::vector<hitable*> elements, bool threaded, std::size_t grains)
+std::vector<Pixel_t> raytracer::render(Render_t render)
 {
-    hitable* world = new hitable_list(elements.data(), elements.size());
-
     // pixelrgba_t data[res.y()][res.x()];
 
-    render_data_s render_data;
-    render_data.pixels.resize(res.x() * res.y());
+    // render_data_s render_data;
+    render.pixels.resize(render.res.x() * render.res.y());
     std::vector<Pixel_t> pixels;
-    pixels.resize(res.x() * res.y());
+    pixels.resize(render.res.x() * render.res.y());
 
 #if defined(USING_TBB)
-    if (threaded) {
-        rendering_s rendering(cam, res, samples, elements,  world, &render_data);
-        tbb::parallel_for(tbb::blocked_range3d<size_t>(0, samples, grains, 0, res.y() + 1, grains, 0, res.x() + 1, grains), rendering, tbb::simple_partitioner());
+    if (render.threaded) {
+        rendering_s rendering(&render);
+        tbb::parallel_for(tbb::blocked_range3d<size_t>(0, render.samples, render.grains, 0, render.res.y() + 1, render.grains, 0, render.res.x() + 1, render.grains), rendering, tbb::simple_partitioner());
 
         //struct sample_s sample(i, j, cam, res, world, col);
         //tbb::parallel_for(tbb::blocked_range<size_t>(0, samples, grains), sample, tbb::simple_partitioner());
 
     } else { // Single threaded rendering.
 #endif // USING_TBB
-        for (int j = res.y() - 1; j >= 0; j--) {
-            for (int i = 0; i < res.x(); i++) {
+        for (int j = render.res.y() - 1; j >= 0; j--) {
+            for (int i = 0; i < render.res.x(); i++) {
                 Vec3 col(0, 0, 0);
 
-                for (int s = 0; s < samples; s++) {
-                    double u = double(i + double(rand()) / RAND_MAX) / double(res.x());
-                    double v = double(j + double(rand()) / RAND_MAX) / double(res.y());
-                    ray r = cam->get_ray(u, v);
+                for (int s = 0; s < render.samples; s++) {
+                    double u = double(i + double(rand()) / RAND_MAX) / double(render.res.x());
+                    double v = double(j + double(rand()) / RAND_MAX) / double(render.res.y());
+                    ray r = render.cam->get_ray(u, v);
                     // Vec3 p = r.point_at_parameter(2.0);
-                    col += color(r, world, 0);
+                    col += color(r, render.world, 0);
                 }
 
-                col /= double(samples);
+                col /= double(render.samples);
                 col = Vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
                 uint8_t ir = uint8_t(255.99 * col[0]);
                 uint8_t ig = uint8_t(255.99 * col[1]);
                 uint8_t ib = uint8_t(255.99 * col[2]);
                 uint8_t ia = uint8_t(255.99 * 1);  // Eric: leave this as the default for now
 
-                render_data.pixels[(res.y() - 1 - j) * res.x() + i].pixelData.r = ir;
-                render_data.pixels[(res.y() - 1 - j) * res.x() + i].pixelData.g = ig;
-                render_data.pixels[(res.y() - 1 - j) * res.x() + i].pixelData.b = ib;
-                render_data.pixels[(res.y() - 1 - j) * res.x() + i].pixelData.a = ia;
+                render.pixels[(render.res.y() - 1 - j) * render.res.x() + i].pixelData.r = ir;
+                render.pixels[(render.res.y() - 1 - j) * render.res.x() + i].pixelData.g = ig;
+                render.pixels[(render.res.y() - 1 - j) * render.res.x() + i].pixelData.b = ib;
+                render.pixels[(render.res.y() - 1 - j) * render.res.x() + i].pixelData.a = ia;
                 // writeFile("default.tga", Vec2<int>(640, 480), pixels);
             }
         }
 #if defined(USING_TBB)
     }
 #endif // USING_TBB
-    return render_data.pixels;
+    return render.pixels;
 }
